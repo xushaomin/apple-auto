@@ -12,8 +12,9 @@
 	<name>apple-auto-calculate-fence</name>
 	<url>http://maven.apache.org</url>
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<structure.version>0.0.1-SNAPSHOT</structure.version>
 	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>com.appleframework.config</groupId>
@@ -30,6 +31,12 @@
 		<dependency>
 			<groupId>com.appleframework.jms</groupId>
 			<artifactId>apple-jms-kafka</artifactId>
+		</dependency>
+		
+		<dependency>
+  			<groupId>com.appleframework.structure</groupId>
+  			<artifactId>apple-structure-kdtree</artifactId>
+  			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
 		<!-- spring -->
