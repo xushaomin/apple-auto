@@ -9,7 +9,6 @@
 		<version>0.0.1.RELEASE</version>
 	</parent>
 	<artifactId>apple-auto-acquisition-socket</artifactId>
-	<packaging>war</packaging>
 	<name>apple-auto-acquisition-socket</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
