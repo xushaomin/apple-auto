@@ -1,0 +1,9 @@
+*.class
+*.classpath
+*.project
+target
+/target
+/target/
+.settings
+/.settings
+/.settings/
