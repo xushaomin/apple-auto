@@ -10,7 +10,7 @@
 	</parent>
 	<artifactId>apple-auto-acquisition-socket</artifactId>
 	<packaging>war</packaging>
-	<name>apple-auto-acquisition-socket Maven Webapp</name>
+	<name>apple-auto-acquisition-socket</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<!-- apple -->
