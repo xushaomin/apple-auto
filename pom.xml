@@ -1,0 +1,107 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.appleframework.auto</groupId>
+	<artifactId>apple-auto</artifactId>
+	<version>0.0.1.RELEASE</version>
+	<packaging>pom</packaging>
+
+	<name>apple-auto</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<spring.version>3.2.2.RELEASE</spring.version>
+		<log4j-version>1.2.17</log4j-version>
+		<common-lang3-version>3.4</common-lang3-version>
+		<jackson.version>1.9.13</jackson.version>
+		<apple.version>0.1.9.RELEASE</apple.version>
+		<config.version>0.2.5.RELEASE</config.version>
+		<boot.version>0.3.2.RELEASE</boot.version>
+		<cim.version>0.0.1.RELEASE</cim.version>
+		<bean.version>0.0.2.RELEASE</bean.version>
+		<jms.version>0.1.4.RELEASE</jms.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- apple -->
+			<dependency>
+				<groupId>com.appleframework.cim</groupId>
+				<artifactId>apple-cim-netty-server-sdk</artifactId>
+				<version>${cim.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.appleframework.config</groupId>
+				<artifactId>apple-config-diamond</artifactId>
+				<version>${config.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.appleframework.boot</groupId>
+				<artifactId>apple-boot-jetty8</artifactId>
+				<version>${boot.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.appleframework.bean</groupId>
+				<artifactId>apple-bean-location</artifactId>
+				<version>${bean.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.appleframework.jms</groupId>
+				<artifactId>apple-jms-activemq</artifactId>
+				<version>${jms.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.appleframework.jms</groupId>
+				<artifactId>apple-jms-kafka</artifactId>
+				<version>${jms.version}</version>
+			</dependency>
+
+			<!-- spring -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context-support</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-web</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-webmvc</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			
+		</dependencies>
+		
+	</dependencyManagement>
+
+	<modules>
+		<module>apple-auto-service</module>
+		<module>apple-auto-calculate</module>
+		<module>apple-auto-storager</module>
+		<module>apple-auto-acquisition</module>
+	</modules>
+	
+	<distributionManagement>
+		<repository>
+			<id>nexus-releases</id>
+			<name>Local Nexus Releases Repository</name>
+			<url>http://nexus.appleframework.com:8081/nexus/content/repositories/releases</url>
+		</repository>
+
+		<snapshotRepository>
+			<id>nexus-snapshots</id>
+			<name>Local Nexus Snapshots Repository</name>
+			<url>http://nexus.appleframework.com:8081/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+	
+</project>

@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	  http://www.springframework.org/schema/beans 
+	  http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	  
+	<bean id="propertyConfigurer"
+		class="com.appleframework.config.ExtendedPropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:system.properties</value>
+			</list>
+		</property>
+		<property name="loadRemote" value="false" />
+	</bean>
+
+	<bean id="contextHolder" class="com.appleframework.cim.util.ContextHolder" />
+
+	<bean id="CIMNioAcceptor" class="com.appleframework.cim.sdk.server.handler.CIMNioSocketAcceptor" init-method="bind">
+		<property name="port" value="${service.port}" />
+		<property name="handlers">
+			<map>
+				<entry key="client_bind">
+					<bean class="com.appleframework.cim.handler.BindHandler" />
+				</entry>
+				<entry key="client_heartbeat">
+					<bean class="com.appleframework.cim.sdk.server.handler.HeartbeatHandler" />
+				</entry>
+				<entry key="client_cimsession_closed">
+					<bean class="com.appleframework.cim.handler.SessionClosedHandler" />
+				</entry>
+				<entry key="client_realtime_location">
+					<bean class="com.appleframework.auto.acquisition.socket.handler.LocationHandler" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="hazelcastInstance" class="com.appleframework.auto.acquisition.socket.session.HazelcastInstanceFactoryBean">
+		<property name="members" value="${hazelcast.members}" />
+	</bean>
+		
+	<bean id="CIMSessionManager" class="com.appleframework.auto.acquisition.socket.session.ClusterSessionManager">
+		<property name="instance" ref="hazelcastInstance" />
+	</bean>
+		
+	<!-- 
+	<bean id="CIMSessionManager"
+		class="com.appleframework.cim.sdk.server.session.DefaultSessionManager" />
+	 -->
+
+	<bean id="messagePusher" class="com.appleframework.cim.push.DefaultMessagePusher">
+		<property name="sessionManager" ref="CIMSessionManager" />
+	</bean>
+
+	<bean id="systemMessagePusher" class="com.appleframework.cim.push.SystemMessagePusher">
+		<property name="sessionManager" ref="CIMSessionManager" />
+	</bean>
+	
+</beans>
