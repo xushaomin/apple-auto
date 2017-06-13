@@ -15,6 +15,9 @@ public class LocationSearchRequest extends AbstractRopRequest {
 	@NotNull
 	private Long endTime;
 
+	@NotNull
+	private Integer mapType;
+
 	public String getAccount() {
 		return account;
 	}
@@ -37,6 +40,14 @@ public class LocationSearchRequest extends AbstractRopRequest {
 
 	public void setEndTime(Long endTime) {
 		this.endTime = endTime;
+	}
+
+	public Integer getMapType() {
+		return mapType;
+	}
+
+	public void setMapType(Integer mapType) {
+		this.mapType = mapType;
 	}
 
 }

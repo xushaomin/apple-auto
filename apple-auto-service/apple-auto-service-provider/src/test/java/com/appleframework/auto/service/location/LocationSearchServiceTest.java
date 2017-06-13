@@ -29,7 +29,7 @@ public class LocationSearchServiceTest {
 			String account = "2017061301";
 			long startTime = format.parse(date).getTime();
 			long endTime = startTime + 86400000L;
-			List<Location> list = locationSearchService.search(account, startTime, endTime);
+			List<Location> list = locationSearchService.search(account, startTime, endTime, 1);
 			for (Location location : list) {
 				System.out.println(location);
 			}

@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.appleframework.auto.service.location.key.LocationRowkey;
+import com.appleframework.auto.service.utils.PoiUtils;
 import com.appleframework.bean.location.Location;
 import com.appleframework.data.hbase.client.SimpleHbaseClient;
 import com.appleframework.exception.ServiceException;
@@ -21,10 +22,14 @@ public class LocationSearchServiceImpl implements LocationSearchService {
 	private SimpleHbaseClient locationHbaseDao;
 
 	@Override
-	public List<Location> search(String account, long startTime, long endTime) throws ServiceException {
+	public List<Location> search(String account, long startTime, long endTime, int mapType) throws ServiceException {
 		LocationRowkey startRowKey = LocationRowkey.create(account, startTime);
 		LocationRowkey endRowKey = LocationRowkey.create(account, endTime);
-		return locationHbaseDao.findObjectList(startRowKey, endRowKey, Location.class);
+		List<Location> list = locationHbaseDao.findObjectList(startRowKey, endRowKey, Location.class);
+		for (Location location : list) {
+			PoiUtils.fixPoi(location, mapType);
+		}
+		return list;
 	}
 
 }

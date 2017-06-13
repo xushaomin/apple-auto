@@ -47,6 +47,11 @@
 			<artifactId>apple-data-hbase1x</artifactId>
 			<version>${data.version}</version>
 		</dependency>
+		<dependency>
+	  		<groupId>com.appleframework.util</groupId>
+	  		<artifactId>apple-util-map</artifactId>
+	  		<version>0.0.2.RELEASE</version>
+		</dependency>
 
 		<!-- spring -->
 		<dependency>

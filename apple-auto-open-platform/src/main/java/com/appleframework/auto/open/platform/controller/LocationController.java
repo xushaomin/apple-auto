@@ -34,9 +34,10 @@ public class LocationController {
 		LocationSearchResponse response = new LocationSearchResponse();
 		String account = request.getAccount();
 		long startTime = request.getStartTime();
-		long endTime = request.getEndTime();		
+		long endTime = request.getEndTime();
+		int mapType = request.getMapType();
 		try {			
-			List<Location> list = locationSearchService.search(account, startTime, endTime);
+			List<Location> list = locationSearchService.search(account, startTime, endTime, mapType);
 			response.setList(list);
 		} catch(ServiceException e) {
 			return new ServiceExceptionResponse(request.getRopRequestContext(), e);

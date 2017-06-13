@@ -11,6 +11,6 @@ import com.appleframework.exception.ServiceException;
  */
 public interface LocationSearchService {
 	
-	public List<Location> search(String account, long startTime, long endTime) throws ServiceException;
+	public List<Location> search(String account, long startTime, long endTime, int mapType) throws ServiceException;
 	
 }

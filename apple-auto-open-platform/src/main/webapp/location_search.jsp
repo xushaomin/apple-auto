@@ -36,16 +36,16 @@ var xmlDoc;
             if (window.ActiveXObject) {
                 xmlDoc = new ActiveXObject('Microsoft.XMLDOM');//IE浏览器
                 xmlDoc.async = false;
-                xmlDoc.load("shuzi.xml");
+                xmlDoc.load("http://localhost:8080/router?method=apple.auto.location.search&appkey=apple-auto&v=1.0&sign=ECA056FF6A12D03EFC9A54290E3F7551&account=2017061301&format=xml&startTime=1497283200000&endTime=1497369600000&mapType=1");
             }
           else if (navigator.userAgent.indexOf("Firefox")>0) { //火狐浏览器
                 xmlDoc = document.implementation.createDocument('', '', null);
                 xmlDoc.async = false;
-               xmlDoc.load("shuzi.xml");
+               xmlDoc.load("http://localhost:8080/router?method=apple.auto.location.search&appkey=apple-auto&v=1.0&sign=ECA056FF6A12D03EFC9A54290E3F7551&account=2017061301&format=xml&startTime=1497283200000&endTime=1497369600000&mapType=1");
             } 
            else{ //谷歌浏览器
               var xmlhttp = new window.XMLHttpRequest();
-                xmlhttp.open("GET","shuzi.xml",false);
+                xmlhttp.open("GET","http://localhost:8080/router?method=apple.auto.location.search&appkey=apple-auto&v=1.0&sign=ECA056FF6A12D03EFC9A54290E3F7551&account=2017061301&format=xml&startTime=1497283200000&endTime=1497369600000&mapType=1",false);
                 xmlhttp.send(null);
                 if(xmlhttp.readyState == 4){
                xmlDoc = xmlhttp.responseXML.documentElement;
@@ -54,14 +54,14 @@ var xmlDoc;
  var arrx=[];
  var arry=[];
 var nodes;
-nodes = xmlDoc.getElementsByTagName('zuobiao'); //读取XML文件中需要显示的数据
+nodes = xmlDoc.getElementsByTagName('list'); //读取XML文件中需要显示的数据
   for(ix=0;ix<nodes.length;ix++){
 	  var obj={};
 	  var obj1={};
 	 // obj=nodes[ix].childNodes[0].nodeValue;
-	 obj=nodes[ix].getElementsByTagName("x")[0].childNodes[0].nodeValue;
+	 obj=nodes[ix].getElementsByTagName("longitude")[0].childNodes[0].nodeValue;
 	 // obj1=nodes[ix].childNodes[1].nodeValue;
-	 obj1=nodes[ix].getElementsByTagName("y")[0].childNodes[0].nodeValue;
+	 obj1=nodes[ix].getElementsByTagName("latitude")[0].childNodes[0].nodeValue;
 	  arrx.push(obj);
 	  arry.push(obj1);
   }
