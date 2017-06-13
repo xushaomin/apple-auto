@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:rop="http://www.appleframework.com/schema/rop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+       http://www.appleframework.com/schema/rop http://www.appleframework.com/schema/rop/rop-1.3.xsd
+   	 http://www.springframework.org/schema/context
+   	 http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+    <!--① 扫描Spring Bean-->
+    <context:component-scan base-package="com.appleframework.auto.open.platform"/>
+	
+    <!-- 启动Rop框架 -->
+    <rop:annotation-driven
+            id="router"
+            session-manager="sampleSessionManager"
+            app-secret-manager="appSecretManager"
+            service-access-controller="serviceAccessController"
+            formatting-conversion-service="conversionService"
+            ext-error-base-names="i18n/rop/open-platform"
+            service-timeout-seconds="10"
+            thread-ferry-class="com.appleframework.rop.sample.SampleThreadFerry"
+            invoke-times-controller="invokeTimesController"
+            upload-file-max-size="100000"
+            upload-file-types="png,gif,jpg,jpeg"
+            core-pool-size="${rop.core.pool.size:1000}"
+            max-pool-size="${rop.max.pool.size:3000}"
+            queue-capacity="${rop.queue.capacity:3000}"
+            keep-alive-seconds="${rop.keep.alive.seconds:300}"
+            sign-enable="${rop.sign.enable:false}"
+            monitor-enable="${rop.monitor.enable:false}" />
+
+	<bean id="sampleSessionManager" class="com.appleframework.auto.open.platform.manager.SampleSessionManager" />
+	
+    <bean id="invokeTimesController" class="com.appleframework.rop.sample.SampleInvokeTimesController"/>
+
+	<bean id="appSecretManager" class="com.appleframework.auto.open.platform.manager.SampleAppSecretManager" />
+
+    <bean id="serviceAccessController" class="com.appleframework.rop.sample.SampleServiceAccessController"/>
+
+    <!--设置自定义的类型转换服务，注册自定义的类型转换器-->
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <!--将xxxx-yyyyyyy格式的电话转换为内部的Telephone对象-->
+                <bean class="com.appleframework.rop.converter.TelephoneConverter"/>
+                <bean class="com.appleframework.rop.converter.DateConverter"/>
+            </set>
+        </property>
+    </bean>
+
+    <!--注册拦截器，可配置多个
+    <rop:interceptors>
+        <bean class="com.appleframework.rop.sample.ReservedUserNameInterceptor"/>
+    </rop:interceptors>-->
+
+    <!--注册监听器，可配置多具
+    <rop:listeners>
+        <bean class="com.appleframework.rop.sample.PostInitializeEventListener" />
+        <bean class="com.appleframework.rop.sample.PreDoServiceEventListener"/>
+        <bean class="com.appleframework.rop.sample.SampleAfterDoServiceEventListener" />
+    </rop:listeners>
+	-->
+	
+    <!--自定义method,appKey等这些系统级参数的参数名-->
+    <rop:sysparams
+            appkey-param-name="appkey"
+   			sessionid-param-name="session"
+			method-param-name="method"
+			version-param-name="v"
+			format-param-name="format"
+			sign-param-name="sign"
+            jsonp-param-name="invoke"/>
+            
+</beans>

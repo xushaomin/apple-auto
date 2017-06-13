@@ -16,5 +16,9 @@
 			<groupId>com.appleframework.bean</groupId>
 			<artifactId>apple-bean-location</artifactId>
 		</dependency>
+		<dependency>
+  			<groupId>com.appleframework</groupId>
+			<artifactId>apple-exception</artifactId>
+		</dependency>
 	</dependencies>
 </project>

@@ -23,6 +23,10 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
+  			<groupId>com.appleframework</groupId>
+			<artifactId>apple-distributed</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>com.appleframework.config</groupId>
 			<artifactId>apple-config-diamond</artifactId>
 		</dependency>
