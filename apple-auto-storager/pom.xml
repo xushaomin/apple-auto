@@ -11,16 +11,8 @@
 	<artifactId>apple-auto-storager</artifactId>
 	<name>apple-auto-storager</name>
 	<url>http://maven.apache.org</url>
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
 	<packaging>pom</packaging>
+	<modules>
+		<module>apple-auto-storager-location</module>
+	</modules>
 </project>

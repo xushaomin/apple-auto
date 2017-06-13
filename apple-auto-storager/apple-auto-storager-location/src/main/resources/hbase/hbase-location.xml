@@ -1,0 +1,13 @@
+<SimpleHbase>
+    	
+	<HBaseTableSchema tableName="location" defaultFamily="info">
+		<HBaseColumnSchema qualifier="account" typeName="string" />
+		<HBaseColumnSchema qualifier="latitude" typeName="double" />
+		<HBaseColumnSchema qualifier="longitude" typeName="double" />
+		<HBaseColumnSchema qualifier="altitude" typeName="double" />
+		<HBaseColumnSchema qualifier="speed" typeName="double" />
+		<HBaseColumnSchema qualifier="direction" typeName="double" />
+		<HBaseColumnSchema qualifier="time" typeName="long" />
+	</HBaseTableSchema>
+	
+</SimpleHbase>
