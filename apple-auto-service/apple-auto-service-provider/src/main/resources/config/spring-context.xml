@@ -21,10 +21,10 @@
 			</list>
 		</property>
 		<property name="loadRemote" value="false" />
-	</bean>
+	</bean>	
 	
-	<bean id="mapPointFix" class="com.appleframework.commons.map.google.MapPointFix" init-method="init" lazy-init="false">
-		<property name="tableFilePath" value="${table.file.path}"/>
+	<bean id="mapPointFix" class="com.appleframework.util.map.google.MapPointFix" init-method="init" lazy-init="false">
+		<property name="tableFilePath" value="/work/data/tools/table2.txt"/>
 	</bean>
 	
 </beans>

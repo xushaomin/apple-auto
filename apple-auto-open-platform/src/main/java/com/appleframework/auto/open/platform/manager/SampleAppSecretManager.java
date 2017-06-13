@@ -9,24 +9,22 @@ import org.slf4j.LoggerFactory;
 import com.appleframework.rop.security.AppSecretManager;
 
 public class SampleAppSecretManager implements AppSecretManager {
-	
-    protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private static Map<String, String> appKeySecretMap = new HashMap<String, String>();
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-    static {
-        appKeySecretMap.put("apple-auto", "open-platform");
-    }
+	private static Map<String, String> appKeySecretMap = new HashMap<String, String>();
 
-    @Override
-    public String getSecret(String appKey) {
-    	logger.info("use SampleAppSecretManager!");
-        return appKeySecretMap.get(appKey);
-    }
+	static {
+		appKeySecretMap.put("apple-auto", "open-platform");
+	}
 
-    @Override
-    public boolean isValidAppKey(String appKey) {
-        return getSecret(appKey) != null;
-    }
+	@Override
+	public String getSecret(String appKey) {
+		return appKeySecretMap.get(appKey);
+	}
+
+	@Override
+	public boolean isValidAppKey(String appKey) {
+		return getSecret(appKey) != null;
+	}
 }
-
