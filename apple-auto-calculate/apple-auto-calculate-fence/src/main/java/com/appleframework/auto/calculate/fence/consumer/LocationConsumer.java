@@ -15,11 +15,12 @@ public class LocationConsumer extends BytesMessageConsumer {
 	@Override
 	public void processMessage(byte[] message) {
 		try {
-			LocationProto.Model location = LocationProto.Model.parseFrom(message);
-			fenceCalculateService.calculate(location);
+			LocationProto.Model model = LocationProto.Model.parseFrom(message);
+			fenceCalculateService.calculate(model);
 		} catch (InvalidProtocolBufferException e) {
 			e.printStackTrace();
 		}
+		return;
 	}
 	
 }

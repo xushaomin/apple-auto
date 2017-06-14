@@ -4,6 +4,7 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.appleframework.auto.bean.location.LocationProto;
@@ -14,6 +15,8 @@ import com.appleframework.structure.kdtree.KDTree;
 @Service
 public class FenceCalculateServiceImpl implements FenceCalculateService {
 
+	protected final static Logger logger = Logger.getLogger(FenceCalculateServiceImpl.class);
+
 	@Resource
 	private FenceInfoService fenceInfoService;
 
@@ -23,6 +26,9 @@ public class FenceCalculateServiceImpl implements FenceCalculateService {
 		double x = location.getLatitude();
 		double y = location.getLongitude();
 
+		if(logger.isDebugEnabled()) {
+			logger.debug(location);
+		}
 		// 获取围栏信息
 		double[] T = { x, y, 0 };
 		try {

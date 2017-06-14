@@ -42,7 +42,6 @@
 
 	<bean id="locationConsumer" class="com.appleframework.auto.calculate.fence.consumer.LocationConsumer" init-method="init" destroy-method="destroy">
 		<property name="consumerConfig" ref="consumerConfig" />
-		<!-- <property name="messageConusmer2" ref="messageConusmer2" /> -->
 		<property name="topic" value="${consumer.topic}" />
 		<property name="partitionsNum" value="${consumer.partitionsNum}" />
 	</bean>
