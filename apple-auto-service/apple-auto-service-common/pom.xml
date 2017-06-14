@@ -13,12 +13,9 @@
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>
-			<groupId>com.appleframework.bean</groupId>
-			<artifactId>apple-bean-location</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.appleframework.bean</groupId>
-			<artifactId>apple-bean-fence</artifactId>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>apple-auto-bean-location</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
   			<groupId>com.appleframework</groupId>

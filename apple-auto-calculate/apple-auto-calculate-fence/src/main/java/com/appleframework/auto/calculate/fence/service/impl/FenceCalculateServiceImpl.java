@@ -6,9 +6,9 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.appleframework.auto.bean.location.LocationProto;
 import com.appleframework.auto.calculate.fence.service.FenceCalculateService;
 import com.appleframework.auto.calculate.fence.service.FenceInfoService;
-import com.appleframework.bean.location.LocationProto;
 import com.appleframework.structure.kdtree.KDTree;
 
 @Service
