@@ -1,35 +1,44 @@
 package com.appleframework.auto.calculate.fence.service.impl;
 
+import java.util.Set;
+
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.appleframework.auto.bean.fence.CircleFence;
+import com.appleframework.auto.bean.fence.Fence;
 import com.appleframework.auto.calculate.fence.service.FenceInfoService;
 import com.appleframework.structure.kdtree.KDTree;
+import com.hazelcast.core.HazelcastInstance;
 
 @Service
 public class FenceInfoServiceImpl implements FenceInfoService {
+	
+	@Resource
+	private HazelcastInstance hazelcastInstance;
 
-	private KDTree<String> tree;
+	private KDTree<String> kdTree;
 	
 	@PostConstruct
 	public void init() {
-		tree = new KDTree<String>(3);
-		double x = 22.53885893;
-		double y = 113.94917554;
-		double radius = 200;
-		double[] ll = { x, y, radius};
-
-		String value = "111";
-		
-		try {
-			tree.insert(ll, value);
-		} catch (Exception e) {
-			// TODO: handle exception
+		kdTree = new KDTree<String>(3);
+		Set<Fence> fenceSet = hazelcastInstance.getSet("FENCE_INFO");
+		for (Fence fence : fenceSet) {
+			if(fence instanceof CircleFence) {
+				CircleFence circleFence = (CircleFence)fence;
+				try {
+					kdTree.insert(circleFence.toArray(), circleFence.getId());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
-	
-	public KDTree<String> getFenceInfo(String account) {
-		return tree;
+
+	public KDTree<String> getKdTree() {
+		return kdTree;
 	}
+	
 }

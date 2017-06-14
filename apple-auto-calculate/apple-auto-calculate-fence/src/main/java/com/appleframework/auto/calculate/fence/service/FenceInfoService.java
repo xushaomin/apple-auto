@@ -4,5 +4,5 @@ import com.appleframework.structure.kdtree.KDTree;
 
 public interface FenceInfoService {
 
-	public KDTree<String> getFenceInfo(String account);
+	public KDTree<String> getKdTree();
 }

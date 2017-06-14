@@ -55,5 +55,10 @@ public class Point implements Serializable {
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
+	
+	public double[] toArray() {
+		double[] point = { latitude, longitude};
+		return point;
+	}
 
 }

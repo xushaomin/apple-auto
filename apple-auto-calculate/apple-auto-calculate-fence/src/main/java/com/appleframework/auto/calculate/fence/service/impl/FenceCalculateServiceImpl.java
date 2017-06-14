@@ -18,7 +18,7 @@ public class FenceCalculateServiceImpl implements FenceCalculateService {
 	private FenceInfoService fenceInfoService;
 
 	public void calculate(LocationProto.Model location) {
-		KDTree<String> tree = fenceInfoService.getFenceInfo(location.getAccount());
+		KDTree<String> tree = fenceInfoService.getKdTree();
 
 		double x = location.getLatitude();
 		double y = location.getLongitude();
@@ -31,7 +31,7 @@ public class FenceCalculateServiceImpl implements FenceCalculateService {
 				System.out.println(id);
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 	}
 }

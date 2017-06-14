@@ -93,5 +93,10 @@ public class CircleFence implements Fence, Serializable {
 			return false;
 		return true;
 	}
+	
+	public double[] toArray() {
+		double[] fence = { point.getLatitude(), point.getLongitude(), radius};
+		return fence;
+	}
 
 }
