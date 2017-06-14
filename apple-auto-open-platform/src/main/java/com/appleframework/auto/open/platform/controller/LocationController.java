@@ -6,13 +6,13 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import com.appleframework.auto.bean.location.Location;
 import com.appleframework.auto.open.platform.request.LocationListRequest;
 import com.appleframework.auto.open.platform.request.LocationSearchRequest;
 import com.appleframework.auto.open.platform.response.LocationSearchResponse;
 import com.appleframework.auto.open.platform.response.ServiceExceptionResponse;
 import com.appleframework.auto.open.platform.response.ServiceUnavailableErrorResponse;
 import com.appleframework.auto.service.location.LocationSearchService;
-import com.appleframework.bean.location.Location;
 import com.appleframework.exception.ServiceException;
 import com.appleframework.rop.annotation.NeedInSessionType;
 import com.appleframework.rop.annotation.ServiceMethod;
