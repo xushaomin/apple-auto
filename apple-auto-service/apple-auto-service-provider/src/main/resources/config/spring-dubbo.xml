@@ -20,6 +20,8 @@
 	<!-- service begin -->
 	<dubbo:service ref="locationSearchService"  interface="com.appleframework.auto.service.location.LocationSearchService" version="1.0" />
 	
-	<dubbo:service ref="locationNewestService"  interface="com.appleframework.auto.service.location.LocationNewestService" version="1.0" />
+	<dubbo:service ref="locationNewestService"  interface="com.appleframework.auto.service.location.LocationNewestService" version="1.0" />	
+	
+	<dubbo:service ref="fenceInfoService"  interface="com.appleframework.auto.service.fence.FenceInfoService" version="1.0" />
 	
 </beans>
