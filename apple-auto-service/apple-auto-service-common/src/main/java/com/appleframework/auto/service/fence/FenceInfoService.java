@@ -1,10 +1,11 @@
 package com.appleframework.auto.service.fence;
 
 
+import com.appleframework.auto.bean.fence.Fence;
 import com.appleframework.exception.ServiceException;
 
 /**
- * 轨迹搜索
+ * 围栏管理接口
  *
  */
 public interface FenceInfoService {
