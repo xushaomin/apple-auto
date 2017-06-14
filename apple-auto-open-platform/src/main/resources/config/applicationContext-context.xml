@@ -21,7 +21,7 @@
 				<value>classpath:system.properties</value>
 			</list>
 		</property>
-		<property name="loadRemote" value="true" />
+		<property name="loadRemote" value="false" />
 	</bean>
 	
 	 <!-- 启用注解识别功能 -->

@@ -37,6 +37,10 @@
 		  	<artifactId>apple-data-hbase1x</artifactId>
 		  	<version>${data.version}</version>
 		</dependency>
+		<dependency>
+  			<groupId>com.appleframework.cache</groupId>
+			<artifactId>apple-cache-hazelcast</artifactId>
+		</dependency>
 
 		<!-- spring -->
 		<dependency>

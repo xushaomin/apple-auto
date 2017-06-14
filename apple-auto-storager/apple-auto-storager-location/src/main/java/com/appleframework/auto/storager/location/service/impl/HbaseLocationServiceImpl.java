@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.appleframework.auto.storager.location.key.LocationRowkey;
 import com.appleframework.auto.storager.location.service.HbaseLocationService;
 import com.appleframework.bean.location.Location;
-import com.appleframework.bean.location.LocationProto.Model;
 import com.appleframework.data.hbase.client.RowKey;
 import com.appleframework.data.hbase.client.SimpleHbaseClient;
 
@@ -27,19 +26,6 @@ public class HbaseLocationServiceImpl implements HbaseLocationService {
 			logger.debug(rowKey);
 		}
 		locationHbaseDao.putObject(rowKey, location);
-	}
-
-	@Override
-	public void save(Model model) {
-		Location builder = new Location();
-		builder.setAccount(model.getAccount());
-		builder.setLatitude(model.getLatitude());
-		builder.setLongitude(model.getLongitude());
-		builder.setAltitude(model.getAltitude());
-		builder.setSpeed(model.getSpeed());
-		builder.setDirection(model.getDirection());
-		builder.setTime(model.getTime());
-		this.save(builder);
 	}
 
 }

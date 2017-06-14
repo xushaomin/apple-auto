@@ -38,6 +38,11 @@
   			<artifactId>apple-structure-kdtree</artifactId>
   			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		
+		<dependency>
+  			<groupId>com.appleframework.cache</groupId>
+			<artifactId>apple-cache-hazelcast</artifactId>
+		</dependency>
 
 		<!-- spring -->
 		<dependency>

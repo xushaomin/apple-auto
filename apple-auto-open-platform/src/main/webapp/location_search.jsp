@@ -11,9 +11,9 @@
 </head>
 <body>
 	<div id="searchDiv">
-		帐号：<input id="account" type="text" name="account" value="2017061301" />
-		开始时间：<input id="startTime" name="startTime" onfocus="WdatePicker({dateFmt:'yyyyMMddHHmmss'})" value="20170613094527" />
-		结束时间：<input id="endTime" name="endTime" onfocus="WdatePicker({dateFmt:'yyyyMMddHHmmss'})" value="20170613094545" />
+		帐号：<input id="account" type="text" name="account" value="2017061401" />
+		开始时间：<input id="startTime" name="startTime" onfocus="WdatePicker({dateFmt:'yyyyMMddHHmmss'})" value="20170614090000" />
+		结束时间：<input id="endTime" name="endTime" onfocus="WdatePicker({dateFmt:'yyyyMMddHHmmss'})" value="20170614100000" />
 		<button id="search" type="button" onclick="doShow();">提交</button>
 	</div>
 	<div id="map"></div>

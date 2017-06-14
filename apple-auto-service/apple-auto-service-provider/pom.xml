@@ -52,6 +52,10 @@
 	  		<artifactId>apple-util-map</artifactId>
 	  		<version>0.0.2.RELEASE</version>
 		</dependency>
+		<dependency>
+  			<groupId>com.appleframework.cache</groupId>
+			<artifactId>apple-cache-hazelcast</artifactId>
+		</dependency>
 
 		<!-- spring -->
 		<dependency>
