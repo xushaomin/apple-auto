@@ -2,22 +2,24 @@ package com.appleframework.auto.calculate.fence.consumer;
 
 import javax.annotation.Resource;
 
-import com.appleframework.auto.bean.location.LocationProto;
+import com.appleframework.auto.bean.location.Location;
 import com.appleframework.auto.calculate.fence.service.FenceCalculateService;
-import com.appleframework.jms.kafka.consumer.BytesMessageConsumer;
-import com.google.protobuf.InvalidProtocolBufferException;
+import com.appleframework.jms.kafka.consumer.ObjectMessageConsumer;
 
-public class LocationConsumer extends BytesMessageConsumer {
+public class LocationConsumer extends ObjectMessageConsumer {
 	
 	@Resource
 	private FenceCalculateService fenceCalculateService;
 
 	@Override
-	public void processMessage(byte[] message) {
+	public void processMessage(Object message) {
 		try {
-			LocationProto.Model model = LocationProto.Model.parseFrom(message);
-			fenceCalculateService.calculate(model);
-		} catch (InvalidProtocolBufferException e) {
+			if (message instanceof Location) {
+				Location location = (Location) message;
+				fenceCalculateService.calculate(location);
+
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return;

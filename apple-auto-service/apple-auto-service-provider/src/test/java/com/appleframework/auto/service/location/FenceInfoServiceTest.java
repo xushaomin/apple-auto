@@ -31,7 +31,7 @@ public class FenceInfoServiceTest {
 			point.setLatitude(latitude);
 			point.setLongitude(longitude);
 			fence.setPoint(point);
-			fence.setRadius(100d);
+			fence.setRadius(200d);
 			fence.setId(UUID.randomUUID().toString());
 			
 			fenceInfoService.create(fence);
@@ -44,7 +44,20 @@ public class FenceInfoServiceTest {
 			point.setLatitude(latitude);
 			point.setLongitude(longitude);
 			fence.setPoint(point);
-			fence.setRadius(100d);
+			fence.setRadius(200d);
+			fence.setId(UUID.randomUUID().toString());
+			
+			fenceInfoService.create(fence);
+			
+			latitude = 113.960818;
+			longitude = 22.540969;
+			
+			fence = new CircleFence();
+			point = new Point();
+			point.setLatitude(latitude);
+			point.setLongitude(longitude);
+			fence.setPoint(point);
+			fence.setRadius(200d);
 			fence.setId(UUID.randomUUID().toString());
 			
 			fenceInfoService.create(fence);

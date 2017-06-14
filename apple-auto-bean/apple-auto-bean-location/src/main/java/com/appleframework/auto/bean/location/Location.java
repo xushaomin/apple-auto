@@ -26,13 +26,11 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 
-import com.appleframework.auto.bean.core.Protobufable;
-
 /**
  * 位置对象
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Location implements Serializable, Protobufable {
+public class Location implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -143,31 +141,6 @@ public class Location implements Serializable, Protobufable {
 
 	public boolean isNotEmpty(String txt) {
 		return txt != null && txt.trim().length() != 0;
-	}
-
-	@Override
-	public byte[] getByteArray() {
-		LocationProto.Model.Builder builder = LocationProto.Model.newBuilder();
-		builder.setAccount(account);
-		builder.setLatitude(latitude);
-		builder.setLongitude(longitude);
-		builder.setAltitude(altitude);
-		builder.setSpeed(speed);
-		builder.setDirection(direction);
-		builder.setTime(time);
-		return builder.build().toByteArray();
-	}
-
-	public static Location builder(LocationProto.Model model) {
-		Location builder = new Location();
-		builder.setAccount(model.getAccount());
-		builder.setLatitude(model.getLatitude());
-		builder.setLongitude(model.getLongitude());
-		builder.setAltitude(model.getAltitude());
-		builder.setSpeed(model.getSpeed());
-		builder.setDirection(model.getDirection());
-		builder.setTime(model.getTime());
-		return builder;
 	}
 
 }

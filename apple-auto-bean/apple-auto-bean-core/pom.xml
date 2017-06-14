@@ -13,10 +13,6 @@
 	<url>http://maven.apache.org</url>
 
 	<dependencies>
-		<dependency>
-			<groupId>com.google.protobuf</groupId>
-			<artifactId>protobuf-java</artifactId>
-		</dependency>
 	</dependencies>
 	
 </project>

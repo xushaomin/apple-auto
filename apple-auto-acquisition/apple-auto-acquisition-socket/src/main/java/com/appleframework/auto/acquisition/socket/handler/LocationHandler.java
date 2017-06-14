@@ -69,7 +69,7 @@ public class LocationHandler implements CIMRequestHandler {
 			if (logger.isInfoEnabled())
 				logger.info(location.toString());
 
-			messageProducer.sendByte(location.getByteArray());
+			messageProducer.sendObject(location);
 		} catch (Exception e) {
 			reply.setCode(CIMConstant.ReturnCode.CODE_500);
 		}

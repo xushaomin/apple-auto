@@ -7,7 +7,7 @@ import javax.annotation.Resource;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
-import com.appleframework.auto.bean.location.LocationProto;
+import com.appleframework.auto.bean.location.Location;
 import com.appleframework.auto.calculate.fence.service.FenceCalculateService;
 import com.appleframework.auto.calculate.fence.service.FenceInfoService;
 import com.appleframework.structure.kdtree.KDTree;
@@ -20,7 +20,7 @@ public class FenceCalculateServiceImpl implements FenceCalculateService {
 	@Resource
 	private FenceInfoService fenceInfoService;
 
-	public void calculate(LocationProto.Model location) {
+	public void calculate(Location location) {
 		KDTree<String> tree = fenceInfoService.getKdTree();
 
 		double x = location.getLatitude();

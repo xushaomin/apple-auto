@@ -30,7 +30,7 @@ public class PlaybackLocationServiceTest {
 			LocationRowkey startRowKey = LocationRowkey.create("00000020170614010000000000000");
 			List<Location> list = locationHbaseDao.findObjectList(startRowKey, 100000, Location.class);
 			for (Location location : list) {
-				messageProducer.sendByte(location.getByteArray());
+				messageProducer.sendObject(location);
 			}
 			System.in.read();
 		} catch (Exception e) {
