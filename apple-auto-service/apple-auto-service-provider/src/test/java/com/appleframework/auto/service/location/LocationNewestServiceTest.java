@@ -1,9 +1,5 @@
 package com.appleframework.auto.service.location;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.junit.Test;
@@ -15,23 +11,19 @@ import com.appleframework.auto.bean.location.Location;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath*:config/spring-*.xml" })
-public class LocationSearchServiceTest {
+public class LocationNewestServiceTest {
 
 	@Resource
-	private LocationSearchService locationSearchService;
+	private LocationNewestService locationNewestService;
 	
-	private DateFormat format = new SimpleDateFormat("yyyy-MM-dd");  
-
 	@Test
 	public void testAddOpinion1() {
 		try {
-			String date = "2017-06-13";
-			String account = "2017061301";
-			long startTime = format.parse(date).getTime();
-			long endTime = startTime + 86400000L;
-			List<Location> list = locationSearchService.search(account, startTime, endTime, 1);
-			for (Location location : list) {
+			String account = "2017061401";
+			for (int i = 0; i < 120000; i++) {
+				Location location = locationNewestService.newest(account, 1);
 				System.out.println(location);
+				Thread.sleep(1000);
 			}
 			System.in.read();
 		} catch (Exception e) {
