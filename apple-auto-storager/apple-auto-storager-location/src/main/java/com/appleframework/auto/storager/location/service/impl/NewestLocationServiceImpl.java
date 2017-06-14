@@ -7,8 +7,8 @@ import javax.annotation.Resource;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import com.appleframework.auto.bean.location.Location;
 import com.appleframework.auto.storager.location.service.NewestLocationService;
-import com.appleframework.bean.location.Location;
 import com.hazelcast.core.HazelcastInstance;
 
 @Service("newestLocationService")

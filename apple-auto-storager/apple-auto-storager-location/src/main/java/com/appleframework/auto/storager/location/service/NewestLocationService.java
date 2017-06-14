@@ -1,6 +1,6 @@
 package com.appleframework.auto.storager.location.service;
 
-import com.appleframework.bean.location.Location;
+import com.appleframework.auto.bean.location.Location;
 
 public interface NewestLocationService {
 

@@ -23,7 +23,7 @@ package com.appleframework.auto.acquisition.socket.handler;
 
 import org.apache.log4j.Logger;
 
-import com.appleframework.bean.location.Location;
+import com.appleframework.auto.bean.location.Location;
 import com.appleframework.cim.sdk.server.constant.CIMConstant;
 import com.appleframework.cim.sdk.server.handler.CIMRequestHandler;
 import com.appleframework.cim.sdk.server.model.ReplyBody;

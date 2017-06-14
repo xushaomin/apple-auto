@@ -12,6 +12,11 @@
 	<name>apple-auto-acquisition-socket</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>apple-auto-bean-location</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<!-- apple -->
 		<dependency>
 			<groupId>com.appleframework.cim</groupId>
@@ -24,10 +29,6 @@
 		<dependency>
 			<groupId>com.appleframework.boot</groupId>
 			<artifactId>apple-boot-jetty8</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.appleframework.bean</groupId>
-			<artifactId>apple-bean-location</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.appleframework.jms</groupId>

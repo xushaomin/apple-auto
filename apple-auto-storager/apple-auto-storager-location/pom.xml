@@ -17,16 +17,17 @@
 	
 	<dependencies>
 		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>apple-auto-bean-location</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>com.appleframework.config</groupId>
 			<artifactId>apple-config-diamond</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.appleframework.boot</groupId>
 			<artifactId>apple-boot-spring</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.appleframework.bean</groupId>
-			<artifactId>apple-bean-location</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.appleframework.jms</groupId>

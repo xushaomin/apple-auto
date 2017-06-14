@@ -3,7 +3,7 @@ package com.appleframework.auto.service.utils;
 
 import java.util.Map;
 
-import com.appleframework.bean.location.Location;
+import com.appleframework.auto.bean.location.Location;
 import com.appleframework.util.map.utility.GpsUtility;
 
 

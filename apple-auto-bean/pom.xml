@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.appleframework.auto</groupId>
+		<artifactId>apple-auto</artifactId>
+		<version>0.0.1.RELEASE</version>
+	</parent>
+	<artifactId>apple-auto-bean</artifactId>
+	<name>apple-auto-bean</name>
+	<url>http://maven.apache.org</url>
+	<packaging>pom</packaging>
+	<modules>
+		<module>apple-auto-bean-location</module>
+		<module>apple-auto-bean-fence</module>
+		<module>apple-auto-bean-core</module>
+	</modules>
+</project>

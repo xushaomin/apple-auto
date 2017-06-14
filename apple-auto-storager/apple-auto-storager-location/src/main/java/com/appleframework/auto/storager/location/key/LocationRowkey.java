@@ -2,8 +2,8 @@ package com.appleframework.auto.storager.location.key;
 
 import org.apache.hadoop.hbase.util.Bytes;
 
+import com.appleframework.auto.bean.location.Location;
 import com.appleframework.auto.storager.location.utils.StringUtils;
-import com.appleframework.bean.location.Location;
 import com.appleframework.data.hbase.client.RowKey;
 
 public class LocationRowkey implements RowKey {

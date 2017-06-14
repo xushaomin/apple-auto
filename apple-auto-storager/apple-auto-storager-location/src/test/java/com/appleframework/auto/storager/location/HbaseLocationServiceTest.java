@@ -9,8 +9,8 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.appleframework.auto.bean.location.Location;
 import com.appleframework.auto.storager.location.key.LocationRowkey;
-import com.appleframework.bean.location.Location;
 import com.appleframework.data.hbase.client.SimpleHbaseClient;
 
 @RunWith(SpringJUnit4ClassRunner.class)

@@ -5,9 +5,9 @@ import javax.annotation.Resource;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import com.appleframework.auto.bean.location.Location;
 import com.appleframework.auto.storager.location.key.LocationRowkey;
 import com.appleframework.auto.storager.location.service.HbaseLocationService;
-import com.appleframework.bean.location.Location;
 import com.appleframework.data.hbase.client.RowKey;
 import com.appleframework.data.hbase.client.SimpleHbaseClient;
 

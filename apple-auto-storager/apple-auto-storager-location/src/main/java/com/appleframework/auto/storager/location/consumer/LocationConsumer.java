@@ -2,10 +2,10 @@ package com.appleframework.auto.storager.location.consumer;
 
 import javax.annotation.Resource;
 
+import com.appleframework.auto.bean.location.Location;
+import com.appleframework.auto.bean.location.LocationProto;
 import com.appleframework.auto.storager.location.service.HbaseLocationService;
 import com.appleframework.auto.storager.location.service.NewestLocationService;
-import com.appleframework.bean.location.Location;
-import com.appleframework.bean.location.LocationProto;
 import com.appleframework.jms.kafka.consumer.BytesMessageConsumer;
 import com.google.protobuf.InvalidProtocolBufferException;
 

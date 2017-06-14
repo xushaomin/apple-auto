@@ -2,7 +2,8 @@ package com.appleframework.auto.service.location;
 
 import java.util.List;
 
-import com.appleframework.bean.location.Location;
+import javax.xml.stream.Location;
+
 import com.appleframework.exception.ServiceException;
 
 /**

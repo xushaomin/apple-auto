@@ -5,24 +5,18 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.appleframework.auto</groupId>
-		<artifactId>apple-auto-service</artifactId>
+		<artifactId>apple-auto-bean</artifactId>
 		<version>0.0.1.RELEASE</version>
 	</parent>
-	<artifactId>apple-auto-service-common</artifactId>
-	<name>apple-auto-service-common</name>
+	<artifactId>apple-auto-bean-core</artifactId>
+	<name>apple-auto-bean-core</name>
 	<url>http://maven.apache.org</url>
+
 	<dependencies>
 		<dependency>
-			<groupId>com.appleframework.bean</groupId>
-			<artifactId>apple-bean-location</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.appleframework.bean</groupId>
-			<artifactId>apple-bean-fence</artifactId>
-		</dependency>
-		<dependency>
-  			<groupId>com.appleframework</groupId>
-			<artifactId>apple-exception</artifactId>
+			<groupId>com.google.protobuf</groupId>
+			<artifactId>protobuf-java</artifactId>
 		</dependency>
 	</dependencies>
+	
 </project>
