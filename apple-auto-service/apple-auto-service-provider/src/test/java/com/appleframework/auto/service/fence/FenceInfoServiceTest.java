@@ -1,4 +1,4 @@
-package com.appleframework.auto.service.location;
+package com.appleframework.auto.service.fence;
 
 import java.util.UUID;
 
@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.appleframework.auto.bean.fence.CircleFence;
 import com.appleframework.auto.bean.fence.Point;
 import com.appleframework.auto.service.fence.FenceInfoService;
+import com.appleframework.auto.service.utils.Constants;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath*:config/spring-*.xml" })
@@ -30,6 +31,7 @@ public class FenceInfoServiceTest {
 			Point point = new Point();
 			point.setLatitude(latitude);
 			point.setLongitude(longitude);
+			PoiUtils.fixPoi(point, Constants.MAP_BAIDU);
 			fence.setPoint(point);
 			fence.setRadius(200d);
 			fence.setId(UUID.randomUUID().toString());
@@ -43,6 +45,7 @@ public class FenceInfoServiceTest {
 			point = new Point();
 			point.setLatitude(latitude);
 			point.setLongitude(longitude);
+			PoiUtils.fixPoi(point, Constants.MAP_BAIDU);
 			fence.setPoint(point);
 			fence.setRadius(200d);
 			fence.setId(UUID.randomUUID().toString());
@@ -56,6 +59,7 @@ public class FenceInfoServiceTest {
 			point = new Point();
 			point.setLatitude(latitude);
 			point.setLongitude(longitude);
+			PoiUtils.fixPoi(point, Constants.MAP_BAIDU);
 			fence.setPoint(point);
 			fence.setRadius(200d);
 			fence.setId(UUID.randomUUID().toString());

@@ -1,4 +1,4 @@
-package com.appleframework.auto.service.location;
+package com.appleframework.auto.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
