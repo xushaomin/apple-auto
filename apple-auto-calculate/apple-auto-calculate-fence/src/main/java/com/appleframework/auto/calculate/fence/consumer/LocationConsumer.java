@@ -17,7 +17,6 @@ public class LocationConsumer extends ObjectMessageConsumer {
 			if (message instanceof Location) {
 				Location location = (Location) message;
 				fenceCalculateService.calculate(location);
-
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

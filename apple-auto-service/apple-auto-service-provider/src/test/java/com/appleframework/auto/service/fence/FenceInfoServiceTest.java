@@ -24,8 +24,8 @@ public class FenceInfoServiceTest {
 	@Test
 	public void testAddOpinion1() {
 		try {
-			double latitude = 113.96645;
-			double longitude = 22.538192;
+			double longitude = 113.96645;
+			double latitude = 22.538192;
 			
 			CircleFence fence = new CircleFence();
 			Point point = new Point();
@@ -38,8 +38,8 @@ public class FenceInfoServiceTest {
 			
 			fenceInfoService.create(fence);
 
-			latitude = 113.956497;
-			longitude = 22.53866;
+			longitude = 113.956497;
+			latitude = 22.53866;
 			
 			fence = new CircleFence();
 			point = new Point();
@@ -52,8 +52,8 @@ public class FenceInfoServiceTest {
 			
 			fenceInfoService.create(fence);
 			
-			latitude = 113.960818;
-			longitude = 22.540969;
+			longitude = 113.960818;
+			latitude = 22.540969;
 			
 			fence = new CircleFence();
 			point = new Point();
@@ -66,6 +66,19 @@ public class FenceInfoServiceTest {
 			
 			fenceInfoService.create(fence);
 
+			longitude = 113.933131;
+			latitude = 22.530473;
+			
+			fence = new CircleFence();
+			point = new Point();
+			point.setLatitude(latitude);
+			point.setLongitude(longitude);
+			PoiUtils.fixPoi(point, Constants.MAP_BAIDU);
+			fence.setPoint(point);
+			fence.setRadius(500d);
+			fence.setId(UUID.randomUUID().toString());
+			
+			fenceInfoService.create(fence);
 			
 			System.in.read();
 		} catch (Exception e) {

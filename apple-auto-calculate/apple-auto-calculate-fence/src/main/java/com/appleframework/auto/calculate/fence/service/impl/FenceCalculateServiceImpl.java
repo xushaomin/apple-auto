@@ -34,7 +34,7 @@ public class FenceCalculateServiceImpl implements FenceCalculateService {
 		try {
 			Set<String> fenceIdSet = tree.nearestEuclideanReturnSet(T);
 			for (String id : fenceIdSet) {
-				System.out.println(id);
+				System.out.println(id + "/n" + location);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
