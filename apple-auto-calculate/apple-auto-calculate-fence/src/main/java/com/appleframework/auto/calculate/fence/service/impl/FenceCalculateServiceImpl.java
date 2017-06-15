@@ -23,14 +23,14 @@ public class FenceCalculateServiceImpl implements FenceCalculateService {
 	public void calculate(Location location) {
 		KDTree<String> tree = fenceInfoService.getKdTree();
 
-		double x = location.getLatitude();
-		double y = location.getLongitude();
+		double latitude = location.getLatitude();
+		double longitude = location.getLongitude();
 
 		if(logger.isDebugEnabled()) {
 			logger.debug(location);
 		}
 		// 获取围栏信息
-		double[] T = { x, y, 0 };
+		double[] T = { latitude, longitude, 0 };
 		try {
 			Set<String> fenceIdSet = tree.nearestEuclideanReturnSet(T);
 			for (String id : fenceIdSet) {
