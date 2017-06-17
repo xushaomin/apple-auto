@@ -30,7 +30,8 @@ import com.appleframework.cim.sdk.server.model.ReplyBody;
 import com.appleframework.cim.sdk.server.model.SentBody;
 import com.appleframework.cim.sdk.server.session.AbstractCIMSession;
 import com.appleframework.cim.util.ContextHolder;
-import com.appleframework.jms.core.producer.MessageProducer;
+import com.appleframework.config.core.PropertyConfigurer;
+import com.appleframework.jms.core.producer.MessageProducer3;
 
 /**
  * 账号绑定实现
@@ -39,10 +40,12 @@ import com.appleframework.jms.core.producer.MessageProducer;
 public class LocationHandler implements CIMRequestHandler {
 
 	protected final Logger logger = Logger.getLogger(LocationHandler.class);
+	
+	private static String topic = PropertyConfigurer.getString("producer.topic", "location");
 
 	public ReplyBody process(AbstractCIMSession newSession, SentBody message) {
 
-		MessageProducer messageProducer = ContextHolder.getBean(MessageProducer.class);
+		MessageProducer3 messageProducer3 = ContextHolder.getBean(MessageProducer3.class);
 
 		ReplyBody reply = new ReplyBody();
 		reply.setCode(CIMConstant.ReturnCode.CODE_200);
@@ -69,7 +72,7 @@ public class LocationHandler implements CIMRequestHandler {
 			if (logger.isInfoEnabled())
 				logger.info(location.toString());
 
-			messageProducer.sendObject(location);
+			messageProducer3.sendObject(topic, account, location);
 		} catch (Exception e) {
 			reply.setCode(CIMConstant.ReturnCode.CODE_500);
 		}

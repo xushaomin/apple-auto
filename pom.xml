@@ -20,7 +20,7 @@
 		<config.version>0.2.5.RELEASE</config.version>
 		<boot.version>0.3.2.RELEASE</boot.version>
 		<cim.version>0.0.1.RELEASE</cim.version>
-		<jms.version>0.1.4.RELEASE</jms.version>
+		<jms.version>0.1.5-SNAPSHOT</jms.version>
 		<rop.version>1.3.3.RELEASE</rop.version>
 		<cache.version>0.3.3.RELEASE</cache.version>
 		<protobuf.version>2.6.1</protobuf.version>
