@@ -29,7 +29,7 @@ public class FenceInfoServiceTest {
 			
 			CircleFence fence = new CircleFence();
 			Point point = new Point();
-			point.setLatitude(latitude);
+			/*point.setLatitude(latitude);
 			point.setLongitude(longitude);
 			PoiUtils.fixPoi(point, Constants.MAP_BAIDU);
 			fence.setPoint(point);
@@ -68,6 +68,20 @@ public class FenceInfoServiceTest {
 
 			longitude = 113.933131;
 			latitude = 22.530473;
+			
+			fence = new CircleFence();
+			point = new Point();
+			point.setLatitude(latitude);
+			point.setLongitude(longitude);
+			PoiUtils.fixPoi(point, Constants.MAP_BAIDU);
+			fence.setPoint(point);
+			fence.setRadius(500d);
+			fence.setId(UUID.randomUUID().toString());
+			
+			fenceInfoService.create(fence);*/
+			
+			longitude = 113.960557;
+			latitude = 22.526613;
 			
 			fence = new CircleFence();
 			point = new Point();
