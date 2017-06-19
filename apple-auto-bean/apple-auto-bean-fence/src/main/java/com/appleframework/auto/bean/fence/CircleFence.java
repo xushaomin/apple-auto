@@ -26,14 +26,9 @@ import java.io.Serializable;
 /**
  * 位置对象
  */
-public class CircleFence implements Fence, Serializable {
+public class CircleFence extends BaseFence implements Fence, Serializable {
 
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * 围栏编号
-	 */
-	private String id;
 
 	/**
 	 * 围栏圆心点
@@ -44,14 +39,6 @@ public class CircleFence implements Fence, Serializable {
 	 * 半径
 	 */
 	private Double radius;
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
 
 	public Point getPoint() {
 		return point;

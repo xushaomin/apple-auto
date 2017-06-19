@@ -21,12 +21,39 @@
  */
 package com.appleframework.auto.bean.fence;
 
-/**
- * 围栏接口
- */
-public interface Fence {
+import java.io.Serializable;
 
-	public String getId();
-	
-	public String getName();
+/**
+ * 围栏基类
+ */
+public class BaseFence implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * 围栏编号
+	 */
+	protected String id;
+
+	/**
+	 * 围栏名称
+	 */
+	protected String name;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 }
