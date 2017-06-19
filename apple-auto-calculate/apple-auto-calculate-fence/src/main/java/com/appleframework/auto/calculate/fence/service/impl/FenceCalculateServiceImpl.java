@@ -59,67 +59,53 @@ public class FenceCalculateServiceImpl implements FenceCalculateService {
 			for (String fenceId : fenceLocationMap.keySet()) {
 				this.noExistsFence(fenceLocationMap, fenceId, account, location);
 			}
-			fenceLocationService.update(account, fenceLocationMap);
 		}
+		fenceLocationService.put(account, fenceLocationMap);
 	}
 
-	private void noExistsFence(Set<String> noExistFenceSet, Location location) throws Exception {
+	private void noExistsFence(Map<String, FenceLocation> fenceLocationMap, Set<String> existFenceSet, Location location) {
 		String account = location.getAccount();
-		Map<String, FenceLocation> fenceLocationMap = fenceLocationService.get(account);
-		if (null != fenceLocationMap && fenceLocationMap.size() > 0 && noExistFenceSet.size() > 0) {
-			for (String fenceId : noExistFenceSet) {
-				this.noExistsFence(fenceLocationMap, fenceId, account, location);
-			}
-			fenceLocationService.update(account, fenceLocationMap);
+		for (String key : fenceLocationMap.keySet()) {  
+			if(!existFenceSet.contains(key)) {
+				this.noExistsFence(fenceLocationMap, key, account, location);
+			}			  
 		}
 	}
 	
 	private void noExistsFence(Map<String, FenceLocation> fenceLocationMap, String fenceId, String account, Location location) {
-		FenceLocation locationCount = fenceLocationMap.get(fenceId);
-		if(null != locationCount) {
-			int outCnt = locationCount.addOutCount();
-			if (outCnt == 1) {
-				fenceLocationMap.put(fenceId, locationCount);
-			} else if (outCnt == 2) {
-				// sendEventToMQ(location, fenceId, "2");
-				// sendRecordToMQ(locationCount.getInLocation(), location, fenceId);
+		FenceLocation fenceLocation = fenceLocationMap.get(fenceId);
+		if (null != fenceLocation) {
+			int outCnt = fenceLocation.addOutCount();
+			if (outCnt == 2) {
 				fenceLocationMap.remove(fenceId);
-				logger.warn("\t退出围栏:" + fenceId + ":" + account + " \t退出时间:" + format.format(new Date(location.getTime())) + " " + "\tlat:"
-						+ location.getLatitude() + " \tlng:" + location.getLongitude());
-			} else {
-				
+				logger.warn(
+						"\t退出围栏:" + fenceId + ":" + account + "\t退出时间:" + format.format(new Date(location.getTime()))
+								+ "\tlat:" + location.getLatitude() + " \tlng:" + location.getLongitude());
 			}
 		}
-	
 	}
 
-	public void existsFence(Set<String> fenceIdSet, Location location) throws Exception {
+	public void existsFence(Set<String> fenceIdSet, Location location) {
 		String account = location.getAccount();
 		// key是FenceID, Value是FenceID与进入围栏的Location点信息
 		Map<String, FenceLocation> fenceLocationMap = fenceLocationService.get(account);
 		// 存在最新轨迹点
 		if (null != fenceLocationMap && fenceLocationMap.size() > 0) {
-			Set<String> noExistFenceSet = fenceLocationMap.keySet();
 			for (String fenceId : fenceIdSet) {
-				FenceLocation locationCount = fenceLocationMap.get(fenceId);
-				if(null != locationCount) {
-					int inCnt = locationCount.addInCount();
+				FenceLocation fenceLocation = fenceLocationMap.get(fenceId);
+				if (null != fenceLocation) {
+					int inCnt = fenceLocation.addInCount();
 					if (inCnt == 2) {
-						// 发送进入围栏记录
-						// sendEventToMQ(location, fenceId, "1");
-						fenceLocationMap.put(fenceId, locationCount);
-						logger.warn("\t进入围栏:" + fenceId + ":" + account + "\t进入时间:" + format.format(new Date(location.getTime())) + " " + "\tlat:"
-								+ location.getLatitude() + " \tlng:" + location.getLongitude());
-					} else {
-						
+						fenceLocationMap.put(fenceId, fenceLocation);
+						logger.warn("\t进入围栏:" + fenceId + ":" + account + "\t进入时间:"
+								+ format.format(new Date(location.getTime())) + "\tlat:" + location.getLatitude()
+								+ " \tlng:" + location.getLongitude());
 					}
 				} else {
-					locationCount = FenceLocation.create(location);
-					fenceLocationMap.put(account, locationCount);
+					fenceLocationMap.put(fenceId, FenceLocation.create(location));
 				}
-				noExistFenceSet.remove(fenceId);
 			}
-			this.noExistsFence(noExistFenceSet, location);
+			this.noExistsFence(fenceLocationMap, fenceIdSet, location);
 		} else {
 			fenceLocationMap = new HashMap<String, FenceLocation>();
 			// 写入围栏列表
@@ -128,6 +114,6 @@ public class FenceCalculateServiceImpl implements FenceCalculateService {
 			}
 		}
 		// 刷新内存
-		fenceLocationService.update(account, fenceLocationMap);
+		fenceLocationService.put(account, fenceLocationMap);
 	}
 }

@@ -28,7 +28,7 @@ public class FenceLocationServiceImpl implements FenceLocationService {
 		return fenceLocationMap.get(key);
 	}
 
-	public void update(String key, Map<String, FenceLocation> map) {
+	public void put(String key, Map<String, FenceLocation> map) {
 		Map<String, Map<String, FenceLocation>> fenceLocationMap = getfenceLocationMap();
 		fenceLocationMap.put(key, map);
 	}
