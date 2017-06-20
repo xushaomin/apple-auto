@@ -34,19 +34,18 @@ import com.appleframework.config.core.PropertyConfigurer;
 import com.appleframework.jms.core.producer.MessageProducer3;
 
 /**
- * 账号绑定实现
+ * 轨迹位置上报
  * 
  */
 public class LocationHandler implements CIMRequestHandler {
 
 	protected final Logger logger = Logger.getLogger(LocationHandler.class);
-	
-	private static String topic = PropertyConfigurer.getString("producer.topic", "location");
+
+	private static String topic = PropertyConfigurer.getString("producer.topic.location", "location");
+
+	private MessageProducer3 messageProducer3 = ContextHolder.getBean(MessageProducer3.class);
 
 	public ReplyBody process(AbstractCIMSession newSession, SentBody message) {
-
-		MessageProducer3 messageProducer3 = ContextHolder.getBean(MessageProducer3.class);
-
 		ReplyBody reply = new ReplyBody();
 		reply.setCode(CIMConstant.ReturnCode.CODE_200);
 		try {

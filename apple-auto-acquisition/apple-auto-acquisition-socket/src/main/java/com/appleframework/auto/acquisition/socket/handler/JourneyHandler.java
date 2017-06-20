@@ -34,18 +34,18 @@ import com.appleframework.config.core.PropertyConfigurer;
 import com.appleframework.jms.core.producer.MessageProducer3;
 
 /**
- * 账号绑定实现
+ * 行程上报
  * 
  */
 public class JourneyHandler implements CIMRequestHandler {
 
 	protected final Logger logger = Logger.getLogger(JourneyHandler.class);
-	
-	private static String topic = PropertyConfigurer.getString("producer.topic", "journey");
+
+	private static String topic = PropertyConfigurer.getString("producer.topic.journey", "journey");
+
+	private MessageProducer3 messageProducer3 = ContextHolder.getBean(MessageProducer3.class);
 
 	public ReplyBody process(AbstractCIMSession newSession, SentBody message) {
-
-		MessageProducer3 messageProducer3 = ContextHolder.getBean(MessageProducer3.class);
 
 		ReplyBody reply = new ReplyBody();
 		reply.setCode(CIMConstant.ReturnCode.CODE_200);
@@ -55,14 +55,14 @@ public class JourneyHandler implements CIMRequestHandler {
 			String startTime = message.get("startTime");
 			String endTime = message.get("endTime");
 			String totalTime = message.get("totalTime");
-			
+
 			Long startTimeLong = Long.parseLong(startTime);
 			Long endTimeLong = Long.parseLong(endTime);
 
 			Journey journey = new Journey();
 			journey.setAccount(account);
 			journey.setStartTime(startTimeLong);
-			journey.setEndTime(endTimeLong);			
+			journey.setEndTime(endTimeLong);
 			journey.setTotalTime(Integer.parseInt(totalTime));
 
 			if (logger.isInfoEnabled())
