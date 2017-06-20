@@ -33,6 +33,9 @@
 				<entry key="client_realtime_location">
 					<bean class="com.appleframework.auto.acquisition.socket.handler.LocationHandler" />
 				</entry>
+				<entry key="client_realtime_journey">
+					<bean class="com.appleframework.auto.acquisition.socket.handler.JourneyHandler" />
+				</entry>
 			</map>
 		</property>
 	</bean>
