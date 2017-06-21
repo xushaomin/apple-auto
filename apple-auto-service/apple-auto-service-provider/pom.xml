@@ -11,11 +11,11 @@
 	<artifactId>apple-auto-service-provider</artifactId>
 	<name>apple-auto-service-provider</name>
 	<url>http://maven.apache.org</url>
-	
+
 	<properties>
 		<data.version>0.1.1.RELEASE</data.version>
 	</properties>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
@@ -28,7 +28,7 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-  			<groupId>com.appleframework</groupId>
+			<groupId>com.appleframework</groupId>
 			<artifactId>apple-distributed</artifactId>
 		</dependency>
 		<dependency>
@@ -49,12 +49,12 @@
 			<version>${data.version}</version>
 		</dependency>
 		<dependency>
-	  		<groupId>com.appleframework.util</groupId>
-	  		<artifactId>apple-util-map</artifactId>
-	  		<version>0.0.2.RELEASE</version>
+			<groupId>com.appleframework.util</groupId>
+			<artifactId>apple-util-map</artifactId>
+			<version>0.0.2.RELEASE</version>
 		</dependency>
 		<dependency>
-  			<groupId>com.appleframework.cache</groupId>
+			<groupId>com.appleframework.cache</groupId>
 			<artifactId>apple-cache-hazelcast</artifactId>
 		</dependency>
 
@@ -78,4 +78,45 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptor>src/main/assembly/assembly.xml</descriptor>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>

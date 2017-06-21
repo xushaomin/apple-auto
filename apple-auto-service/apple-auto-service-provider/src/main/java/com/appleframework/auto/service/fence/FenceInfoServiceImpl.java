@@ -24,5 +24,11 @@ public class FenceInfoServiceImpl implements FenceInfoService {
 		Set<Fence> fenceSet = hazelcastInstance.getSet("FENCE_INFO");
 		fenceSet.add(fence);
 	}
+	
+	@Override
+	public Set<Fence> get() throws ServiceException {
+		Set<Fence> fenceSet = hazelcastInstance.getSet("FENCE_INFO");
+		return fenceSet;
+	}
 
 }
