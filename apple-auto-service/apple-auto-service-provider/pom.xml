@@ -61,7 +61,7 @@
 		<dependency>
   			<groupId>com.appleframework.structure</groupId>
   			<artifactId>apple-structure-kdtree</artifactId>
-  			<version>0.0.1.RELEASE</version>
+  			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
 		<!-- spring -->
