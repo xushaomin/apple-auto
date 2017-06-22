@@ -12,6 +12,9 @@ import com.appleframework.auto.bean.fence.Fence;
 import com.appleframework.auto.service.fence.KDTreeService;
 import com.appleframework.exception.ServiceException;
 import com.appleframework.structure.kdtree.KDTree;
+import com.appleframework.structure.kdtree.KeyDuplicateException;
+import com.appleframework.structure.kdtree.KeyMissingException;
+import com.appleframework.structure.kdtree.KeySizeException;
 import com.hazelcast.core.HazelcastInstance;
 
 @Service("kdtreeService")
@@ -31,8 +34,10 @@ public class KDTreeServiceImpl implements KDTreeService {
 			CircleFence circleFence = (CircleFence) fence;
 			try {
 				kdTree.insert(circleFence.toArray(), circleFence.getId());
-			} catch (Exception e) {
+			} catch (KeySizeException e) {
 				e.printStackTrace();
+			} catch (KeyDuplicateException e) {
+				throw new ServiceException("KeyDuplicateException", e.getMessage());
 			}
 		}
 		this.updateKDTree(kdTree);
@@ -52,9 +57,12 @@ public class KDTreeServiceImpl implements KDTreeService {
 			CircleFence circleFence = (CircleFence) newFence;
 			try {
 				kdTree.insert(circleFence.toArray(), circleFence.getId());
-			} catch (Exception e) {
+			} catch (KeySizeException e) {
 				e.printStackTrace();
-			}
+			} catch (KeyDuplicateException e) {
+				e.printStackTrace();
+				throw new ServiceException("KeyDuplicateException", e.getMessage());
+			} 
 		}
 		this.updateKDTree(kdTree);
 	}
@@ -66,7 +74,9 @@ public class KDTreeServiceImpl implements KDTreeService {
 			CircleFence circleFence = (CircleFence) fence;
 			try {
 				kdTree.delete(circleFence.toArray());
-			} catch (Exception e) {
+			} catch (KeyMissingException e) {
+				e.printStackTrace();
+			} catch (KeySizeException e) {
 				e.printStackTrace();
 			}
 		}

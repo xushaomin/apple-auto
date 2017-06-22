@@ -28,16 +28,23 @@ public class FenceInfoServiceImpl implements FenceInfoService {
 
 	@Override
 	public void create(Fence fence) throws ServiceException {
-		Map<String, Fence> map = this.get();
-		String id = fence.getId();
-		Fence oldFence = map.get(id);
-		if(null == oldFence) {
-			kdtreeService.create(fence);
+		try {
+			Map<String, Fence> map = this.get();
+			String id = fence.getId();
+			Fence oldFence = map.get(id);
+			try {
+				if(null == oldFence) {
+					kdtreeService.create(fence);
+				}
+				else {
+					kdtreeService.update(oldFence, fence);
+				}
+			} catch (ServiceException e) {
+				System.out.println(e.getMessage());
+			}
+			updateToMap(id, fence);
+		} catch (Exception e) {
 		}
-		else {
-			kdtreeService.update(oldFence, fence);
-		}
-		map.put(id, fence);
 	}
 	
 	@Override
@@ -49,6 +56,10 @@ public class FenceInfoServiceImpl implements FenceInfoService {
 	@Override
 	public Map<String, Fence> get() throws ServiceException {
 		return hazelcastInstance.getMap(KEY_FENCE);
+	}
+	
+	private void updateToMap(String id, Fence fence) throws ServiceException {
+		hazelcastInstance.getMap(KEY_FENCE).put(id, fence);
 	}
 
 }
