@@ -57,6 +57,12 @@
 			<groupId>com.appleframework.cache</groupId>
 			<artifactId>apple-cache-hazelcast</artifactId>
 		</dependency>
+		
+		<dependency>
+  			<groupId>com.appleframework.structure</groupId>
+  			<artifactId>apple-structure-kdtree</artifactId>
+  			<version>0.0.1.RELEASE</version>
+		</dependency>
 
 		<!-- spring -->
 		<dependency>
@@ -77,6 +83,7 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
 	</dependencies>
 
 	<build>

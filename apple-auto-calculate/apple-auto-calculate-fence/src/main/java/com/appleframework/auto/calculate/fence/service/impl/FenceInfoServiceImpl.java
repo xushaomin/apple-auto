@@ -21,10 +21,12 @@ public class FenceInfoServiceImpl implements FenceInfoService {
 
 	private KDTree<String> kdTree;
 	
-	@PostConstruct
+	/*@PostConstruct
 	public void init() {
+		if (null != kdTree)
+			kdTree.delete(key);
 		kdTree = new KDTree<String>(3);
-		Set<Fence> fenceSet = hazelcastInstance.getSet("FENCE_INFO");
+		Set<Fence> fenceSet = hazelcastInstance.getDistributedObject("KD_TREE", KDTree.class);
 		for (Fence fence : fenceSet) {
 			if(fence instanceof CircleFence) {
 				CircleFence circleFence = (CircleFence)fence;
@@ -35,9 +37,12 @@ public class FenceInfoServiceImpl implements FenceInfoService {
 				}
 			}
 		}
-	}
+	}*/
+	
+	
 
 	public KDTree<String> getKdTree() {
+		kdTree = hazelcastInstance.getDistributedObject("fenceInfoService", "kdtree");
 		return kdTree;
 	}
 	
