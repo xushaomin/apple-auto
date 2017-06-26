@@ -31,6 +31,11 @@
 	<bean id="cacheManager" class="com.appleframework.cache.jedis.MasterSlaveJedisBucketCacheManager">
 		<property name="poolFactory" ref="poolFactory" />
 	</bean>
-
-		
+	
+	<bean id="fenceConsumer" class="com.appleframework.auto.calculate.fence.consumer.FenceConsumer"
+		init-method="init">
+		<property name="poolFactory" ref="poolFactory" />
+		<property name="topic" value="KEY_FENCE_TOPIC" />
+	</bean>	
+	
 </beans>
