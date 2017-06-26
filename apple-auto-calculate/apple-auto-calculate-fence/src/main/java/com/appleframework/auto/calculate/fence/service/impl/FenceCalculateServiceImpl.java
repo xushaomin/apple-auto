@@ -37,7 +37,7 @@ public class FenceCalculateServiceImpl implements FenceCalculateService {
 		double latitude = location.getLatitude();
 		double longitude = location.getLongitude();
 		// 获取围栏信息
-		double[] T = { latitude, longitude, 0 };
+		double[] T = { latitude, longitude, 0, 0 };
 		try {
 			Set<String> fenceIdSet = tree.nearestEuclideanReturnSet(T);
 			if (fenceIdSet == null || fenceIdSet.size() == 0) {

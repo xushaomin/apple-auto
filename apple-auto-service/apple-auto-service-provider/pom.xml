@@ -44,6 +44,10 @@
 			<artifactId>apple-jms-kafka</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>com.appleframework.jms</groupId>
+			<artifactId>apple-jms-jedis</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>com.appleframework.data</groupId>
 			<artifactId>apple-data-hbase1x</artifactId>
 			<version>${data.version}</version>
@@ -55,7 +59,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.appleframework.cache</groupId>
-			<artifactId>apple-cache-hazelcast</artifactId>
+			<artifactId>apple-cache-jedis</artifactId>
 		</dependency>
 		
 		<dependency>

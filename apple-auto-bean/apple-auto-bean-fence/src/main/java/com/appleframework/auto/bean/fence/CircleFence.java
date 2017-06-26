@@ -85,5 +85,10 @@ public class CircleFence extends BaseFence implements Fence, Serializable {
 		double[] fence = { point.getLatitude(), point.getLongitude(), radius};
 		return fence;
 	}
+	
+	public double[] allToArray() {
+		double[] fence = { point.getLatitude(), point.getLongitude(), radius, Double.parseDouble(id) };
+		return fence;
+	}
 
 }

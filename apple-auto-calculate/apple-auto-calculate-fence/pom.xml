@@ -38,17 +38,21 @@
 			<groupId>com.appleframework.jms</groupId>
 			<artifactId>apple-jms-kafka</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.appleframework.jms</groupId>
+			<artifactId>apple-jms-jedis</artifactId>
+		</dependency>
 		
 		<dependency>
   			<groupId>com.appleframework.structure</groupId>
   			<artifactId>apple-structure-kdtree</artifactId>
   			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		
 		<dependency>
-  			<groupId>com.appleframework.cache</groupId>
-			<artifactId>apple-cache-hazelcast</artifactId>
+			<groupId>com.appleframework.cache</groupId>
+			<artifactId>apple-cache-jedis</artifactId>
 		</dependency>
+		
 
 		<!-- spring -->
 		<dependency>

@@ -1,6 +1,6 @@
 package com.appleframework.auto.service.fence;
 
-import java.util.Map;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -25,9 +25,9 @@ public class FenceInfoServiceTest {
 	@Test
 	public void get() {
 		try {
-			Map<String, Fence> map = fenceInfoService.get();
-			for (Map.Entry<String, Fence> entry : map.entrySet()) {
-				System.out.println("key= " + entry.getKey() + " and value= " + entry.getValue());
+			List<Fence> list = fenceInfoService.get();
+			for (Fence fence : list) {
+				System.out.println(fence.toString());
 			}
 		} catch (ServiceException e) {
 			e.printStackTrace();
