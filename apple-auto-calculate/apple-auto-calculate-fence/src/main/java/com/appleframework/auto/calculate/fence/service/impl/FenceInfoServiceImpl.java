@@ -23,23 +23,23 @@ import redis.clients.jedis.JedisPool;
 
 @Service
 public class FenceInfoServiceImpl implements FenceInfoService {
-	
+
 	protected final static Logger logger = Logger.getLogger(FenceInfoServiceImpl.class);
-	
-	private final static String KEY_FENCE_MAP   = "KEY_FENCE_MAP";
-	
+
+	private final static String KEY_FENCE_MAP = "KEY_FENCE_MAP";
+
 	@Resource
 	private PoolFactory poolFactory;
 
 	private KDTree<String> kdTree;
-	
+
 	@PostConstruct
 	public void init() {
 		kdTree = new KDTree<String>(4);
 		List<Fence> list = this.get();
 		for (Fence fence : list) {
-			if(fence instanceof CircleFence) {
-				CircleFence circleFence = (CircleFence)fence;
+			if (fence instanceof CircleFence) {
+				CircleFence circleFence = (CircleFence) fence;
 				try {
 					kdTree.insert(circleFence.allToArray(), circleFence.getId());
 				} catch (Exception e) {
@@ -48,13 +48,49 @@ public class FenceInfoServiceImpl implements FenceInfoService {
 			}
 		}
 	}
-	
-	
+
+	public void create(Fence fence) {
+		kdTree = new KDTree<String>(4);
+		if (fence instanceof CircleFence) {
+			CircleFence circleFence = (CircleFence) fence;
+			try {
+				kdTree.insert(circleFence.allToArray(), circleFence.getId());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void update(Fence oldFence, Fence newFence) {
+		kdTree = new KDTree<String>(4);
+		if (oldFence instanceof CircleFence && newFence instanceof CircleFence) {
+			CircleFence oldCircleFence = (CircleFence) oldFence;
+			CircleFence newCircleFence = (CircleFence) newFence;
+			try {
+				kdTree.delete(oldCircleFence.allToArray());
+				kdTree.insert(newCircleFence.allToArray(), newCircleFence.getId());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void delete(Fence oldFence) {
+		kdTree = new KDTree<String>(4);
+		if (oldFence instanceof CircleFence) {
+			CircleFence oldCircleFence = (CircleFence) oldFence;
+			try {
+				kdTree.delete(oldCircleFence.allToArray());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 	public KDTree<String> getKdTree() {
 		return kdTree;
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	public List<Fence> get() {
 		List<Fence> list = new ArrayList<Fence>();
@@ -77,5 +113,5 @@ public class FenceInfoServiceImpl implements FenceInfoService {
 		}
 		return list;
 	};
-	
+
 }
