@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.appleframework.auto</groupId>
+		<artifactId>apple-auto-calculate-fence</artifactId>
+		<version>0.0.1.RELEASE</version>
+	</parent>
+	<artifactId>apple-auto-calculate-fence-storm</artifactId>
+	<name>apple-auto-calculate-fence-storm</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<storm.version>1.1.0</storm.version>
+		<slf4j.version>1.7.12</slf4j.version>
+		<joad-time.version>2.9.4</joad-time.version>
+		<storm-kafka.version>0.9.4</storm-kafka.version>
+		<kafka.version>0.9.0.0</kafka.version>
+		<esper.version>5.4.0</esper.version>
+		<aspectj.version>1.8.5</aspectj.version>
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>com.appleframework</groupId>
+			<artifactId>apple-core</artifactId>
+			<version>0.1.9.RELEASE</version>
+		</dependency>
+
+		<!-- aspectj -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${aspectj.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>${aspectj.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>${joad-time.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.storm</groupId>
+			<artifactId>storm-core</artifactId>
+			<version>${storm.version}</version>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>ring-cors</artifactId>
+					<groupId>ring-cors</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>com.appleframework.boot</groupId>
+			<artifactId>apple-boot-java</artifactId>
+			<version>0.3.3-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>log4j</artifactId>
+					<groupId>log4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>com.appleframework.config</groupId>
+			<artifactId>apple-config-diamond</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>log4j</artifactId>
+					<groupId>log4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>com.appleframework.auto</groupId>
+			<artifactId>apple-auto-bean-location</artifactId>
+			<version>0.0.1.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.appleframework.auto</groupId>
+			<artifactId>apple-auto-bean-fence</artifactId>
+			<version>0.0.1.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>com.appleframework.jms</groupId>
+			<artifactId>apple-jms-kafka</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>log4j</artifactId>
+					<groupId>log4j</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>slf4j-log4j12</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!--spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.appleframework.structure</groupId>
+			<artifactId>apple-structure-kdtree</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.appleframework.util</groupId>
+			<artifactId>apple-util-map</artifactId>
+			<version>0.0.2.RELEASE</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<mainClass>com.appleframework.demo.storm.TopologyWordCount</mainClass>
+						</manifest>
+					</archive>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-my-jar-with-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
