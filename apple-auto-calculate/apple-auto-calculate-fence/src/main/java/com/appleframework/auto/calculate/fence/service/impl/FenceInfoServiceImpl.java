@@ -50,7 +50,6 @@ public class FenceInfoServiceImpl implements FenceInfoService {
 	}
 
 	public void create(Fence fence) {
-		kdTree = new KDTree<String>(4);
 		if (fence instanceof CircleFence) {
 			CircleFence circleFence = (CircleFence) fence;
 			try {
@@ -62,7 +61,6 @@ public class FenceInfoServiceImpl implements FenceInfoService {
 	}
 
 	public void update(Fence oldFence, Fence newFence) {
-		kdTree = new KDTree<String>(4);
 		if (oldFence instanceof CircleFence && newFence instanceof CircleFence) {
 			CircleFence oldCircleFence = (CircleFence) oldFence;
 			CircleFence newCircleFence = (CircleFence) newFence;
@@ -76,7 +74,6 @@ public class FenceInfoServiceImpl implements FenceInfoService {
 	}
 
 	public void delete(Fence oldFence) {
-		kdTree = new KDTree<String>(4);
 		if (oldFence instanceof CircleFence) {
 			CircleFence oldCircleFence = (CircleFence) oldFence;
 			try {
