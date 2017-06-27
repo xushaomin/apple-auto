@@ -109,6 +109,6 @@ public class FenceInfoServiceImpl implements FenceInfoService {
 			jedisPool.returnResource(jedis);
 		}
 		return list;
-	};
+	}
 
 }

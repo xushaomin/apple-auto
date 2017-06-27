@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,25 +25,23 @@ public class FenceCalculateServiceImpl implements FenceCalculateService, Seriali
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger logger = LoggerFactory.getLogger(FenceCalculateServiceImpl.class);
+
+	@Resource
+	private FenceInfoService fenceInfoService;
+
+	@Resource
+	private FenceLocationService fenceLocationService;
 	
-	private static FenceCalculateServiceImpl impl;
-	
-	public static void instance() {
-		impl = new FenceCalculateServiceImpl();
-	}
-	
-	public static FenceCalculateService getInstance() {
-		if(null == impl) {
-			impl = new FenceCalculateServiceImpl();
-		}
-		return impl;
+
+	public void setFenceInfoService(FenceInfoService fenceInfoService) {
+		this.fenceInfoService = fenceInfoService;
 	}
 
-	private FenceInfoService fenceInfoService = FenceInfoServiceImpl.getInstance();
+	public void setFenceLocationService(FenceLocationService fenceLocationService) {
+		this.fenceLocationService = fenceLocationService;
+	}
 
-	private FenceLocationService fenceLocationService = FenceLocationServiceImpl.getInstance();
-	
-    private DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
+	private DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
 
 	public void calculate(Location location) {
 		KDTree<String> tree = fenceInfoService.getKdTree();

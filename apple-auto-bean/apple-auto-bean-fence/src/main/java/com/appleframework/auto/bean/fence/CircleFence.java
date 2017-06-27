@@ -91,4 +91,9 @@ public class CircleFence extends BaseFence implements Fence, Serializable {
 		return fence;
 	}
 
+	@Override
+	public String toString() {
+		return "CircleFence [point=" + point.getLatitude() + "," + point.getLongitude() + ", radius=" + radius + "]";
+	}
+
 }

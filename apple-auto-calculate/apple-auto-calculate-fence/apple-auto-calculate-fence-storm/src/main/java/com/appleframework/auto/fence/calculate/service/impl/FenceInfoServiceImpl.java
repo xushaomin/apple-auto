@@ -1,138 +1,122 @@
 package com.appleframework.auto.fence.calculate.service.impl;
 
 import java.io.Serializable;
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.apache.log4j.Logger;
 
 import com.appleframework.auto.bean.fence.CircleFence;
-import com.appleframework.auto.bean.fence.Point;
+import com.appleframework.auto.bean.fence.Fence;
 import com.appleframework.auto.fence.calculate.service.FenceInfoService;
-import com.appleframework.auto.fence.calculate.utils.Constants;
-import com.appleframework.auto.fence.calculate.utils.PoiUtils;
+import com.appleframework.cache.core.CacheException;
+import com.appleframework.cache.core.utils.SerializeUtility;
+import com.appleframework.cache.jedis.factory.PoolFactory;
 import com.appleframework.structure.kdtree.KDTree;
-import com.appleframework.structure.kdtree.KeyDuplicateException;
-import com.appleframework.structure.kdtree.KeySizeException;
+
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 public class FenceInfoServiceImpl implements FenceInfoService, Serializable {
 	
+	protected final static Logger logger = Logger.getLogger(FenceInfoServiceImpl.class);
+	
 	private static final long serialVersionUID = 1L;
-
-	private static FenceInfoServiceImpl impl;
 	
-	public static void instance() {
-		impl = new FenceInfoServiceImpl();
+	private final static String KEY_FENCE_MAP = "KEY_FENCE_MAP";
+	
+	@Resource
+	private PoolFactory poolFactory;
+	
+	public void setPoolFactory(PoolFactory poolFactory) {
+		if(null == this.poolFactory)
+			this.poolFactory = poolFactory;
 	}
-	
-	public static FenceInfoService getInstance() {
-		if(null == impl) {
-			impl = new FenceInfoServiceImpl();
-		}
-		return impl;
-	}
-	
 
 	private static KDTree<String> kdTree;
+		
+	/*public FenceInfoServiceImpl(PoolFactory poolFactory) {
+		this.poolFactory = poolFactory;
+	}*/
+
+	public void init() {
+		kdTree = new KDTree<String>(4);
+		List<Fence> list = this.get();
+		for (Fence fence : list) {
+			if (fence instanceof CircleFence) {
+				CircleFence circleFence = (CircleFence) fence;
+				try {
+					logger.debug(circleFence.toString());
+					kdTree.insert(circleFence.allToArray(), circleFence.getId());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 	
-	static {
-		kdTree = new KDTree<String>(3);
-		
-		double longitude = 113.96645;
-		double latitude = 22.538192;
-		
-		CircleFence fence = new CircleFence();
-		Point point = new Point();
-		point.setLatitude(latitude);
-		point.setLongitude(longitude);
-		PoiUtils.fixPoi(point, Constants.MAP_BAIDU);
-		fence.setPoint(point);
-		fence.setRadius(200d);
-		fence.setId(UUID.randomUUID().toString());
-		
-		try {
-			kdTree.insert(fence.toArray(), fence.getId());
-		} catch (KeySizeException | KeyDuplicateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public void create(Fence fence) {
+		if (fence instanceof CircleFence) {
+			CircleFence circleFence = (CircleFence) fence;
+			try {
+				kdTree.insert(circleFence.allToArray(), circleFence.getId());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
+	}
 
-		longitude = 113.956497;
-		latitude = 22.53866;
-		
-		fence = new CircleFence();
-		point = new Point();
-		point.setLatitude(latitude);
-		point.setLongitude(longitude);
-		PoiUtils.fixPoi(point, Constants.MAP_BAIDU);
-		fence.setPoint(point);
-		fence.setRadius(200d);
-		fence.setId(UUID.randomUUID().toString());
-		
-		try {
-			kdTree.insert(fence.toArray(), fence.getId());
-		} catch (KeySizeException | KeyDuplicateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public void update(Fence oldFence, Fence newFence) {
+		if (oldFence instanceof CircleFence && newFence instanceof CircleFence) {
+			CircleFence oldCircleFence = (CircleFence) oldFence;
+			CircleFence newCircleFence = (CircleFence) newFence;
+			try {
+				kdTree.delete(oldCircleFence.allToArray());
+				kdTree.insert(newCircleFence.allToArray(), newCircleFence.getId());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-		
-		longitude = 113.960818;
-		latitude = 22.540969;
-		
-		fence = new CircleFence();
-		point = new Point();
-		point.setLatitude(latitude);
-		point.setLongitude(longitude);
-		PoiUtils.fixPoi(point, Constants.MAP_BAIDU);
-		fence.setPoint(point);
-		fence.setRadius(200d);
-		fence.setId(UUID.randomUUID().toString());
-		
-		try {
-			kdTree.insert(fence.toArray(), fence.getId());
-		} catch (KeySizeException | KeyDuplicateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	}
 
-		longitude = 113.933131;
-		latitude = 22.530473;
-		
-		fence = new CircleFence();
-		point = new Point();
-		point.setLatitude(latitude);
-		point.setLongitude(longitude);
-		PoiUtils.fixPoi(point, Constants.MAP_BAIDU);
-		fence.setPoint(point);
-		fence.setRadius(500d);
-		fence.setId(UUID.randomUUID().toString());
-		
-		try {
-			kdTree.insert(fence.toArray(), fence.getId());
-		} catch (KeySizeException | KeyDuplicateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		longitude = 113.960557;
-		latitude = 22.526613;
-		
-		fence = new CircleFence();
-		point = new Point();
-		point.setLatitude(latitude);
-		point.setLongitude(longitude);
-		PoiUtils.fixPoi(point, Constants.MAP_BAIDU);
-		fence.setPoint(point);
-		fence.setRadius(500d);
-		fence.setId(UUID.randomUUID().toString());
-		
-		try {
-			kdTree.insert(fence.toArray(), fence.getId());
-		} catch (KeySizeException | KeyDuplicateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public void delete(Fence oldFence) {
+		if (oldFence instanceof CircleFence) {
+			CircleFence oldCircleFence = (CircleFence) oldFence;
+			try {
+				kdTree.delete(oldCircleFence.allToArray());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
 	public KDTree<String> getKdTree() {
 		return kdTree;
 	}
-	
+
+	@SuppressWarnings("deprecation")
+	public List<Fence> get() {
+		List<Fence> list = new ArrayList<Fence>();
+		JedisPool jedisPool = poolFactory.getReadPool();
+		Jedis jedis = jedisPool.getResource();
+		try {
+			byte[] key = KEY_FENCE_MAP.getBytes();
+			Map<byte[], byte[]> map = jedis.hgetAll(key);
+			if (null != map && map.size() > 0) {
+				for (Map.Entry<byte[], byte[]> entry : map.entrySet()) {
+					Fence boValue = (Fence) SerializeUtility.unserialize(entry.getValue());
+					list.add(boValue);
+				}
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			throw new CacheException(e.getMessage());
+		} finally {
+			jedisPool.returnResource(jedis);
+		}
+		return list;
+	};
 }

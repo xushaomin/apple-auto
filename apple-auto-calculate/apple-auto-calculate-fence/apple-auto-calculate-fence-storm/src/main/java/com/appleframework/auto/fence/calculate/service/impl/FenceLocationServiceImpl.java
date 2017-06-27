@@ -1,30 +1,17 @@
 package com.appleframework.auto.fence.calculate.service.impl;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.appleframework.auto.fence.calculate.model.FenceLocation;
 import com.appleframework.auto.fence.calculate.service.FenceLocationService;
 
 public class FenceLocationServiceImpl implements FenceLocationService, Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
-	private static FenceLocationServiceImpl impl;
-	
-	public static void instance() {
-		impl = new FenceLocationServiceImpl();
-	}
-	
-	public static FenceLocationService getInstance() {
-		if(null == impl) {
-			impl = new FenceLocationServiceImpl();
-		}
-		return impl;
-	}
-	
-	private Map<String, Map<String, FenceLocation>> fenceLocationMap = new HashMap<>();
+	private Map<String, Map<String, FenceLocation>> fenceLocationMap = new ConcurrentHashMap<>();
 
 	public Map<String, FenceLocation> get(String key) {
 		Map<String, Map<String, FenceLocation>> fenceLocationMap = getfenceLocationMap();
@@ -37,10 +24,10 @@ public class FenceLocationServiceImpl implements FenceLocationService, Serializa
 	}
 
 	public void delete(String key) {
+		fenceLocationMap.remove(key);
 	}
 
 	private Map<String, Map<String, FenceLocation>> getfenceLocationMap() {
-		//Map<String, Map<String, FenceLocation>> fenceLocationMap = hazelcastInstance.getMap("FENCE_LOCATION");
 		return fenceLocationMap;
 	}
 

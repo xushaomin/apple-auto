@@ -1,5 +1,7 @@
 package com.appleframework.auto.fence.calculate;
 
+import java.util.Properties;
+
 import org.apache.storm.Config;
 import org.apache.storm.LocalCluster;
 import org.apache.storm.StormSubmitter;
@@ -22,16 +24,16 @@ import com.appleframework.config.core.PropertyConfigurer;
 public class KafkaTopology extends AbstractMainContainer {
 
 	public void doStart() {
-		
+		Properties props = PropertyConfigurer.getProps();
 		TopologyBuilder builder = new TopologyBuilder();
-		builder.setSpout("fence-calculate-spout", new KafkaSpout(PropertyConfigurer.getProps()));
-		builder.setBolt("fence-calculate-blots", new FenceCalculateBolt()).fieldsGrouping("fence-calculate-spout", new Fields("account"));
+		builder.setSpout("fence-calculate-spout", new KafkaSpout(props));
+		builder.setBolt("fence-calculate-blots", new FenceCalculateBolt(props)).fieldsGrouping("fence-calculate-spout", new Fields("account"));
 		builder.setBolt("fence-inout-blots", new FenceInoutBolt()).fieldsGrouping("fence-calculate-blots", new Fields("account"));
 		
 		Config config = new Config();
 		config.setDebug(false);
 
-		String args = PropertyConfigurer.getString("application.name");
+		String args = System.getProperty("application.name");
 		//String args = null;
 		if (args != null && args.length() > 0) {
 			config.setNumWorkers(2);

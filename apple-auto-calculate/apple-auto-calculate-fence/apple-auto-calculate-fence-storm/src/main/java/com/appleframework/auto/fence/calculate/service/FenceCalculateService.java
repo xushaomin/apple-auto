@@ -5,6 +5,10 @@ import java.util.Set;
 import com.appleframework.auto.bean.location.Location;
 
 public interface FenceCalculateService {
+	
+	public void setFenceInfoService(FenceInfoService fenceInfoService);
+
+	public void setFenceLocationService(FenceLocationService fenceLocationService);
 
 	public void calculate(Location location);
 	

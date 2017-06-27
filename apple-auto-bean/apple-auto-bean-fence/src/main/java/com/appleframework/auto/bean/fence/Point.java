@@ -61,4 +61,9 @@ public class Point implements Serializable {
 		return point;
 	}
 
+	@Override
+	public String toString() {
+		return "Point [latitude=" + latitude + ", longitude=" + longitude + "]";
+	}
+
 }

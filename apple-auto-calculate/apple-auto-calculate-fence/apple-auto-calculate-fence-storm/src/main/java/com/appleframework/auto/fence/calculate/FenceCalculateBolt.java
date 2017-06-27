@@ -1,6 +1,7 @@
 package com.appleframework.auto.fence.calculate;
 
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import org.apache.storm.task.OutputCollector;
@@ -12,8 +13,9 @@ import org.apache.storm.tuple.Tuple;
 import org.apache.storm.tuple.Values;
 
 import com.appleframework.auto.bean.location.Location;
+import com.appleframework.auto.fence.calculate.config.StormConfigurer;
+import com.appleframework.auto.fence.calculate.factory.ServiceFactory;
 import com.appleframework.auto.fence.calculate.service.FenceCalculateService;
-import com.appleframework.auto.fence.calculate.service.impl.FenceCalculateServiceImpl;
 
 /**
  * 简单的按照空格进行切分后，发射到下一阶段bolt Created by QinDongLiang on 2016/8/31.
@@ -27,12 +29,17 @@ public class FenceCalculateBolt extends BaseRichBolt {
 	private OutputCollector outputCollector;
 
 	private FenceCalculateService fenceCalculateService;
+	
+	public FenceCalculateBolt(Properties props) {
+		StormConfigurer.load(props);
+		ServiceFactory.init();
+	}
 
 	@SuppressWarnings("rawtypes")
 	@Override
 	public void prepare(Map map, TopologyContext topologyContext, OutputCollector outputCollector) {
 		this.outputCollector = outputCollector;
-		fenceCalculateService = FenceCalculateServiceImpl.getInstance();
+		fenceCalculateService = ServiceFactory.getFenceCalculateService();
 	}
 
 	@Override

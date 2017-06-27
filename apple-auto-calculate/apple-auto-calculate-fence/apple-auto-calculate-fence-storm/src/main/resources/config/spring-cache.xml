@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns:context="http://www.springframework.org/schema/context"
@@ -32,7 +32,7 @@
 		<property name="poolFactory" ref="poolFactory" />
 	</bean>
 	
-	<bean id="fenceConsumer" class="com.appleframework.auto.calculate.fence.consumer.FenceConsumer"
+	<bean id="fenceConsumer" class="com.appleframework.auto.fence.calculate.consumer.FenceConsumer"
 		init-method="init">
 		<property name="poolFactory" ref="poolFactory" />
 		<property name="topic" value="KEY_FENCE_TOPIC" />
