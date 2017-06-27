@@ -33,7 +33,6 @@ public abstract class BaseFenceCalculateBolt extends BaseRichBolt {
 	private final static String KEY_FENCE_MAP = "KEY_FENCE_MAP";
 
 	public void init(Properties props) {
-		System.out.println("--------------init--------------------kdTree=" + kdTree);
 		if (null == kdTree) {
 			PoolFactory poolFactory = RedisFactory.getInstance(props);
 			kdTree = new KDTree<String>(4);
@@ -42,7 +41,6 @@ public abstract class BaseFenceCalculateBolt extends BaseRichBolt {
 				if (fence instanceof CircleFence) {
 					CircleFence circleFence = (CircleFence) fence;
 					try {
-						logger.warn("--------------------------------=====" + circleFence.toString());
 						kdTree.insert(circleFence.allToArray(), circleFence.getId());
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -53,7 +51,6 @@ public abstract class BaseFenceCalculateBolt extends BaseRichBolt {
 	}
 
 	public Set<String> calculate2(Location location) {
-		System.out.println("--------------calculate2--------------------" + kdTree.size());
 		double latitude = location.getLatitude();
 		double longitude = location.getLongitude();
 		// 获取围栏信息

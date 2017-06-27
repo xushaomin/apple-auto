@@ -14,7 +14,7 @@ import org.apache.storm.tuple.Values;
 import com.appleframework.auto.bean.location.Location;
 
 /**
- * 简单的按照空格进行切分后，发射到下一阶段bolt Created by QinDongLiang on 2016/8/31.
+ * 简单的按照空格进行切分后，发射到下一阶段bolt
  */
 public class FenceCalculateBolt extends BaseFenceCalculateBolt {
 
@@ -41,8 +41,7 @@ public class FenceCalculateBolt extends BaseFenceCalculateBolt {
 		Location location = (Location) tuple.getValue(1);
 		// System.out.println("线程"+Thread.currentThread().getName());
 		// 简单的按照空格进行切分后，发射到下一阶段bolt
-		//LOGGER.info("FenceCalculateBolt:" + location.toString());
-
+		// LOGGER.info("FenceCalculateBolt:" + location.toString());
 		Set<String> fenceSet = this.calculate2(location);
 		outputCollector.emit(new Values(account, location, fenceSet));
 	}

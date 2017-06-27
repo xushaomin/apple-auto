@@ -47,7 +47,7 @@ public class FenceInoutBolt extends BaseFenceInoutBolt {
 	@Override
 	public void declareOutputFields(OutputFieldsDeclarer outputFieldsDeclarer) {
 		// 声明输出的filed
-		outputFieldsDeclarer.declare(new Fields("location", "fenceSet"));
+		outputFieldsDeclarer.declare(new Fields("account", "location", "fenceId", "type"));
 	}
 	
 }
