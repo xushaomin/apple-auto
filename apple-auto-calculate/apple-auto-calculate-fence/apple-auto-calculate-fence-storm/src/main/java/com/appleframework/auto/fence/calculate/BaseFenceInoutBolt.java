@@ -81,7 +81,7 @@ public abstract class BaseFenceInoutBolt extends BaseRichBolt {
 						logger.warn("\t进入围栏:" + fenceId + ":" + account + "\t进入时间:"
 								+ format.format(new Date(location.getTime())) + "\tlat:" + location.getLatitude()
 								+ " \tlng:" + location.getLongitude());
-						outputCollector.emit(new Values(account, location, fenceId, 2));
+						outputCollector.emit(new Values(account, location, fenceId, 1));
 					}
 				} else {
 					fenceLocationMap.put(fenceId, FenceLocation.create(location));
