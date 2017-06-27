@@ -7,39 +7,32 @@ import java.util.Set;
 import org.apache.storm.task.OutputCollector;
 import org.apache.storm.task.TopologyContext;
 import org.apache.storm.topology.OutputFieldsDeclarer;
-import org.apache.storm.topology.base.BaseRichBolt;
 import org.apache.storm.tuple.Fields;
 import org.apache.storm.tuple.Tuple;
 import org.apache.storm.tuple.Values;
 
 import com.appleframework.auto.bean.location.Location;
-import com.appleframework.auto.fence.calculate.config.StormConfigurer;
-import com.appleframework.auto.fence.calculate.factory.ServiceFactory;
-import com.appleframework.auto.fence.calculate.service.FenceCalculateService;
 
 /**
  * 简单的按照空格进行切分后，发射到下一阶段bolt Created by QinDongLiang on 2016/8/31.
  */
-public class FenceCalculateBolt extends BaseRichBolt {
+public class FenceCalculateBolt extends BaseFenceCalculateBolt {
 
-	private static final long serialVersionUID = 2029919818959082300L;
-
-	//private static final Logger LOGGER = LoggerFactory.getLogger(KafkaSpout.class);
+	private static final long serialVersionUID = 1L;	
 
 	private OutputCollector outputCollector;
 
-	private FenceCalculateService fenceCalculateService;
+	private Properties props;
 	
 	public FenceCalculateBolt(Properties props) {
-		StormConfigurer.load(props);
-		ServiceFactory.init();
+		 this.props = props;
 	}
-
+	
 	@SuppressWarnings("rawtypes")
 	@Override
 	public void prepare(Map map, TopologyContext topologyContext, OutputCollector outputCollector) {
 		this.outputCollector = outputCollector;
-		fenceCalculateService = ServiceFactory.getFenceCalculateService();
+		this.init(props);
 	}
 
 	@Override
@@ -50,7 +43,7 @@ public class FenceCalculateBolt extends BaseRichBolt {
 		// 简单的按照空格进行切分后，发射到下一阶段bolt
 		//LOGGER.info("FenceCalculateBolt:" + location.toString());
 
-		Set<String> fenceSet = fenceCalculateService.calculate2(location);
+		Set<String> fenceSet = this.calculate2(location);
 		outputCollector.emit(new Values(account, location, fenceSet));
 	}
 

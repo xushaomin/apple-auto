@@ -1,6 +1,7 @@
 package com.appleframework.auto.fence.calculate.factory;
 
-import com.appleframework.auto.fence.calculate.config.StormConfigurer;
+import java.util.Properties;
+
 import com.appleframework.cache.jedis.config.MasterSlaveServersConfig;
 import com.appleframework.cache.jedis.factory.MasterSlavePoolFactory;
 import com.appleframework.cache.jedis.factory.PoolFactory;
@@ -11,12 +12,12 @@ public class RedisFactory {
 
 	private static MasterSlavePoolFactory poolFactory;
 
-	private static void init() {
+	private static void init(Properties props) {
 
 		MasterSlaveServersConfig serverConfig = new MasterSlaveServersConfig();
-		serverConfig.setMasterAddressUri(StormConfigurer.getString("redis.masterAddressUri"));
-		serverConfig.setSlaveAddressUris(StormConfigurer.getString("redis.slaveAddressUris"));
-		serverConfig.setDatabase(StormConfigurer.getInteger("redis.database", 0));
+		serverConfig.setMasterAddressUri(props.getProperty("redis.masterAddressUri"));
+		serverConfig.setSlaveAddressUris(props.getProperty("redis.slaveAddressUris"));
+		serverConfig.setDatabase(Integer.parseInt(props.getProperty("redis.database")));
 
 		JedisPoolConfig poolConfig = new JedisPoolConfig();
 		poolConfig.setMaxTotal(24);
@@ -31,10 +32,9 @@ public class RedisFactory {
 		poolFactory.init();
 	}
 
-	public static synchronized PoolFactory getInstance() {
-		if (poolFactory == null) {
-			init();
-		}
+	public static PoolFactory getInstance(Properties props) {
+		if(null == poolFactory)
+			init(props);
 		return poolFactory;
 	}
 
