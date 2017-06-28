@@ -6,6 +6,10 @@ public class SyncOperate implements Serializable {
 
 	private static final long serialVersionUID = -331105663663246055L;
 	
+	public static int CREATE = 1;
+	public static int UPDATE = 2;
+	public static int DELETE = 3;
+	
 	private Integer operate;
 	private Fence oldFence;
 	private Fence newFence;

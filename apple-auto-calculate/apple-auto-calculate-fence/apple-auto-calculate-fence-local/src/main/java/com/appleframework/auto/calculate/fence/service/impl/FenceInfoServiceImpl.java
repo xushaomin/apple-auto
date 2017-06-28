@@ -16,6 +16,7 @@ import com.appleframework.auto.calculate.fence.service.FenceInfoService;
 import com.appleframework.cache.core.CacheException;
 import com.appleframework.cache.core.utils.SerializeUtility;
 import com.appleframework.cache.jedis.factory.PoolFactory;
+import com.appleframework.config.core.PropertyConfigurer;
 import com.appleframework.structure.kdtree.KDTree;
 
 import redis.clients.jedis.Jedis;
@@ -25,8 +26,6 @@ import redis.clients.jedis.JedisPool;
 public class FenceInfoServiceImpl implements FenceInfoService {
 
 	protected final static Logger logger = Logger.getLogger(FenceInfoServiceImpl.class);
-
-	private final static String KEY_FENCE_MAP = "KEY_FENCE_MAP";
 
 	@Resource
 	private PoolFactory poolFactory;
@@ -94,7 +93,8 @@ public class FenceInfoServiceImpl implements FenceInfoService {
 		JedisPool jedisPool = poolFactory.getReadPool();
 		Jedis jedis = jedisPool.getResource();
 		try {
-			byte[] key = KEY_FENCE_MAP.getBytes();
+			String keyFence = PropertyConfigurer.getString("redis.fence.map", "KEY_FENCE_MAP");
+			byte[] key = keyFence.getBytes();
 			Map<byte[], byte[]> map = jedis.hgetAll(key);
 			if (null != map && map.size() > 0) {
 				for (Map.Entry<byte[], byte[]> entry : map.entrySet()) {

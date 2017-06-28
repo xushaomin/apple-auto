@@ -53,7 +53,7 @@ public class FenceInfoServiceImpl implements FenceInfoService {
 
 				// 修改
 				SyncOperate operate = new SyncOperate();
-				operate.setOperate(2);
+				operate.setOperate(SyncOperate.UPDATE);
 				operate.setOldFence(oldFence);
 				operate.setNewFence(fence);
 				jedis.publish(KEY_FENCE_TOPIC.getBytes(), SerializeUtility.serialize(operate));
@@ -64,7 +64,7 @@ public class FenceInfoServiceImpl implements FenceInfoService {
 
 				// 新增
 				SyncOperate operate = new SyncOperate();
-				operate.setOperate(1);
+				operate.setOperate(SyncOperate.CREATE);
 				operate.setNewFence(fence);
 				jedis.publish(KEY_FENCE_TOPIC.getBytes(), SerializeUtility.serialize(operate));
 			}
@@ -97,7 +97,7 @@ public class FenceInfoServiceImpl implements FenceInfoService {
 				jedis.hdel(key, field);
 				// 删除
 				SyncOperate operate = new SyncOperate();
-				operate.setOperate(3);
+				operate.setOperate(SyncOperate.DELETE);
 				operate.setOldFence(oldFence);
 				jedis.publish(KEY_FENCE_TOPIC.getBytes(), SerializeUtility.serialize(operate));
 			}

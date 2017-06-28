@@ -22,8 +22,6 @@ public class FenceCalculateBolt extends BaseFenceCalculateBolt {
 
 	private OutputCollector outputCollector;
 
-	private Properties props;
-	
 	public FenceCalculateBolt(Properties props) {
 		 this.props = props;
 	}
@@ -32,7 +30,7 @@ public class FenceCalculateBolt extends BaseFenceCalculateBolt {
 	@Override
 	public void prepare(Map map, TopologyContext topologyContext, OutputCollector outputCollector) {
 		this.outputCollector = outputCollector;
-		this.init(props);
+		this.init();
 	}
 
 	@Override

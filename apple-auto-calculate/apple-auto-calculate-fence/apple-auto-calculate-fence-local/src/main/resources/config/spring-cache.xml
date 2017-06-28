@@ -35,7 +35,7 @@
 	<bean id="fenceConsumer" class="com.appleframework.auto.calculate.fence.consumer.FenceConsumer"
 		init-method="init">
 		<property name="poolFactory" ref="poolFactory" />
-		<property name="topic" value="KEY_FENCE_TOPIC" />
+		<property name="topic" value="${redis.fence.topic:KEY_FENCE_TOPIC}" />
 	</bean>	
 	
 </beans>

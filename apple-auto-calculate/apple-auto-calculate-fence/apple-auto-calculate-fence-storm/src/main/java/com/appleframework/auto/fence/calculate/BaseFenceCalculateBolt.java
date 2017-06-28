@@ -26,18 +26,16 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 public abstract class BaseFenceCalculateBolt extends BaseRichBolt {
+	
+	private static final Logger logger = LoggerFactory.getLogger(BaseFenceCalculateBolt.class);
 
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger logger = LoggerFactory.getLogger(BaseFenceCalculateBolt.class);
-
 	protected static KDTree<String> kdTree;
-
-	private final static String KEY_FENCE_MAP = "KEY_FENCE_MAP";
 	
-	protected String topic;
-
-	public void init(Properties props) {
+	protected Properties props;
+		
+	public void init() {
 		// 初始化kdtree
 		final PoolFactory poolFactory = RedisFactory.getInstance(props);
 		if (null == kdTree) {
@@ -49,17 +47,42 @@ public abstract class BaseFenceCalculateBolt extends BaseRichBolt {
 					try {
 						kdTree.insert(circleFence.allToArray(), circleFence.getId());
 					} catch (Exception e) {
-						e.printStackTrace();
+						logger.error(e.getMessage());
 					}
 				}
 			}
 		}
+		
+		//redis topic consumer
+		final BinaryJedisPubSub pubSub = new BinaryJedisPubSub() {
+			@Override
+			public void onMessage(byte[] channel, byte[] message) {
+				processMessage(ByteUtils.fromByte(message));
+			}
+
+			@Override
+			public void onPMessage(byte[] pattern, byte[] channel, byte[] message) {
+				processMessage(ByteUtils.fromByte(message));
+			}
+
+			@Override
+			public void punsubscribe() {
+				super.punsubscribe();
+			}
+
+			@Override
+			public void punsubscribe(byte[]... patterns) {
+				super.punsubscribe(patterns);
+			}
+		};
+		
 		// 初始化redis topic订阅
 		new Thread(new Runnable() {
 			@SuppressWarnings("deprecation")
 			@Override
 			public void run() {
 				try {
+					String topic = props.getProperty("redis.fence.topic");
 					String[] topics = topic.split(",");
 					JedisPool jedisPool = poolFactory.getWritePool();
 					Jedis jedis = jedisPool.getResource();
@@ -78,9 +101,10 @@ public abstract class BaseFenceCalculateBolt extends BaseRichBolt {
 				}
 			}
 		}).start();
+		
 		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 			public void run() {
-				unsubscribe();
+				pubSub.unsubscribe();
 			}
 		}));
 	}
@@ -93,7 +117,7 @@ public abstract class BaseFenceCalculateBolt extends BaseRichBolt {
 		try {
 			return kdTree.nearestEuclideanReturnSet(T);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		return null;
 	}
@@ -104,7 +128,8 @@ public abstract class BaseFenceCalculateBolt extends BaseRichBolt {
 		JedisPool jedisPool = poolFactory.getReadPool();
 		Jedis jedis = jedisPool.getResource();
 		try {
-			byte[] key = KEY_FENCE_MAP.getBytes();
+			String mapKey = props.getProperty("redis.fence.map");
+			byte[] key = mapKey.getBytes();
 			Map<byte[], byte[]> map = jedis.hgetAll(key);
 			if (null != map && map.size() > 0) {
 				for (Map.Entry<byte[], byte[]> entry : map.entrySet()) {
@@ -127,7 +152,7 @@ public abstract class BaseFenceCalculateBolt extends BaseRichBolt {
 			try {
 				kdTree.insert(circleFence.allToArray(), circleFence.getId());
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e.getMessage());
 			}
 		}
 	}
@@ -140,7 +165,7 @@ public abstract class BaseFenceCalculateBolt extends BaseRichBolt {
 				kdTree.delete(oldCircleFence.allToArray());
 				kdTree.insert(newCircleFence.allToArray(), newCircleFence.getId());
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e.getMessage());
 			}
 		}
 	}
@@ -151,52 +176,20 @@ public abstract class BaseFenceCalculateBolt extends BaseRichBolt {
 			try {
 				kdTree.delete(oldCircleFence.allToArray());
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e.getMessage());
 			}
 		}
-	}
-	
-	//redis topic consumer
-	private BinaryJedisPubSub pubSub = new BinaryJedisPubSub() {
-		@Override
-		public void onMessage(byte[] channel, byte[] message) {
-			processMessage(ByteUtils.fromByte(message));
-		}
-
-		@Override
-		public void onPMessage(byte[] pattern, byte[] channel, byte[] message) {
-			processMessage(ByteUtils.fromByte(message));
-		}
-
-		@Override
-		public void punsubscribe() {
-			super.punsubscribe();
-		}
-
-		@Override
-		public void punsubscribe(byte[]... patterns) {
-			super.punsubscribe(patterns);
-		}
-	};
-	
-	private void unsubscribe() {
-		pubSub.unsubscribe();
-	}
-
-	public void setTopic(String topic) {
-		this.topic = topic.trim().replaceAll(" ", "");
-	}
-
-	public void destroy() {
-		unsubscribe();
 	}
 	
 	public void processMessage(Object message) {
 		if (message instanceof SyncOperate) {
 			SyncOperate operate = (SyncOperate) message;
-			if (operate.getOperate() == 1) {
+			if(logger.isInfoEnabled()) {
+				logger.info("SyncOperate===========" + operate.toString());
+			}
+			if (operate.getOperate() == SyncOperate.CREATE) {
 				this.create(operate.getNewFence());
-			} else if (operate.getOperate() == 2) {
+			} else if (operate.getOperate() == SyncOperate.UPDATE) {
 				this.update(operate.getOldFence(), operate.getNewFence());
 			} else {
 				this.delete(operate.getOldFence());
