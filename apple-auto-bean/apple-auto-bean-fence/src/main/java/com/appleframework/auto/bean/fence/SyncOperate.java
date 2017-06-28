@@ -32,6 +32,19 @@ public class SyncOperate implements Serializable {
 
 	public void setNewFence(Fence newFence) {
 		this.newFence = newFence;
-	}	
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("SyncOperate [operate=");
+		builder.append(operate);
+		builder.append(", oldFence=");
+		builder.append(oldFence);
+		builder.append(", newFence=");
+		builder.append(newFence);
+		builder.append("]");
+		return builder.toString();
+	}
 
 }
