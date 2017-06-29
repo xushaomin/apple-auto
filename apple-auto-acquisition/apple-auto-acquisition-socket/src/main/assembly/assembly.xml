@@ -15,11 +15,13 @@
             <directory>src/main/assembly/conf/</directory>
             <outputDirectory>conf</outputDirectory>
         </fileSet>
+        <!-- 
         <fileSet>
             <directory>src/main/webapp</directory>
             <outputDirectory>webapp</outputDirectory>
             <fileMode>0644</fileMode>
         </fileSet>
+         -->
     </fileSets>
     <dependencySets>
         <dependencySet>
