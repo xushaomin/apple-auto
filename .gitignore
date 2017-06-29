@@ -7,3 +7,7 @@ target
 .settings
 /.settings
 /.settings/
+*/logs/*
+*.log
+*/*/*/logs
+*/*/*/dependency-reduced-pom.xml
