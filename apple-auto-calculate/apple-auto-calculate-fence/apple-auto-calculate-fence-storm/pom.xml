@@ -108,13 +108,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
-		<!--spring 
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context-support</artifactId>
-		</dependency>-->
-
+		
 		<dependency>
 			<groupId>com.appleframework.structure</groupId>
 			<artifactId>apple-structure-kdtree</artifactId>
@@ -154,23 +148,40 @@
 					<source>1.7</source>
 					<target>1.7</target>
 				</configuration>
-			</plugin>
-			<plugin>
+			</plugin>			
+			<plugin>  
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-shade-plugin</artifactId>
+	            <version>2.0</version>
+	            <executions>
+	                <execution>
+	                    <phase>package</phase>
+	                    <goals>
+	                        <goal>shade</goal>
+	                    </goals>
+	                    <configuration>
+	                        <transformers>
+	                            <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">  
+	                                <mainClass>com.appleframework.boot.Main</mainClass>
+	                            </transformer>
+	                            <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+	                                <resource>system.properties</resource>
+	                            </transformer>
+	                        </transformers>
+	                        <shadedArtifactAttached>true</shadedArtifactAttached>
+	                        <shadedClassifierName>executable</shadedClassifierName>
+	                    </configuration>
+	                </execution>
+	            </executions>
+	        </plugin>
+	        <plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
-					<archive>
-						<manifest>
-							<addClasspath>true</addClasspath>
-							<mainClass>com.appleframework.boot.Main</mainClass>
-						</manifest>
-					</archive>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
+					<descriptor>src/main/assembly/assembly.xml</descriptor>
 				</configuration>
 				<executions>
 					<execution>
-						<id>make-my-jar-with-dependencies</id>
+						<id>make-assembly</id>
 						<phase>package</phase>
 						<goals>
 							<goal>single</goal>
@@ -178,43 +189,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-            	<artifactId>maven-shade-plugin</artifactId>
-            	<version>1.7.1</version>
-            	<executions>
-                	<execution>
-                    	<phase>package</phase>
-                    	<goals>
-                        	<goal>shade</goal>
-                    	</goals>
-                    	<configuration>
-                        	<filters>
-                            	<filter>
-                                	<artifact>:</artifact>
-                             		<excludes>
-                                    	<exclude>META-INF/*.SF</exclude>
-                                    	<exclude>META-INF/*.DSA</exclude>
-                                    	<exclude>META-INF/*.RSA</exclude>
-                                	</excludes>
-                            	</filter>
-                        	</filters>
-                        	<transformers>
-                            	<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-	                                <mainClass>com.appleframework.boot.Main</mainClass>
-	                            </transformer>
-	                            <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-	                                <resource>META-INF/spring.handlers</resource>
-	                            </transformer>
-	                            <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-	                                <resource>META-INF/spring.schemas</resource>
-	                            </transformer>
-                        	</transformers>
-                    	</configuration>
-                	</execution>
-            	</executions>
-        	</plugin>
+        
 		</plugins>
 	</build>
 </project>

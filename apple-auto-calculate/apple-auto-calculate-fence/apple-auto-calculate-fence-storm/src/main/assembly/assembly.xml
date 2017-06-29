@@ -1,0 +1,25 @@
+<assembly>
+    <id>assembly</id>
+    <formats>
+        <format>tar.gz</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <fileSets>
+        <fileSet>
+            <directory>src/main/assembly/bin/</directory>
+            <outputDirectory>bin</outputDirectory>
+            <fileMode>0755</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/assembly/conf/</directory>
+            <outputDirectory>conf</outputDirectory>
+        </fileSet>
+		<fileSet>  
+		    <directory>${project.build.directory}</directory>  
+		    <outputDirectory>lib</outputDirectory>
+		    <includes>  
+        		<include>**/*-executable.jar</include>  
+   			</includes> 
+		</fileSet>
+    </fileSets>
+</assembly>
