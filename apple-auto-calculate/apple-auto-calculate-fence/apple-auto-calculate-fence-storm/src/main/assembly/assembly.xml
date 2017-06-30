@@ -3,7 +3,7 @@
     <formats>
         <format>tar.gz</format>
     </formats>
-    <includeBaseDirectory>false</includeBaseDirectory>
+    <includeBaseDirectory>true</includeBaseDirectory>
     <fileSets>
         <fileSet>
             <directory>src/main/assembly/bin/</directory>
@@ -13,6 +13,7 @@
         <fileSet>
             <directory>src/main/assembly/conf/</directory>
             <outputDirectory>conf</outputDirectory>
+            <fileMode>0644</fileMode>
         </fileSet>
 		<fileSet>  
 		    <directory>${project.build.directory}</directory>  
