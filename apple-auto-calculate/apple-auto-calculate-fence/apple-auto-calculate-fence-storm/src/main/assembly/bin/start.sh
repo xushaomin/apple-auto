@@ -26,7 +26,6 @@ if [ -n "$PIDS" ]; then
 fi
 
 SERVER_COUNT=`storm list | grep $SERVER_NAME | wc -l`
-echo "$SERVER_COUNT"
 if [ $SERVER_COUNT -gt 0 ]; then
     echo "ERROR: The storm worker $SERVER_NAME already started!"
     exit 1
