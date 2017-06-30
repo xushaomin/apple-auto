@@ -12,9 +12,9 @@ if [ -z "$SERVER_NAME" ]; then
 	SERVER_NAME=`hostname`
 fi
 
-PIDS=`ps -ef | grep java | grep "$CONF_DIR" |awk '{print $2}'`
+PIDS=`ps -ef | grep java | grep "$DEPLOY_DIR" |awk '{print $2}'`
 if [ -z "$PIDS" ]; then
-    echo "ERROR: The $SERVER_NAME does not started!"
+    echo "ERROR: The application $SERVER_NAME does not started!"
     exit 1
 fi
 
@@ -37,7 +37,7 @@ if [ ! -d $DATE_DIR ]; then
 	mkdir $DATE_DIR
 fi
 
-echo -e "Dumping the $SERVER_NAME ...\c"
+echo -e "Dumping the application $SERVER_NAME ...\c"
 for PID in $PIDS ; do
 	jstack $PID > $DATE_DIR/jstack-$PID.dump 2>&1
 	echo -e ".\c"

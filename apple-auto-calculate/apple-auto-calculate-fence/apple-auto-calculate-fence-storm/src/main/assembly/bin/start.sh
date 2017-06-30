@@ -18,16 +18,17 @@ if [ -z "$SERVER_NAME" ]; then
     SERVER_NAME=`hostname`
 fi
 
-PIDS=`ps -f | grep java | grep "$CONF_DIR" |awk '{print $2}'`
+PIDS=`ps -ef | grep java | grep "$CONF_DIR" |awk '{print $2}'`
 if [ -n "$PIDS" ]; then
-    echo "ERROR: The $SERVER_NAME already started!"
+    echo "ERROR: The application $SERVER_NAME already started!"
     echo "PID: $PIDS"
     exit 1
 fi
 
-SERVER_COUNT=`storm list | grep  $SERVER_NAME | wc -l`
+SERVER_COUNT=`storm list | grep $SERVER_NAME | wc -l`
+echo "$SERVER_COUNT"
 if [ $SERVER_COUNT -gt 0 ]; then
-    echo "ERROR: The $SERVER_NAME already running!"
+    echo "ERROR: The storm worker $SERVER_NAME already started!"
     exit 1
 fi
 
