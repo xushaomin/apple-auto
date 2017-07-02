@@ -24,7 +24,7 @@ package com.appleframework.auto.bean.fence;
 import java.io.Serializable;
 
 /**
- * 位置对象
+ * 圆形围栏
  */
 public class CircleFence extends BaseFence implements Fence, Serializable {
 
