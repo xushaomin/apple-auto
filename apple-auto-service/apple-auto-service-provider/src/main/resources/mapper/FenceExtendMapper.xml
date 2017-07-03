@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.appleframework.auto.service.mapper.FenceExtendMapper">
+	<resultMap id="BaseResultMap" type="com.appleframework.auto.entity.fence.FenceEntity">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="fence_type" property="fenceType" jdbcType="INTEGER" />
+		<result column="is_enable" property="isEnable" jdbcType="BIT" />
+		<result column="is_delete" property="isDelete" jdbcType="BIT" />
+		<result column="deal_type" property="dealType" jdbcType="INTEGER" />
+		<result column="color" property="color" jdbcType="VARCHAR" />
+		<result column="continue_time" property="continueTime" jdbcType="INTEGER" />
+		<result column="radius" property="radius" jdbcType="DOUBLE" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.appleframework.auto.entity.fence.FenceEntityWithBLOBs" extends="BaseResultMap">
+		<result column="parameter" property="parameter" jdbcType="LONGVARCHAR" />
+		<result column="latitudes" property="latitudes" jdbcType="LONGVARCHAR" />
+		<result column="longitudes" property="longitudes" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, name, fence_type, is_enable, is_delete, deal_type, color,
+		continue_time, radius,
+		remark, create_time, update_time
+	</sql>
+	<sql id="Blob_Column_List">
+		parameter, latitudes, longitudes
+	</sql>
+	
+	<select id="selectAll" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from fence order by id asc
+	</select>
+
+</mapper>

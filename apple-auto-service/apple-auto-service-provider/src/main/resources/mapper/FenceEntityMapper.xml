@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.appleframework.auto.service.mapper.FenceEntityMapper">
+	<resultMap id="BaseResultMap" type="com.appleframework.auto.entity.fence.FenceEntity">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="fence_type" property="fenceType" jdbcType="INTEGER" />
+		<result column="is_enable" property="isEnable" jdbcType="BIT" />
+		<result column="is_delete" property="isDelete" jdbcType="BIT" />
+		<result column="deal_type" property="dealType" jdbcType="INTEGER" />
+		<result column="color" property="color" jdbcType="VARCHAR" />
+		<result column="continue_time" property="continueTime" jdbcType="INTEGER" />
+		<result column="radius" property="radius" jdbcType="DOUBLE" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.appleframework.auto.entity.fence.FenceEntityWithBLOBs" extends="BaseResultMap">
+		<result column="parameter" property="parameter" jdbcType="LONGVARCHAR" />
+		<result column="latitudes" property="latitudes" jdbcType="LONGVARCHAR" />
+		<result column="longitudes" property="longitudes" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, name, fence_type, is_enable, is_delete, deal_type, color,
+		continue_time, radius,
+		remark, create_time, update_time
+	</sql>
+	<sql id="Blob_Column_List">
+		parameter, latitudes, longitudes
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from fence
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from fence
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.appleframework.auto.entity.fence.FenceEntityWithBLOBs">
+		insert into fence (
+			id, name, fence_type,
+			is_enable, is_delete, deal_type,
+			color, continue_time, radius,
+			remark, create_time, update_time,
+			parameter, latitudes, longitudes
+		)
+		values (
+			#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+			#{fenceType,jdbcType=INTEGER},
+			#{isEnable,jdbcType=BIT}, #{isDelete,jdbcType=BIT}, #{dealType,jdbcType=INTEGER},
+			#{color,jdbcType=VARCHAR}, #{continueTime,jdbcType=INTEGER},
+			#{radius,jdbcType=DOUBLE},
+			#{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+			#{parameter,jdbcType=LONGVARCHAR}, #{latitudes,jdbcType=LONGVARCHAR},
+			#{longitudes,jdbcType=LONGVARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.appleframework.auto.entity.fence.FenceEntityWithBLOBs">
+		insert into fence
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="fenceType != null">
+				fence_type,
+			</if>
+			<if test="isEnable != null">
+				is_enable,
+			</if>
+			<if test="isDelete != null">
+				is_delete,
+			</if>
+			<if test="dealType != null">
+				deal_type,
+			</if>
+			<if test="color != null">
+				color,
+			</if>
+			<if test="continueTime != null">
+				continue_time,
+			</if>
+			<if test="radius != null">
+				radius,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="parameter != null">
+				parameter,
+			</if>
+			<if test="latitudes != null">
+				latitudes,
+			</if>
+			<if test="longitudes != null">
+				longitudes,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="fenceType != null">
+				#{fenceType,jdbcType=INTEGER},
+			</if>
+			<if test="isEnable != null">
+				#{isEnable,jdbcType=BIT},
+			</if>
+			<if test="isDelete != null">
+				#{isDelete,jdbcType=BIT},
+			</if>
+			<if test="dealType != null">
+				#{dealType,jdbcType=INTEGER},
+			</if>
+			<if test="color != null">
+				#{color,jdbcType=VARCHAR},
+			</if>
+			<if test="continueTime != null">
+				#{continueTime,jdbcType=INTEGER},
+			</if>
+			<if test="radius != null">
+				#{radius,jdbcType=DOUBLE},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="parameter != null">
+				#{parameter,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="latitudes != null">
+				#{latitudes,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="longitudes != null">
+				#{longitudes,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.appleframework.auto.entity.fence.FenceEntityWithBLOBs">
+		update fence
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="fenceType != null">
+				fence_type = #{fenceType,jdbcType=INTEGER},
+			</if>
+			<if test="isEnable != null">
+				is_enable = #{isEnable,jdbcType=BIT},
+			</if>
+			<if test="isDelete != null">
+				is_delete = #{isDelete,jdbcType=BIT},
+			</if>
+			<if test="dealType != null">
+				deal_type = #{dealType,jdbcType=INTEGER},
+			</if>
+			<if test="color != null">
+				color = #{color,jdbcType=VARCHAR},
+			</if>
+			<if test="continueTime != null">
+				continue_time = #{continueTime,jdbcType=INTEGER},
+			</if>
+			<if test="radius != null">
+				radius = #{radius,jdbcType=DOUBLE},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="parameter != null">
+				parameter = #{parameter,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="latitudes != null">
+				latitudes = #{latitudes,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="longitudes != null">
+				longitudes = #{longitudes,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.appleframework.auto.entity.fence.FenceEntityWithBLOBs">
+		update fence
+		set name = #{name,jdbcType=VARCHAR},
+		fence_type = #{fenceType,jdbcType=INTEGER},
+		is_enable = #{isEnable,jdbcType=BIT},
+		is_delete = #{isDelete,jdbcType=BIT},
+		deal_type = #{dealType,jdbcType=INTEGER},
+		color = #{color,jdbcType=VARCHAR},
+		continue_time = #{continueTime,jdbcType=INTEGER},
+		radius = #{radius,jdbcType=DOUBLE},
+		remark = #{remark,jdbcType=VARCHAR},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		update_time = #{updateTime,jdbcType=TIMESTAMP},
+		parameter = #{parameter,jdbcType=LONGVARCHAR},
+		latitudes = #{latitudes,jdbcType=LONGVARCHAR},
+		longitudes = #{longitudes,jdbcType=LONGVARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.appleframework.auto.entity.fence.FenceEntity">
+		update fence
+		set name = #{name,jdbcType=VARCHAR},
+		fence_type = #{fenceType,jdbcType=INTEGER},
+		is_enable = #{isEnable,jdbcType=BIT},
+		is_delete = #{isDelete,jdbcType=BIT},
+		deal_type = #{dealType,jdbcType=INTEGER},
+		color = #{color,jdbcType=VARCHAR},
+		continue_time = #{continueTime,jdbcType=INTEGER},
+		radius = #{radius,jdbcType=DOUBLE},
+		remark = #{remark,jdbcType=VARCHAR},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		update_time = #{updateTime,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>
