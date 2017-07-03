@@ -16,13 +16,13 @@ import com.appleframework.auto.bean.location.Location;
 /**
  * 简单的按照空格进行切分后，发射到下一阶段bolt
  */
-public class FenceCalculateBolt extends BaseFenceCalculateBolt {
+public class FenceCalculateCircleBolt extends BaseFenceCalculateCircleBolt {
 
 	private static final long serialVersionUID = 1L;	
 
 	private OutputCollector outputCollector;
 
-	public FenceCalculateBolt(Properties props) {
+	public FenceCalculateCircleBolt(Properties props) {
 		 this.props = props;
 	}
 	

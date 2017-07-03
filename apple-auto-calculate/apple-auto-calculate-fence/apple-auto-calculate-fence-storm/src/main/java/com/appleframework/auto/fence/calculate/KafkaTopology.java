@@ -27,9 +27,15 @@ public class KafkaTopology extends AbstractMainContainer {
 		Properties props = PropertyConfigurer.getProps();
 		TopologyBuilder builder = new TopologyBuilder();
 		builder.setSpout("fence-calculate-spout", new KafkaSpout(props));
-		builder.setBolt("fence-calculate-blots", new FenceCalculateBolt(props)).fieldsGrouping("fence-calculate-spout", new Fields("account"));
-		builder.setBolt("fence-inout-blots", new FenceInoutBolt()).fieldsGrouping("fence-calculate-blots", new Fields("account"));
-		builder.setBolt("fence-notify-blots", new FenceNotifyBolt(props)).fieldsGrouping("fence-inout-blots", new Fields("account"));
+		
+		builder.setBolt("fence-calculate-circle-blots", new FenceCalculateCircleBolt(props)).fieldsGrouping("fence-calculate-spout", new Fields("account"));
+		builder.setBolt("fence-calculate-rectangle-blots", new FenceCalculateRectangleBolt(props)).fieldsGrouping("fence-calculate-spout", new Fields("account"));
+		
+		builder.setBolt("fence-inout-circle-blots", new FenceInoutCircleBolt()).fieldsGrouping("fence-calculate-circle-blots", new Fields("account"));
+		builder.setBolt("fence-inout-rectangle-blots", new FenceInoutRectangleBolt()).fieldsGrouping("fence-calculate-rectangle-blots", new Fields("account"));
+		
+		builder.setBolt("fence-notify-circle-blots", new FenceNotifyBolt(props)).fieldsGrouping("fence-inout-circle-blots", new Fields("account"));
+		builder.setBolt("fence-notify-rectangle-blots", new FenceNotifyBolt(props)).fieldsGrouping("fence-inout-rectangle-blots", new Fields("account"));
 		
 		Config config = new Config();
 		config.setDebug(false);

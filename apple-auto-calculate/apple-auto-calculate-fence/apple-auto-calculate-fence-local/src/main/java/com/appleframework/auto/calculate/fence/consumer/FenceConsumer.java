@@ -15,9 +15,9 @@ public class FenceConsumer extends TopicObjectMessageConsumer<Object> {
 	public void processMessage(Object message) {
 		if (message instanceof SyncOperate) {
 			SyncOperate operate = (SyncOperate) message;
-			if (operate.getOperate() == SyncOperate.CREATE) {
+			if (operate.getOperateType() == SyncOperate.CREATE) {
 				fenceInfoService.create(operate.getNewFence());
-			} else if (operate.getOperate() == SyncOperate.UPDATE) {
+			} else if (operate.getOperateType() == SyncOperate.UPDATE) {
 				fenceInfoService.update(operate.getOldFence(), operate.getNewFence());
 			} else {
 				fenceInfoService.delete(operate.getOldFence());

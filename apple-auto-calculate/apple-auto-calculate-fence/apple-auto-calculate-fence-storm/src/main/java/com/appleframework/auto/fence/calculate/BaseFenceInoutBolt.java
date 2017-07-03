@@ -26,7 +26,7 @@ public abstract class BaseFenceInoutBolt extends BaseRichBolt {
 
 	private static final Logger logger = LoggerFactory.getLogger(KafkaSpout.class);
 
-	private static Map<String, Map<String, FenceLocation>> fenceLocationMapMap = new ConcurrentHashMap<>();
+	private Map<String, Map<String, FenceLocation>> fenceLocationMapMap = new ConcurrentHashMap<>();
 
 	private DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 

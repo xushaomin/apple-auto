@@ -14,7 +14,7 @@ import com.appleframework.auto.bean.location.Location;
 /**
  * 简单的按照空格进行切分后，发射到下一阶段bolt
  */
-public class FenceInoutBolt extends BaseFenceInoutBolt {
+public class FenceInoutCircleBolt extends BaseFenceInoutBolt {
 
 	private static final long serialVersionUID = 2029919818959082300L;
 		

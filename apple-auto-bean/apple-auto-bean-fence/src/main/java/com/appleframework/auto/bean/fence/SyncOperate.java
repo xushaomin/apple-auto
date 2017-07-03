@@ -5,22 +5,15 @@ import java.io.Serializable;
 public class SyncOperate implements Serializable {
 
 	private static final long serialVersionUID = -331105663663246055L;
-	
+
 	public static int CREATE = 1;
 	public static int UPDATE = 2;
 	public static int DELETE = 3;
-	
-	private Integer operate;
+
+	private Integer operateType;
+	private Integer fenceType;
 	private Fence oldFence;
 	private Fence newFence;
-
-	public Integer getOperate() {
-		return operate;
-	}
-
-	public void setOperate(Integer operate) {
-		this.operate = operate;
-	}
 
 	public Fence getOldFence() {
 		return oldFence;
@@ -38,17 +31,26 @@ public class SyncOperate implements Serializable {
 		this.newFence = newFence;
 	}
 
+	public Integer getOperateType() {
+		return operateType;
+	}
+
+	public void setOperateType(Integer operateType) {
+		this.operateType = operateType;
+	}
+
+	public Integer getFenceType() {
+		return fenceType;
+	}
+
+	public void setFenceType(Integer fenceType) {
+		this.fenceType = fenceType;
+	}
+
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("SyncOperate [operate=");
-		builder.append(operate);
-		builder.append(", oldFence=");
-		builder.append(oldFence);
-		builder.append(", newFence=");
-		builder.append(newFence);
-		builder.append("]");
-		return builder.toString();
+		return "SyncOperate [operateType=" + operateType + ", fenceType=" + fenceType + ", oldFence=" + oldFence
+				+ ", newFence=" + newFence + "]";
 	}
 
 }
