@@ -32,6 +32,22 @@ public class FenceInfoServiceImpl implements FenceInfoService {
 	
 	@Resource
 	private PoolFactory poolFactory;
+	
+	@SuppressWarnings("deprecation")
+	@Override
+	public void clear() throws ServiceException {
+		JedisPool jedisPool = poolFactory.getReadPool();
+		Jedis jedis = jedisPool.getResource();
+		try {
+			byte[] key = KEY_FENCE_MAP.getBytes();
+			jedis.del(key);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			throw new CacheException(e.getMessage());
+		} finally {
+			jedisPool.returnResource(jedis);
+		}
+	}
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -54,6 +70,7 @@ public class FenceInfoServiceImpl implements FenceInfoService {
 				// 修改
 				SyncOperate operate = new SyncOperate();
 				operate.setOperateType(SyncOperate.UPDATE);
+				operate.setFenceType(fence.getType());
 				operate.setOldFence(oldFence);
 				operate.setNewFence(fence);
 				jedis.publish(KEY_FENCE_TOPIC.getBytes(), SerializeUtility.serialize(operate));
@@ -65,6 +82,7 @@ public class FenceInfoServiceImpl implements FenceInfoService {
 				// 新增
 				SyncOperate operate = new SyncOperate();
 				operate.setOperateType(SyncOperate.CREATE);
+				operate.setFenceType(fence.getType());
 				operate.setNewFence(fence);
 				jedis.publish(KEY_FENCE_TOPIC.getBytes(), SerializeUtility.serialize(operate));
 			}
@@ -98,6 +116,7 @@ public class FenceInfoServiceImpl implements FenceInfoService {
 				// 删除
 				SyncOperate operate = new SyncOperate();
 				operate.setOperateType(SyncOperate.DELETE);
+				operate.setFenceType(oldFence.getType());
 				operate.setOldFence(oldFence);
 				jedis.publish(KEY_FENCE_TOPIC.getBytes(), SerializeUtility.serialize(operate));
 			}

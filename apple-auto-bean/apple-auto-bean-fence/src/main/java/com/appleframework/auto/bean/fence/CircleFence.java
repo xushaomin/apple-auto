@@ -55,6 +55,11 @@ public class CircleFence extends BaseFence implements Fence, Serializable {
 	public void setRadius(Double radius) {
 		this.radius = radius;
 	}
+	
+	@Override
+	public Integer getType() {
+		return 1;
+	}
 
 	@Override
 	public int hashCode() {

@@ -40,6 +40,20 @@ public class Point implements Serializable {
 	 */
 	private Double longitude;
 
+	public Point() {
+	}
+
+	public Point(Double latitude, Double longitude) {
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
+	
+	public Point(String parameter) {
+		String[] parameters = parameter.split(",");
+		this.latitude = Double.parseDouble(parameters[0]);
+		this.longitude = Double.parseDouble(parameters[1]);;
+	}
+
 	public Double getLatitude() {
 		return latitude;
 	}

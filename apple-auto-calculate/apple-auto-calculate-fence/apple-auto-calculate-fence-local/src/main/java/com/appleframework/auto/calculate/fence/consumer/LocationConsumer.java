@@ -20,8 +20,10 @@ public class LocationConsumer extends ObjectMessageConsumer {
 		try {
 			if (message instanceof Location) {
 				Location location = (Location) message;
+				long t = System.currentTimeMillis();
 				calculateCircleService.calculate(location);
 				calculateRectangleService.calculate(location);
+				System.out.println(System.currentTimeMillis() - t);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

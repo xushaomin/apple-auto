@@ -98,5 +98,26 @@ public class FenceInfoServiceImpl implements FenceInfoService {
 		}
 		return list;
 	}
+	
+	@SuppressWarnings("deprecation")
+	public Fence get(String fenceId) {
+		JedisPool jedisPool = poolFactory.getReadPool();
+		Jedis jedis = jedisPool.getResource();
+		Fence fence = null;
+		try {
+			String keyFence = PropertyConfigurer.getString("redis.fence.map", "KEY_FENCE_MAP");
+			byte[] key = keyFence.getBytes();
+			byte[] value = jedis.hget(key, fenceId.getBytes());
+			if (null != value) {
+				fence = (Fence) SerializeUtility.unserialize(value);
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			throw new CacheException(e.getMessage());
+		} finally {
+			jedisPool.returnResource(jedis);
+		}
+		return fence;
+	}
 
 }

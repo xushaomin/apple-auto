@@ -9,4 +9,6 @@ public interface FenceInfoService {
 	public void update(Fence oldFence, Fence newFence);
 	
 	public void delete(Fence oldFence);
+	
+	public Fence get(String fenceId);
 }

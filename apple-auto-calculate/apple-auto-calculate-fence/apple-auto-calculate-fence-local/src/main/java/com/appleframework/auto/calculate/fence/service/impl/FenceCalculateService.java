@@ -1,12 +1,11 @@
 package com.appleframework.auto.calculate.fence.service.impl;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+
+import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
 
@@ -19,7 +18,8 @@ public abstract class FenceCalculateService {
 
 	private Map<String, Map<String, FenceLocation>> fenceLocationMapMap = new ConcurrentHashMap<>();
 
-	private DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	@Resource
+	protected FenceNotifyService fenceNotifyService;
 
 	public void noExistsFence(Location location) {
 		String account = location.getAccount();
@@ -32,9 +32,7 @@ public abstract class FenceCalculateService {
 			int outCnt = fenceLocation.addOutCount();
 			if (outCnt == 2) {
 				it.remove();
-				logger.warn(
-						"\t退出围栏:" + fenceId + ":" + account + "\t退出时间:" + format.format(new Date(location.getTime()))
-								+ "\tlat:" + location.getLatitude() + " \tlng:" + location.getLongitude());
+				fenceNotifyService.notify(account, location, fenceId, 2);
 			}
 
 		}
@@ -54,9 +52,7 @@ public abstract class FenceCalculateService {
 				int outCnt = fenceLocation.addOutCount();
 				if (outCnt == 2) {
 					it.remove();
-					logger.warn("\t退出围栏:" + fenceId + ":" + account + "\t退出时间:"
-							+ format.format(new Date(location.getTime())) + "\tlat:" + location.getLatitude()
-							+ " \tlng:" + location.getLongitude());
+					fenceNotifyService.notify(account, location, fenceId, 2);
 				}
 			}
 
@@ -75,9 +71,7 @@ public abstract class FenceCalculateService {
 					int inCnt = fenceLocation.addInCount();
 					if (inCnt == 2) {
 						fenceLocationMap.put(fenceId, fenceLocation);
-						logger.warn("\t进入围栏:" + fenceId + ":" + account + "\t进入时间:"
-								+ format.format(new Date(location.getTime())) + "\tlat:" + location.getLatitude()
-								+ " \tlng:" + location.getLongitude());
+						fenceNotifyService.notify(account, location, fenceId, 1);
 					}
 				} else {
 					fenceLocationMap.put(fenceId, FenceLocation.create(location));

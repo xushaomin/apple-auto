@@ -29,4 +29,6 @@ public interface Fence {
 	public String getId();
 	
 	public String getName();
+	
+	public Integer getType();
 }

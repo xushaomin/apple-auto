@@ -51,6 +51,11 @@ public class RectangleFence extends BaseFence implements Fence, Serializable {
 	}
 	
 	@Override
+	public Integer getType() {
+		return 2;
+	}
+	
+	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("{\"pointA\":\"");

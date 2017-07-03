@@ -20,4 +20,6 @@ public interface FenceInfoService {
 	
 	public List<Fence> get() throws ServiceException;
 	
+	public void clear() throws ServiceException;
+	
 }
