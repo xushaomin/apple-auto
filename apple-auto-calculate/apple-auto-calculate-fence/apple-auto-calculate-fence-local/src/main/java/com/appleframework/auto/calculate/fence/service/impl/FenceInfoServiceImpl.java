@@ -18,10 +18,6 @@ import com.appleframework.cache.core.CacheException;
 import com.appleframework.cache.core.utils.SerializeUtility;
 import com.appleframework.cache.jedis.factory.PoolFactory;
 import com.appleframework.config.core.PropertyConfigurer;
-import com.appleframework.structure.kdtree.KDTree;
-import com.appleframework.structure.rtree.Rectangle;
-import com.appleframework.structure.rtree.SpatialIndex;
-import com.appleframework.structure.rtree.rtree.RTree;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -33,52 +29,27 @@ public class FenceInfoServiceImpl implements FenceInfoService {
 
 	@Resource
 	private PoolFactory poolFactory;
-
-	private KDTree<String> kdTree = new KDTree<String>(4);
 	
-	private SpatialIndex rTree = new RTree();
+	@Resource
+	private FenceRectangleService fenceRectangleService;
+	
+	@Resource
+	private FenceCircleService fenceCircleService;
 
 	@PostConstruct
 	public void init() {
-		rTree.init(null);
 		List<Fence> list = this.get();
-		for (Fence fence : list) {
-			if (fence instanceof CircleFence) {
-				CircleFence circleFence = (CircleFence) fence;
-				try {
-					kdTree.insert(circleFence.allToArray(), circleFence.getId());
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			else if(fence instanceof RectangleFence) {
-				RectangleFence rectangleFence = (RectangleFence) fence;
-				Rectangle rectangle = new Rectangle(rectangleFence.allToArray());
-				try {
-					rTree.add(rectangle, Integer.parseInt(rectangleFence.getId()));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
+		fenceCircleService.init(list);
+		fenceRectangleService.init(list);
 	}
 
 	public void create(Fence fence) {
 		if (fence instanceof CircleFence) {
 			CircleFence circleFence = (CircleFence) fence;
-			try {
-				kdTree.insert(circleFence.allToArray(), circleFence.getId());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		else if(fence instanceof RectangleFence) {
+			fenceCircleService.create(circleFence);
+		} else if(fence instanceof RectangleFence) {
 			RectangleFence rectangleFence = (RectangleFence) fence;
-			try {
-				rTree.add(new Rectangle(rectangleFence.allToArray()), Integer.parseInt(rectangleFence.getId()));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			fenceRectangleService.create(rectangleFence);
 		}
 	}
 
@@ -86,46 +57,22 @@ public class FenceInfoServiceImpl implements FenceInfoService {
 		if (oldFence instanceof CircleFence && newFence instanceof CircleFence) {
 			CircleFence oldCircleFence = (CircleFence) oldFence;
 			CircleFence newCircleFence = (CircleFence) newFence;
-			try {
-				kdTree.delete(oldCircleFence.allToArray());
-				kdTree.insert(newCircleFence.allToArray(), newCircleFence.getId());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		else if (oldFence instanceof RectangleFence && newFence instanceof RectangleFence) {
+			fenceCircleService.update(oldCircleFence, newCircleFence);
+		} else if (oldFence instanceof RectangleFence && newFence instanceof RectangleFence) {
 			RectangleFence oldRectangleFence = (RectangleFence) oldFence;
 			RectangleFence newRectangleFence = (RectangleFence) newFence;
-			try {
-				rTree.delete(new Rectangle(oldRectangleFence.allToArray()), Integer.parseInt(oldRectangleFence.getId()));
-				rTree.add(new Rectangle(newRectangleFence.allToArray()), Integer.parseInt(newRectangleFence.getId()));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			fenceRectangleService.update(oldRectangleFence, newRectangleFence);
 		}
 	}
 
 	public void delete(Fence oldFence) {
 		if (oldFence instanceof CircleFence) {
 			CircleFence oldCircleFence = (CircleFence) oldFence;
-			try {
-				kdTree.delete(oldCircleFence.allToArray());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		else if (oldFence instanceof RectangleFence) {
+			fenceCircleService.delete(oldCircleFence);
+		} else if (oldFence instanceof RectangleFence) {
 			RectangleFence oldRectangleFence = (RectangleFence) oldFence;
-			try {
-				rTree.delete(new Rectangle(oldRectangleFence.allToArray()), Integer.parseInt(oldRectangleFence.getId()));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			fenceRectangleService.delete(oldRectangleFence);
 		}
-	}
-
-	public KDTree<String> getKdTree() {
-		return kdTree;
 	}
 
 	@SuppressWarnings("deprecation")
