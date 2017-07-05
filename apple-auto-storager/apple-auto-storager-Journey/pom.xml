@@ -8,9 +8,13 @@
 		<artifactId>apple-auto-storager</artifactId>
 		<version>0.0.1.RELEASE</version>
 	</parent>
-	<artifactId>apple-auto-storager-location</artifactId>
-	<name>apple-auto-storager-location</name>
+	<artifactId>apple-auto-storager-Journey</artifactId>
+	<name>apple-auto-storager-Journey</name>
 	<url>http://maven.apache.org</url>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 	
 	<dependencies>
 		<dependency>
@@ -31,12 +35,8 @@
 			<artifactId>apple-jms-kafka</artifactId>
 		</dependency>
 		<dependency>
-		  	<groupId>com.appleframework.data</groupId>
-		  	<artifactId>apple-data-hbase1x</artifactId>
-		</dependency>
-		<dependency>
-  			<groupId>com.appleframework.cache</groupId>
-			<artifactId>apple-cache-hazelcast</artifactId>
+			<groupId>com.appleframework.data</groupId>
+			<artifactId>apple-data-hbase1x</artifactId>
 		</dependency>
 
 		<!-- spring -->
