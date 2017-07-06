@@ -14,7 +14,7 @@
 		<java.version>1.7</java.version>
 		<file.encoding>UTF-8</file.encoding>
 		<apple.version>0.1.9.RELEASE</apple.version>
-		<spring.version>3.2.2.RELEASE</spring.version>
+		<spring.version>4.2.0.RELEASE</spring.version>
 		<jackson.version>1.9.13</jackson.version>
 		<apple.version>0.1.9.RELEASE</apple.version>
 		<config.version>0.2.5.RELEASE</config.version>
