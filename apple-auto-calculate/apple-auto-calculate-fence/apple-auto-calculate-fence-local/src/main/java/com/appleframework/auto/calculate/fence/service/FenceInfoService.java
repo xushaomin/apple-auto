@@ -4,7 +4,7 @@ import com.appleframework.auto.bean.fence.Fence;
 
 public interface FenceInfoService {
 	
-	public void create(Fence fence);
+	public void create(Fence newFence);
 	
 	public void update(Fence oldFence, Fence newFence);
 	

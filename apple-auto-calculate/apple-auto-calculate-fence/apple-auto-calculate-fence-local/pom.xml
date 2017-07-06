@@ -12,10 +12,6 @@
 	<name>apple-auto-calculate-fence-local</name>
 	<url>http://maven.apache.org</url>
 	
-	<properties>
-		<structure.version>0.0.1-SNAPSHOT</structure.version>
-	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
@@ -45,15 +41,11 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.appleframework.structure</groupId>
-			<artifactId>apple-structure-kdtree</artifactId>
-			<version>0.0.3-SNAPSHOT</version>
+  			<groupId>com.github.davidmoten</groupId>
+    		<artifactId>rtree</artifactId>
+    		<version>0.8.0.2.APPLE</version>
 		</dependency>
-		<dependency>
-			<groupId>com.appleframework.structure</groupId>
-			<artifactId>apple-structure-rtree</artifactId>
-			<version>0.0.3-SNAPSHOT</version>
-		</dependency>
+		
 		<dependency>
 			<groupId>com.appleframework.cache</groupId>
 			<artifactId>apple-cache-jedis</artifactId>

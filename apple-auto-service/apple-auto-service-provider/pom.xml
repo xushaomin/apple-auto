@@ -50,7 +50,6 @@
 		<dependency>
 			<groupId>com.appleframework.data</groupId>
 			<artifactId>apple-data-hbase1x</artifactId>
-			<version>${data.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.appleframework.util</groupId>
@@ -62,12 +61,14 @@
 			<artifactId>apple-cache-jedis</artifactId>
 		</dependency>
 		
+		<!-- 
 		<dependency>
-  			<groupId>com.appleframework.structure</groupId>
-  			<artifactId>apple-structure-kdtree</artifactId>
-  			<version>0.0.1-SNAPSHOT</version>
+  			<groupId>com.github.davidmoten</groupId>
+    		<artifactId>rtree</artifactId>
+    		<version>0.8.0.2.APPLE</version>
 		</dependency>
-		
+		 -->
+		 
 		<dependency>
 			<groupId>com.appleframework.orm</groupId>
 			<artifactId>apple-orm-mybatis</artifactId>

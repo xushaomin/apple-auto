@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.appleframework.auto.bean.fence.CircleFence;
 import com.appleframework.auto.bean.fence.Point;
+import com.appleframework.auto.bean.fence.PolygonFence;
 import com.appleframework.auto.bean.fence.RectangleFence;
 import com.appleframework.auto.entity.fence.FenceEntityWithBLOBs;
 import com.appleframework.exception.ServiceException;
@@ -28,7 +29,7 @@ public class FenceEntityServiceTest {
 	@Test
 	public void get() {
 		try {
-			//fenceInfoService.clear();
+			fenceInfoService.clear();
 			List<FenceEntityWithBLOBs> list = fenceEntityService.findAll();
 			for (FenceEntityWithBLOBs entity : list) {
 				System.out.println(entity.toString());
@@ -72,8 +73,25 @@ public class FenceEntityServiceTest {
 					fence.setPointB(pointB);
 					
 					fenceInfoService.create(fence);
+				} else {
+					
+					PolygonFence fence = new PolygonFence();
+					fence.setId(entity.getId().toString());
+					fence.setName(entity.getName());
+					
+					String latitudes = entity.getLatitudes();
+					String longitudes = entity.getLongitudes();
+					
+					List<Double> polygonXA = ListUtil.string2DoubleList(longitudes);
+					List<Double> polygonYA = ListUtil.string2DoubleList(latitudes);
+					
+					fence.setPolygonXA(polygonXA);
+					fence.setPolygonYA(polygonYA);
+					
+					fenceInfoService.create(fence);
 				}
 			}
+			System.out.println("------------------------------------");
 		} catch (ServiceException e) {
 			e.printStackTrace();
 		}

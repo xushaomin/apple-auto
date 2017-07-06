@@ -10,9 +10,7 @@ import javax.annotation.Resource;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
-import com.appleframework.auto.bean.fence.CircleFence;
 import com.appleframework.auto.bean.fence.Fence;
-import com.appleframework.auto.bean.fence.RectangleFence;
 import com.appleframework.auto.calculate.fence.service.FenceInfoService;
 import com.appleframework.cache.core.CacheException;
 import com.appleframework.cache.core.utils.SerializeUtility;
@@ -31,48 +29,24 @@ public class FenceInfoServiceImpl implements FenceInfoService {
 	private PoolFactory poolFactory;
 	
 	@Resource
-	private FenceRectangleService fenceRectangleService;
+	private FenceCacheService fenceCacheService;
 	
-	@Resource
-	private FenceCircleService fenceCircleService;
-
 	@PostConstruct
 	public void init() {
 		List<Fence> list = this.get();
-		fenceCircleService.init(list);
-		fenceRectangleService.init(list);
+		fenceCacheService.init(list);
 	}
 
-	public void create(Fence fence) {
-		if (fence instanceof CircleFence) {
-			CircleFence circleFence = (CircleFence) fence;
-			fenceCircleService.create(circleFence);
-		} else if(fence instanceof RectangleFence) {
-			RectangleFence rectangleFence = (RectangleFence) fence;
-			fenceRectangleService.create(rectangleFence);
-		}
+	public void create(Fence newFence) {
+		fenceCacheService.create(newFence);
 	}
 
 	public void update(Fence oldFence, Fence newFence) {
-		if (oldFence instanceof CircleFence && newFence instanceof CircleFence) {
-			CircleFence oldCircleFence = (CircleFence) oldFence;
-			CircleFence newCircleFence = (CircleFence) newFence;
-			fenceCircleService.update(oldCircleFence, newCircleFence);
-		} else if (oldFence instanceof RectangleFence && newFence instanceof RectangleFence) {
-			RectangleFence oldRectangleFence = (RectangleFence) oldFence;
-			RectangleFence newRectangleFence = (RectangleFence) newFence;
-			fenceRectangleService.update(oldRectangleFence, newRectangleFence);
-		}
+		fenceCacheService.update(oldFence, newFence);
 	}
 
 	public void delete(Fence oldFence) {
-		if (oldFence instanceof CircleFence) {
-			CircleFence oldCircleFence = (CircleFence) oldFence;
-			fenceCircleService.delete(oldCircleFence);
-		} else if (oldFence instanceof RectangleFence) {
-			RectangleFence oldRectangleFence = (RectangleFence) oldFence;
-			fenceRectangleService.delete(oldRectangleFence);
-		}
+		fenceCacheService.delete(oldFence);
 	}
 
 	@SuppressWarnings("deprecation")

@@ -8,10 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.appleframework.auto.calculate.fence.model.FenceLocation;
-import com.appleframework.auto.calculate.fence.service.FenceLocationService;
 
 @Service("fenceLocationService")
-public class FenceLocationServiceImpl implements FenceLocationService {
+public class FenceLocationService {
 
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 	
