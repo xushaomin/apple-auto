@@ -29,12 +29,37 @@
 		parameter, latitudes, longitudes
 	</sql>
 	
-	<select id="selectAll" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+	<select id="selectAll" resultMap="ResultMapWithBLOBs">
 		select
 		<include refid="Base_Column_List" />
 		,
 		<include refid="Blob_Column_List" />
 		from fence order by id asc
+	</select>
+	
+	<select id="selectPage" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		
+		from fence where 1=1
+		
+		<if test="so.name != null">
+    		and name like '%${so.name}%'
+   		</if>   	
+		<if test="so.fenceType != null">
+			and fence_type = ${so.fenceType}
+		</if>
+		<if test="so.isEnable != null">
+			and is_enable = ${so.isEnable}
+		</if>
+		<if test="so.isDelete != null">
+			and is_delete = ${so.isDelete}
+		</if>
+		<if test="so.dealType != null">
+			and deal_type = ${so.dealType}
+		</if>
+			
+		 order by id asc
 	</select>
 
 </mapper>

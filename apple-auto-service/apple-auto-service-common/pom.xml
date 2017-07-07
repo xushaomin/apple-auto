@@ -26,5 +26,9 @@
   			<groupId>com.appleframework</groupId>
 			<artifactId>apple-exception</artifactId>
 		</dependency>
+		<dependency>
+  			<groupId>com.appleframework</groupId>
+			<artifactId>apple-model</artifactId>
+		</dependency>
 	</dependencies>
 </project>

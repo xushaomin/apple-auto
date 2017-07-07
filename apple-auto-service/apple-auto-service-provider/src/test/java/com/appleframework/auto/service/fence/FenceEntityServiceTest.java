@@ -46,7 +46,7 @@ public class FenceEntityServiceTest {
 					
 					fenceInfoService.create(fence);
 				}
-				else if(entity.getFenceType() == 2) {
+				else if(entity.getFenceType() == 2 && entity.getLongitudes().length() == 2) {
 					RectangleFence fence = new RectangleFence();
 					fence.setId(entity.getId().toString());
 					fence.setName(entity.getName());
@@ -57,17 +57,8 @@ public class FenceEntityServiceTest {
 					String[] latitudeArray = latitudes.split(",");
 					String[] longitudeArray = longitudes.split(",");
 					
-					Point pointA = null;
-					Point pointB = null;
-					if(latitudeArray.length == 2) {
-						pointA = new Point(latitudeArray[0] + "," + longitudeArray[0]);
-						pointB = new Point(latitudeArray[1] + "," + longitudeArray[1]);
-					} else if(latitudeArray.length == 4) {
-						pointA = new Point(latitudeArray[0] + "," + longitudeArray[0]);
-						pointB = new Point(latitudeArray[2] + "," + longitudeArray[2]);
-					} else {
-						continue;
-					}
+					Point pointA = new Point(latitudeArray[0] + "," + longitudeArray[0]);
+					Point pointB = new Point(latitudeArray[1] + "," + longitudeArray[1]);
 					
 					fence.setPointA(pointA);
 					fence.setPointB(pointB);
