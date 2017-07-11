@@ -16,9 +16,9 @@ public class LocationConsumer extends ObjectMessageConsumer {
 		try {
 			if (message instanceof Location) {
 				Location location = (Location) message;
-				long t = System.currentTimeMillis();
+				//long t = System.currentTimeMillis();
 				fenceCalculateService.calculate(location);
-				System.out.println(System.currentTimeMillis() - t);
+				//System.out.println(System.currentTimeMillis() - t);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

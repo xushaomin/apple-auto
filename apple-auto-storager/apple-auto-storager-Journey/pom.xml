@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.appleframework.auto</groupId>
 		<artifactId>apple-auto-storager</artifactId>
-		<version>0.0.1.RELEASE</version>
+		<version>0.0.2.RELEASE</version>
 	</parent>
 	<artifactId>apple-auto-storager-Journey</artifactId>
 	<name>apple-auto-storager-Journey</name>

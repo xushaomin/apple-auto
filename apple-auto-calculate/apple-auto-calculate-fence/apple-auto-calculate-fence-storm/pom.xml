@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.appleframework.auto</groupId>
 		<artifactId>apple-auto-calculate-fence</artifactId>
-		<version>0.0.1.RELEASE</version>
+		<version>0.0.2.RELEASE</version>
 	</parent>
 	<artifactId>apple-auto-calculate-fence-storm</artifactId>
 	<name>apple-auto-calculate-fence-storm</name>
@@ -86,13 +86,13 @@
 		<dependency>
 			<groupId>com.appleframework.auto</groupId>
 			<artifactId>apple-auto-bean-location</artifactId>
-			<version>0.0.1.RELEASE</version>
+			<version>0.0.2.RELEASE</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.appleframework.auto</groupId>
 			<artifactId>apple-auto-bean-fence</artifactId>
-			<version>0.0.1.RELEASE</version>
+			<version>0.0.2.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>com.appleframework.jms</groupId>
@@ -110,14 +110,9 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>com.appleframework.structure</groupId>
-			<artifactId>apple-structure-kdtree</artifactId>
-			<version>0.0.3-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>com.appleframework.structure</groupId>
-			<artifactId>apple-structure-rtree</artifactId>
-			<version>0.0.3-SNAPSHOT</version>
+  			<groupId>com.github.davidmoten</groupId>
+    		<artifactId>rtree</artifactId>
+    		<version>0.8.0.2.APPLE</version>
 		</dependency>
 
 		<dependency>
@@ -131,11 +126,6 @@
 			<artifactId>apple-jms-jedis</artifactId>
 		</dependency>
 		
-		<dependency>
-  			<groupId>com.appleframework.structure</groupId>
-  			<artifactId>apple-structure-kdtree</artifactId>
-  			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
 		<dependency>
 			<groupId>com.appleframework.cache</groupId>
 			<artifactId>apple-cache-jedis</artifactId>

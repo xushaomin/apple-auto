@@ -82,7 +82,6 @@ public class FenceCalculateService extends FenceInoutService {
             	}
             }
         });
-        
     }
 
 }
