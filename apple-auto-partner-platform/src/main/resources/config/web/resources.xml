@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+      	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+    	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd
+     	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+    	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
+
+	<!-- spring mvc3 资源映射功能 请参见：
+	http://static.springsource.org/spring/docs/3.0.6.RELEASE/spring-framework-reference/htmlsingle/spring-framework-reference.html#mvc 
+		15.12.4 mvc:resources -->
+	
+	<mvc:resources mapping="/js/**" location="/static/js/" />
+	<mvc:resources mapping="/images/**" location="/static/images/" />
+	<mvc:resources mapping="/error/**" location="/static/error/" />
+	<mvc:resources mapping="/flat_ui/**" location="/static/flat_ui/" />
+	
+	<!-- 
+	<mvc:resources mapping="/styles/**" location="http://static.aceona.com/style/" cache-period="31556926" />
+	<mvc:resources mapping="/styles/**" location="/, classpath:/META-INF/public-web-resources/" />
+	<mvc:resources mapping="/WEB-INF/**" location="/WEB-INF/" />
+	<mvc:resources mapping="/html/**" location="file:///home/jobs/html/" /> -->
+	<!-- <util:properties id="appProps" location="classpath:/application.properties" /> -->
+</beans>

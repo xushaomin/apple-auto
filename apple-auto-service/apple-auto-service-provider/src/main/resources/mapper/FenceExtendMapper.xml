@@ -3,6 +3,7 @@
 <mapper namespace="com.appleframework.auto.service.mapper.FenceExtendMapper">
 	<resultMap id="BaseResultMap" type="com.appleframework.auto.entity.fence.FenceEntity">
 		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="client_id" property="clientId" jdbcType="INTEGER" />
 		<result column="name" property="name" jdbcType="VARCHAR" />
 		<result column="fence_type" property="fenceType" jdbcType="INTEGER" />
 		<result column="is_enable" property="isEnable" jdbcType="BIT" />
@@ -21,9 +22,8 @@
 		<result column="longitudes" property="longitudes" jdbcType="LONGVARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, name, fence_type, is_enable, is_delete, deal_type, color,
-		continue_time, radius,
-		remark, create_time, update_time
+		id, client_id, name, fence_type, is_enable, is_delete, deal_type, color,
+		continue_time, radius, remark, create_time, update_time
 	</sql>
 	<sql id="Blob_Column_List">
 		parameter, latitudes, longitudes
@@ -41,7 +41,7 @@
 		select
 		<include refid="Base_Column_List" />
 		
-		from fence where 1=1
+		from fence where is_delete = 0
 		
 		<if test="so.name != null">
     		and name like '%${so.name}%'
@@ -51,9 +51,6 @@
 		</if>
 		<if test="so.isEnable != null">
 			and is_enable = ${so.isEnable}
-		</if>
-		<if test="so.isDelete != null">
-			and is_delete = ${so.isDelete}
 		</if>
 		<if test="so.dealType != null">
 			and deal_type = ${so.dealType}

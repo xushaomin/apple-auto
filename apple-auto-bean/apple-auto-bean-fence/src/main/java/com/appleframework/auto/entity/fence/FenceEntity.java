@@ -8,6 +8,8 @@ public class FenceEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
+	
+	private Integer clientId;
 
 	private String name;
 
@@ -37,6 +39,14 @@ public class FenceEntity implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Integer getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(Integer clientId) {
+		this.clientId = clientId;
 	}
 
 	public String getName() {

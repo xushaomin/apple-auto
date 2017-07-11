@@ -3,6 +3,7 @@
 <mapper namespace="com.appleframework.auto.service.mapper.FenceEntityMapper">
 	<resultMap id="BaseResultMap" type="com.appleframework.auto.entity.fence.FenceEntity">
 		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="client_id" property="clientId" jdbcType="INTEGER" />
 		<result column="name" property="name" jdbcType="VARCHAR" />
 		<result column="fence_type" property="fenceType" jdbcType="INTEGER" />
 		<result column="is_enable" property="isEnable" jdbcType="BIT" />
@@ -21,7 +22,7 @@
 		<result column="longitudes" property="longitudes" jdbcType="LONGVARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, name, fence_type, is_enable, is_delete, deal_type, color,
+		id, client_id, name, fence_type, is_enable, is_delete, deal_type, color,
 		continue_time, radius,
 		remark, create_time, update_time
 	</sql>
@@ -42,14 +43,15 @@
 	</delete>
 	<insert id="insert" parameterType="com.appleframework.auto.entity.fence.FenceEntityWithBLOBs">
 		insert into fence (
-			id, name, fence_type,
+			id, client_id, name, fence_type,
 			is_enable, is_delete, deal_type,
 			color, continue_time, radius,
 			remark, create_time, update_time,
 			parameter, latitudes, longitudes
 		)
 		values (
-			#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+			#{id,jdbcType=INTEGER}, #{client_id,jdbcType=INTEGER},
+			#{name,jdbcType=VARCHAR},
 			#{fenceType,jdbcType=INTEGER},
 			#{isEnable,jdbcType=BIT}, #{isDelete,jdbcType=BIT}, #{dealType,jdbcType=INTEGER},
 			#{color,jdbcType=VARCHAR}, #{continueTime,jdbcType=INTEGER},
@@ -64,6 +66,9 @@
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
 				id,
+			</if>
+			<if test="clientId != null">
+				client_id,
 			</if>
 			<if test="name != null">
 				name,
@@ -112,6 +117,9 @@
 			<if test="id != null">
 				#{id,jdbcType=INTEGER},
 			</if>
+			<if test="clientId != null">
+				#{clientId,jdbcType=INTEGER},
+			</if>
 			<if test="name != null">
 				#{name,jdbcType=VARCHAR},
 			</if>
@@ -159,6 +167,9 @@
 	<update id="updateByPrimaryKeySelective" parameterType="com.appleframework.auto.entity.fence.FenceEntityWithBLOBs">
 		update fence
 		<set>
+			<if test="clientId != null">
+				client_id = #{clientId,jdbcType=INTEGER},
+			</if>
 			<if test="name != null">
 				name = #{name,jdbcType=VARCHAR},
 			</if>
@@ -202,39 +213,48 @@
 				longitudes = #{longitudes,jdbcType=LONGVARCHAR},
 			</if>
 		</set>
-		where id = #{id,jdbcType=INTEGER}
+		where
+			id = #{id,jdbcType=INTEGER}
 	</update>
 	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.appleframework.auto.entity.fence.FenceEntityWithBLOBs">
-		update fence
-		set name = #{name,jdbcType=VARCHAR},
-		fence_type = #{fenceType,jdbcType=INTEGER},
-		is_enable = #{isEnable,jdbcType=BIT},
-		is_delete = #{isDelete,jdbcType=BIT},
-		deal_type = #{dealType,jdbcType=INTEGER},
-		color = #{color,jdbcType=VARCHAR},
-		continue_time = #{continueTime,jdbcType=INTEGER},
-		radius = #{radius,jdbcType=DOUBLE},
-		remark = #{remark,jdbcType=VARCHAR},
-		create_time = #{createTime,jdbcType=TIMESTAMP},
-		update_time = #{updateTime,jdbcType=TIMESTAMP},
-		parameter = #{parameter,jdbcType=LONGVARCHAR},
-		latitudes = #{latitudes,jdbcType=LONGVARCHAR},
-		longitudes = #{longitudes,jdbcType=LONGVARCHAR}
-		where id = #{id,jdbcType=INTEGER}
+		update
+			fence
+		set
+			client_id = #{clientId,jdbcType=INTEGER},
+			name = #{name,jdbcType=VARCHAR},
+			fence_type = #{fenceType,jdbcType=INTEGER},
+			is_enable = #{isEnable,jdbcType=BIT},
+			is_delete = #{isDelete,jdbcType=BIT},
+			deal_type = #{dealType,jdbcType=INTEGER},
+			color = #{color,jdbcType=VARCHAR},
+			continue_time = #{continueTime,jdbcType=INTEGER},
+			radius = #{radius,jdbcType=DOUBLE},
+			remark = #{remark,jdbcType=VARCHAR},
+			create_time = #{createTime,jdbcType=TIMESTAMP},
+			update_time = #{updateTime,jdbcType=TIMESTAMP},
+			parameter = #{parameter,jdbcType=LONGVARCHAR},
+			latitudes = #{latitudes,jdbcType=LONGVARCHAR},
+			longitudes = #{longitudes,jdbcType=LONGVARCHAR}
+		where
+			id = #{id,jdbcType=INTEGER}
 	</update>
 	<update id="updateByPrimaryKey" parameterType="com.appleframework.auto.entity.fence.FenceEntity">
-		update fence
-		set name = #{name,jdbcType=VARCHAR},
-		fence_type = #{fenceType,jdbcType=INTEGER},
-		is_enable = #{isEnable,jdbcType=BIT},
-		is_delete = #{isDelete,jdbcType=BIT},
-		deal_type = #{dealType,jdbcType=INTEGER},
-		color = #{color,jdbcType=VARCHAR},
-		continue_time = #{continueTime,jdbcType=INTEGER},
-		radius = #{radius,jdbcType=DOUBLE},
-		remark = #{remark,jdbcType=VARCHAR},
-		create_time = #{createTime,jdbcType=TIMESTAMP},
-		update_time = #{updateTime,jdbcType=TIMESTAMP}
-		where id = #{id,jdbcType=INTEGER}
+		update
+			fence
+		set
+			client_id = #{clientId,jdbcType=INTEGER},
+			name = #{name,jdbcType=VARCHAR},
+			fence_type = #{fenceType,jdbcType=INTEGER},
+			is_enable = #{isEnable,jdbcType=BIT},
+			is_delete = #{isDelete,jdbcType=BIT},
+			deal_type = #{dealType,jdbcType=INTEGER},
+			color = #{color,jdbcType=VARCHAR},
+			continue_time = #{continueTime,jdbcType=INTEGER},
+			radius = #{radius,jdbcType=DOUBLE},
+			remark = #{remark,jdbcType=VARCHAR},
+			create_time = #{createTime,jdbcType=TIMESTAMP},
+			update_time = #{updateTime,jdbcType=TIMESTAMP}
+		where
+			id = #{id,jdbcType=INTEGER}
 	</update>
 </mapper>

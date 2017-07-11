@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:util="http://www.springframework.org/schema/util" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+ 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+    	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+   		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd
+    	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+  		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+	<!-- 启用注解识别功能 -->
+	<context:annotation-config />
+
+	<context:component-scan base-package="com.appleframework.auto.partner.platform" />
+	
+	<mvc:annotation-driven validator="validator" />
+	
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" />
+
+	<bean id="viewNameTranslator" class="org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator" />
+	
+	<bean id="paginationDirective" class="com.appleframework.web.freemarker.directive.PaginationDirective" />
+
+	<mvc:annotation-driven />
+	<!-- 拦截器链 -->
+	<mvc:interceptors>
+		<!-- <bean class="com.appleframework.web.springmvc.Interceptor.CsrfInterceptor" /> -->
+		<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="lang" />
+		</bean>
+	</mvc:interceptors>
+	<mvc:default-servlet-handler />
+	<bean id="annotationMethodHandlerAdapter"
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+
+	<!-- FreeMarker 相关配置 -->
+	<bean id="freemarkerConfig"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer"
+		p:configuration-ref="freemarkerConfiguration" />
+
+	<bean id="freemarkerBeansWrapper"
+		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean"
+		p:staticMethod='freemarker.ext.beans.BeansWrapper.getDefaultInstance'>
+	</bean>
+	<bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape" />
+
+	<bean id="freemarkerConfiguration"
+		class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean"
+		p:templateLoaderPath="/WEB-INF/">
+		<property name="freemarkerSettings">
+			<props>				
+				<prop key="number_format">0.######</prop>
+				<prop key="boolean_format">true,false</prop>
+				<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+				<prop key="date_format">yyyy-MM-dd</prop>
+				<prop key="time_format">HH:mm:ss</prop>
+				
+				<!-- <prop key="tag_syntax">square_bracket</prop> -->
+				<prop key="output_encoding">UTF-8</prop>
+				<prop key="defaultEncoding">UTF-8</prop>
+				<prop key="url_escaping_charset">UTF-8</prop>
+				
+				<prop key="object_wrapper">freemarker.ext.beans.BeansWrapper</prop>
+				
+			</props>
+		</property>
+		<property name="freemarkerVariables">
+			<map>
+				<entry key="statics">
+					<bean
+						class="org.springframework.beans.factory.config.MethodInvokingFactoryBean"
+						p:targetObject-ref='freemarkerBeansWrapper' p:targetMethod='getStaticModels'>
+					</bean>
+				</entry>
+				<entry key="enums">
+					<bean
+						class="org.springframework.beans.factory.config.MethodInvokingFactoryBean"
+						p:targetObject-ref='freemarkerBeansWrapper' p:targetMethod='getEnumModels'>
+					</bean>
+				</entry>
+				<entry key="xml_escape" value-ref="fmXmlEscape" />
+				<entry key="paging" value-ref="paginationDirective"/>
+				<!-- <entry key="datetime" value-ref="datetimeDirective"/> -->
+			</map>
+		</property>
+	</bean>
+
+	<bean id='viewResolver'
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver"
+		p:cache="true" p:exposeSpringMacroHelpers="true"
+		p:requestContextAttribute="rc" p:exposeSessionAttributes="true"
+		p:prefix="/content/" p:suffix=".ftl" p:contentType="text/html;charset=UTF-8" />
+	
+	<!-- 
+	<bean id="VelocityViewResolver"
+		class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+		<property name="cache" value="true" />
+		<property name="prefix" value="" />
+		<property name="suffix" value=".vm" />
+	</bean>
+	 -->
+	 
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/content/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	
+	<bean id="cnManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">  
+        <property name="ignoreAcceptHeader" value="true"/>  
+        <property name="favorPathExtension" value="true"/>  
+        <property name="defaultContentType" value="text/html"/>  
+        <property name="favorParameter" value="true"/>  
+        <property name="mediaTypes">  
+            <map>
+				<entry key="atom" value="application/atom+xml" />
+				<entry key="html" value="text/html" />
+				<entry key="htm" value="text/html" />
+				<entry key="ftl" value="text/html" />
+				<entry key="json" value="application/json" />
+			</map>  
+        </property>  
+    </bean>
+    
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="contentNegotiationManager" ref="cnManager"/>  
+		<property name="viewResolvers">
+			<list>
+				<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
+				<bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+					<property name="cache" value="true" />
+					<property name="order" value="0" />
+					<property name="prefix" value="/content/" />
+					<property name="suffix" value=".ftl" />
+					<property name="contentType" value="text/html;charset=UTF-8" />
+					<property name="exposeSpringMacroHelpers" value="true" />
+					<property name="requestContextAttribute" value="rc" />
+					<property name="exposeSessionAttributes" value="true" />
+				</bean>
+				<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+					<property name="prefix" value="/WEB-INF/content/" />
+					<property name="suffix" value=".jsp" />
+				</bean>
+
+			</list>
+		</property>
+		<property name="defaultViews">
+			<list>
+				<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 返回json 配置 -->
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<util:list id="beanList">
+				<ref bean="mappingJacksonHttpMessageConverter" />
+			</util:list>
+		</property>
+	</bean>
+	<bean id="mappingJacksonHttpMessageConverter"
+		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="supportedMediaTypes">
+			<list>
+				<value>text/html;charset=UTF-8</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 文件上传最大值（单位： bytes） -->
+		<property name="maxUploadSize" value="9000000000000" />
+	</bean>
+	
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+	
+</beans>

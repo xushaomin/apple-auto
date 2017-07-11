@@ -1,5 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.appleframework.auto</groupId>
@@ -33,6 +33,16 @@
 			<dependency>
   				<groupId>com.appleframework</groupId>
 				<artifactId>apple-model</artifactId>
+				<version>${apple.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.appleframework</groupId>
+				<artifactId>apple-core</artifactId>
+				<version>${apple.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.appleframework</groupId>
+				<artifactId>apple-web</artifactId>
 				<version>${apple.version}</version>
 			</dependency>
 			<dependency>
@@ -147,13 +157,14 @@
 	</dependencyManagement>
 
 	<modules>
+		<module>apple-auto-bean</module>
 		<module>apple-auto-service</module>
 		<module>apple-auto-calculate</module>
 		<module>apple-auto-storager</module>
 		<module>apple-auto-acquisition</module>
 		<module>apple-auto-open-platform</module>
-		<module>apple-auto-bean</module>
-	</modules>
+    	<module>apple-auto-partner-platform</module>
+  	</modules>
 
 	<build>
 		<plugins>

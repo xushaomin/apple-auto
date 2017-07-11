@@ -12,8 +12,6 @@ public class FenceSo implements Serializable {
 
 	private Boolean isEnable;
 
-	private Boolean isDelete;
-
 	private Integer dealType;
 
 	public String getName() {
@@ -38,14 +36,6 @@ public class FenceSo implements Serializable {
 
 	public void setIsEnable(Boolean isEnable) {
 		this.isEnable = isEnable;
-	}
-
-	public Boolean getIsDelete() {
-		return isDelete;
-	}
-
-	public void setIsDelete(Boolean isDelete) {
-		this.isDelete = isDelete;
 	}
 
 	public Integer getDealType() {
