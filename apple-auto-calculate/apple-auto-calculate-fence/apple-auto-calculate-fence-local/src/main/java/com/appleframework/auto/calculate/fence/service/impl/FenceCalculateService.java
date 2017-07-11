@@ -53,9 +53,13 @@ public class FenceCalculateService extends FenceInoutService {
 	private Set<String> search(double x, double y) {
 		Set<String> fenceSet = new HashSet<>();
 		Observable<Entry<String, Geometry>> result = search(Geometries.point(x, y));
-		result.forEach(item -> {
+		Iterable<Entry<String, Geometry>> it = result.toBlocking().toIterable();
+		for (Entry<String, Geometry> entry : it) {
+			fenceSet.add(entry.value());
+		}
+		/*result.forEach(item -> {
 			fenceSet.add(item.value());
-		});
+		});*/
 		return fenceSet;
 	}
 	
