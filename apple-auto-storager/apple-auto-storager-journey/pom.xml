@@ -8,8 +8,8 @@
 		<artifactId>apple-auto-storager</artifactId>
 		<version>0.0.2.RELEASE</version>
 	</parent>
-	<artifactId>apple-auto-storager-Journey</artifactId>
-	<name>apple-auto-storager-Journey</name>
+	<artifactId>apple-auto-storager-journey</artifactId>
+	<name>apple-auto-storager-journey</name>
 	<url>http://maven.apache.org</url>
 	
 	<properties>
