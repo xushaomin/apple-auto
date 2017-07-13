@@ -4,13 +4,19 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
+import org.mapdb.DB;
+import org.mapdb.DBMaker;
 
 import com.appleframework.auto.bean.location.Location;
 import com.appleframework.auto.calculate.fence.model.FenceLocation;
+import com.appleframework.config.core.PropertyConfigurer;
 
 public abstract class FenceInoutService {
 
@@ -20,6 +26,8 @@ public abstract class FenceInoutService {
 
 	@Resource
 	protected FenceNotifyService fenceNotifyService;
+	
+	private String fenceLocationPath = PropertyConfigurer.getValue("fence.location.map.path", "/work/data/fence/location/map.db");
 
 	public void noExistsFence(Location location) {
 		String account = location.getAccount();
@@ -103,6 +111,35 @@ public abstract class FenceInoutService {
 			fenceLocationMap = new ConcurrentHashMap<>();
 		}
 		return fenceLocationMap;
+	}
+	
+	@PreDestroy
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public void writeToDisk() {
+		try {
+			DB db = DBMaker.fileDB(fenceLocationPath).make();
+			ConcurrentMap map = db.hashMap("fenceLocation").createOrOpen();
+			map.clear();
+			map.putAll(fenceLocationMapMap);
+			db.close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
+	
+	@PostConstruct
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public void readFromDisk() throws Exception {
+		try {
+			DB db = DBMaker.fileDB(fenceLocationPath).make();
+			ConcurrentMap map = db.hashMap("fenceLocation").createOrOpen();
+			if(map.size() > 0) {
+				fenceLocationMapMap.putAll(map);
+			}
+			db.close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
 	}
 
 }
