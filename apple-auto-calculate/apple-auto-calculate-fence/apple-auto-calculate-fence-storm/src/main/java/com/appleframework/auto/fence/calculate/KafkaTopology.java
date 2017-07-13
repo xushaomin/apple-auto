@@ -28,7 +28,7 @@ public class KafkaTopology extends AbstractMainContainer {
 		TopologyBuilder builder = new TopologyBuilder();
 		builder.setSpout("fence-calculate-spout", new KafkaSpout(props));
 		builder.setBolt("fence-calculate-blots", new FenceCalculateBolt(props)).fieldsGrouping("fence-calculate-spout", new Fields("account"));
-		builder.setBolt("fence-inout-blots", new FenceInoutBolt()).fieldsGrouping("fence-calculate-blots", new Fields("account"));
+		builder.setBolt("fence-inout-blots", new FenceInoutBolt(props)).fieldsGrouping("fence-calculate-blots", new Fields("account"));
 		builder.setBolt("fence-notify-blots", new FenceNotifyBolt(props)).fieldsGrouping("fence-inout-blots", new Fields("account"));
 		
 		Config config = new Config();

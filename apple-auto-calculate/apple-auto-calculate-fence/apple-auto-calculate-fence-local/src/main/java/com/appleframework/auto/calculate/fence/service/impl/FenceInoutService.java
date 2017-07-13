@@ -129,7 +129,7 @@ public abstract class FenceInoutService {
 	
 	@PostConstruct
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public void readFromDisk() throws Exception {
+	public void readFromDisk() {
 		try {
 			DB db = DBMaker.fileDB(fenceLocationPath).make();
 			ConcurrentMap map = db.hashMap("fenceLocation").createOrOpen();

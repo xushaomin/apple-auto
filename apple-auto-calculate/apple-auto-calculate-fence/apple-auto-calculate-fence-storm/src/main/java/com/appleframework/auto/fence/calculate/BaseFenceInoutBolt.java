@@ -5,12 +5,19 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 import org.apache.storm.task.OutputCollector;
 import org.apache.storm.topology.base.BaseRichBolt;
 import org.apache.storm.tuple.Values;
+import org.mapdb.DB;
+import org.mapdb.DBMaker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,11 +33,13 @@ public abstract class BaseFenceInoutBolt extends BaseRichBolt {
 
 	private static final Logger logger = LoggerFactory.getLogger(KafkaSpout.class);
 
-	private Map<String, Map<String, FenceLocation>> fenceLocationMapMap = new ConcurrentHashMap<>();
+	protected Map<String, Map<String, FenceLocation>> fenceLocationMapMap = new ConcurrentHashMap<>();
 
 	private DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	protected OutputCollector outputCollector;
+	
+	protected Properties props;
 
 	public void noExistsFence(Location location) {
 		String account = location.getAccount();
@@ -53,8 +62,7 @@ public abstract class BaseFenceInoutBolt extends BaseRichBolt {
 		put(account, fenceLocationMap);
 	}
 
-	private void noExistsFence(Map<String, FenceLocation> fenceLocationMap, Set<String> existFenceSet,
-			Location location) {
+	private void noExistsFence(Map<String, FenceLocation> fenceLocationMap, Set<String> existFenceSet, Location location) {
 		String account = location.getAccount();
 		Iterator<Map.Entry<String, FenceLocation>> it = fenceLocationMap.entrySet().iterator();
 		while (it.hasNext()) {
@@ -124,5 +132,36 @@ public abstract class BaseFenceInoutBolt extends BaseRichBolt {
 			fenceLocationMap = new ConcurrentHashMap<>();
 		}
 		return fenceLocationMap;
+	}
+	
+	@PreDestroy
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public void writeToDisk() {
+		try {
+			String fenceLocationPath = props.getProperty("fence.location.map.path", "/work/data/fence/location/map.db");
+			DB db = DBMaker.fileDB(fenceLocationPath).make();
+			ConcurrentMap map = db.hashMap("fenceLocation").createOrOpen();
+			map.clear();
+			map.putAll(fenceLocationMapMap);
+			db.close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
+	
+	@PostConstruct
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public void readFromDisk() {
+		try {
+			String fenceLocationPath = props.getProperty("fence.location.map.path", "/work/data/fence/location/map.db");
+			DB db = DBMaker.fileDB(fenceLocationPath).make();
+			ConcurrentMap map = db.hashMap("fenceLocation").createOrOpen();
+			if(map.size() > 0) {
+				fenceLocationMapMap.putAll(map);
+			}
+			db.close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
 	}
 }

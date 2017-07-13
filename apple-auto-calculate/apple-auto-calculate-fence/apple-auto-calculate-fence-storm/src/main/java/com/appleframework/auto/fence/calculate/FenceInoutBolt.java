@@ -1,6 +1,7 @@
 package com.appleframework.auto.fence.calculate;
 
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import org.apache.storm.task.OutputCollector;
@@ -17,11 +18,16 @@ import com.appleframework.auto.bean.location.Location;
 public class FenceInoutBolt extends BaseFenceInoutBolt {
 
 	private static final long serialVersionUID = 2029919818959082300L;
-		
+	
+	public FenceInoutBolt(Properties props) {
+		 this.props = props;
+	}
+	
 	@SuppressWarnings("rawtypes")
 	@Override
 	public void prepare(Map map, TopologyContext topologyContext, OutputCollector outputCollector) {
 		this.outputCollector = outputCollector;
+		readFromDisk();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -48,6 +54,12 @@ public class FenceInoutBolt extends BaseFenceInoutBolt {
 	public void declareOutputFields(OutputFieldsDeclarer outputFieldsDeclarer) {
 		// 声明输出的filed
 		outputFieldsDeclarer.declare(new Fields("account", "location", "fenceId", "type"));
+	}
+
+	@Override
+	public void cleanup() {
+		super.cleanup();
+		writeToDisk();
 	}
 	
 }

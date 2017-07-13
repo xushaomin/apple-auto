@@ -27,7 +27,6 @@
 		<dependency>
 			<groupId>com.appleframework</groupId>
 			<artifactId>apple-core</artifactId>
-			<version>0.1.9.RELEASE</version>
 		</dependency>
 
 		<!-- aspectj -->
@@ -129,6 +128,12 @@
 		<dependency>
 			<groupId>com.appleframework.cache</groupId>
 			<artifactId>apple-cache-jedis</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.mapdb</groupId>
+			<artifactId>mapdb</artifactId>
+			<version>3.0.5</version>
 		</dependency>
 
 	</dependencies>
