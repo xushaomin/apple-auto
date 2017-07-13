@@ -154,7 +154,7 @@
                 -->
                 <#list page.list as info>
                     <tr class="text-danger">
-                        <td><a href="/monitoring/ac85eac37c5549f78e619a24494dc916.hb">${info.id}</a></td>
+                        <td><a href="/fence/show?id=${info.id}">${info.id}</a></td>
                         <td>${info.name}</td>
                         <td>
 							<#if info.fenceType == 1> 
@@ -172,7 +172,12 @@
                         	<em class="fui-checkbox-checked text-success" title="返回正常"></em>
                         </td>
                         <td>${(info.createTime?string('yyyy-MM-dd'))!''}</td>
-                        <td></td>
+                        <td>
+                        	<button href="/fence/show?id=${info.id}" class="btn btn-primary" data-toggle="modal" data-target="#myModal">查看</button>
+                        	
+                        	<a data-toggle="modal" href="/fence/show?id=${info.id}" data-target="#myModal">查看</a>  
+                        	
+                        </td>
                     </tr>
                  </#list>
             </tbody>
@@ -212,8 +217,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
-                        class="sr-only">关闭</span></button>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
                 <h4 class="modal-title" id="myModalLabel"></h4>
             </div>
             <div class="modal-body">

@@ -31,5 +31,10 @@ public class FenceEntityoServiceImpl implements FenceEntityService {
 		page.setList(fenceEntityDao.findPage(page, so));
 		return page;
 	}
+	
+	@Override
+	public FenceEntityWithBLOBs get(Integer id) {
+		return fenceEntityDao.get(id);
+	}
 
 }

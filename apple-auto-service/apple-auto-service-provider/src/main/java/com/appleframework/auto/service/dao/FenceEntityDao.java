@@ -29,4 +29,9 @@ public class FenceEntityDao {
 	public List<FenceEntity> findPage(Pagination page, FenceSo so) {
 		return fenceExtendMapper.selectPage(page, so);
 	}
+	
+	public FenceEntityWithBLOBs get(Integer id) {
+		return fenceEntityMapper.selectByPrimaryKey(id);
+	}
+	
 }

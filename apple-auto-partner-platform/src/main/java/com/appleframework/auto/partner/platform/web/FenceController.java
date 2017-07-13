@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.appleframework.auto.entity.fence.FenceEntityWithBLOBs;
 import com.appleframework.auto.model.fence.FenceSo;
 import com.appleframework.auto.service.fence.FenceEntityService;
 import com.appleframework.model.page.Pagination;
@@ -34,6 +35,21 @@ public class FenceController extends BaseController {
 	@RequestMapping(value = "/add")
 	public String add(Model model) {
 		return viewModel + "add";
+	}
+	
+	@RequestMapping(value = "/show")
+	public String show(Model model, Integer id) {
+		FenceEntityWithBLOBs entity = fenceEntityService.get(id);
+		model.addAttribute("info", entity);
+		if(entity.getFenceType() == 1) {
+			return viewModel + "show_circle";
+		}
+		else {
+			//List<String> pointList = new ArrayList<>();
+			String[] pointArray = entity.getParameter().split("[|]");
+			model.addAttribute("points", pointArray);
+			return viewModel + "show";
+		}
 	}
 
 }

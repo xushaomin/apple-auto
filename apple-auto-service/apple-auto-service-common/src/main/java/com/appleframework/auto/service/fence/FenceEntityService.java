@@ -12,15 +12,11 @@ import com.appleframework.model.page.Pagination;
  *
  */
 public interface FenceEntityService {
-	
-	/*public void create(Fence fence) throws ServiceException;
-	
-	public void update(Fence fence) throws ServiceException;
-	
-	public void delete(String id) throws ServiceException;*/
-	
+		
 	public List<FenceEntityWithBLOBs> findAll();
 	
 	public Pagination findPage(Pagination page, FenceSo so);
+	
+	public FenceEntityWithBLOBs get(Integer id);
 	
 }
