@@ -41,15 +41,7 @@ public class FenceController extends BaseController {
 	public String show(Model model, Integer id) {
 		FenceEntityWithBLOBs entity = fenceEntityService.get(id);
 		model.addAttribute("info", entity);
-		if(entity.getFenceType() == 1) {
-			return viewModel + "show_circle";
-		}
-		else {
-			//List<String> pointList = new ArrayList<>();
-			String[] pointArray = entity.getParameter().split("[|]");
-			model.addAttribute("points", pointArray);
-			return viewModel + "show";
-		}
+		return viewModel + "show";
 	}
 
 }

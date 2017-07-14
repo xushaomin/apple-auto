@@ -154,7 +154,7 @@
                 -->
                 <#list page.list as info>
                     <tr class="text-danger">
-                        <td><a href="/fence/show?id=${info.id}">${info.id}</a></td>
+                        <td><a target="_blank" href="/fence/show?id=${info.id}">${info.id}</a></td>
                         <td>${info.name}</td>
                         <td>
 							<#if info.fenceType == 1> 
