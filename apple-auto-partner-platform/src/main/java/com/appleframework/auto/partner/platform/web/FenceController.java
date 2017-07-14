@@ -26,6 +26,7 @@ public class FenceController extends BaseController {
 
 	@RequestMapping(value = "/list")
 	public String list(Model model, Pagination page, FenceSo so) {
+		page.setPageSize(5);
 		page = fenceEntityService.findPage(page, so);
 		model.addAttribute("page", page);
 		model.addAttribute("so", so);
@@ -35,6 +36,11 @@ public class FenceController extends BaseController {
 	@RequestMapping(value = "/add")
 	public String add(Model model) {
 		return viewModel + "add";
+	}
+	
+	@RequestMapping(value = "/map")
+	public String map(Model model) {
+		return viewModel + "map";
 	}
 	
 	@RequestMapping(value = "/show")
