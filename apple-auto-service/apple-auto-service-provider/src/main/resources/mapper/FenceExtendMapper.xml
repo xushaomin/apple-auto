@@ -56,7 +56,7 @@
 			and deal_type = ${so.dealType}
 		</if>
 			
-		 order by id asc
+		 order by id desc
 	</select>
 
 </mapper>

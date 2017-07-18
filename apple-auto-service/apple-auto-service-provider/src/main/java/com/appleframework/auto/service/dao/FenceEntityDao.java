@@ -34,4 +34,8 @@ public class FenceEntityDao {
 		return fenceEntityMapper.selectByPrimaryKey(id);
 	}
 	
+	public Integer save(FenceEntityWithBLOBs entity) {
+		return fenceEntityMapper.insert(entity);
+	}
+	
 }

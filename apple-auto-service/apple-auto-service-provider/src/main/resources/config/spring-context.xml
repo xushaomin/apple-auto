@@ -9,7 +9,12 @@
            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-		<!--① 扫描Spring Bean-->
+	<!-- 开启注解配置 -->
+	<context:annotation-config />
+	
+	<aop:aspectj-autoproxy />
+	
+	<!--① 扫描Spring Bean-->
 	<!-- 对指定的包进行组件扫描 -->	
 	<!-- 使用annotation 自动注册bean,并检查@Required,@Autowired的属性已被注入 -->
 	<context:component-scan base-package="com.appleframework.auto.service" />

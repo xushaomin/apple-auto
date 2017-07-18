@@ -1,155 +1,82 @@
 package com.appleframework.auto.service.fence.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
-import com.appleframework.auto.bean.fence.Fence;
-import com.appleframework.auto.bean.fence.SyncOperate;
+import com.appleframework.auto.bean.fence.CircleFence;
+import com.appleframework.auto.bean.fence.Point;
+import com.appleframework.auto.bean.fence.PolygonFence;
+import com.appleframework.auto.bean.fence.RectangleFence;
+import com.appleframework.auto.entity.fence.FenceEntityWithBLOBs;
+import com.appleframework.auto.service.fence.FenceCacheService;
 import com.appleframework.auto.service.fence.FenceInfoService;
-import com.appleframework.cache.core.CacheException;
-import com.appleframework.cache.core.utils.SerializeUtility;
-import com.appleframework.cache.jedis.factory.PoolFactory;
-import com.appleframework.exception.ServiceException;
-
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
+import com.appleframework.auto.service.utils.ListUtil;
 
 @Service("fenceInfoService")
 public class FenceInfoServiceImpl implements FenceInfoService {
 
 	protected final static Logger logger = Logger.getLogger(FenceInfoServiceImpl.class);
 	
-	private final static String KEY_FENCE_MAP   = "KEY_FENCE_MAP";
-	
-	private final static String KEY_FENCE_TOPIC = "KEY_FENCE_TOPIC";
-	
 	@Resource
-	private PoolFactory poolFactory;
-	
-	@SuppressWarnings("deprecation")
-	@Override
-	public void clear() throws ServiceException {
-		JedisPool jedisPool = poolFactory.getReadPool();
-		Jedis jedis = jedisPool.getResource();
+	private FenceCacheService fenceCacheService;
+
+	public void create(FenceEntityWithBLOBs entity) {
 		try {
-			byte[] key = KEY_FENCE_MAP.getBytes();
-			jedis.del(key);
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-			throw new CacheException(e.getMessage());
-		} finally {
-			jedisPool.returnResource(jedis);
-		}
-	}
+			if (entity.getFenceType() == 1) {
+				CircleFence fence = new CircleFence();
+				fence.setId(entity.getId().toString());
+				fence.setName(entity.getName());
+				Double latitude = Double.parseDouble(entity.getLatitudes());
+				Double longitude = Double.parseDouble(entity.getLongitudes());
+				Point point = new Point(latitude, longitude);
+				fence.setPoint(point);
+				fence.setRadius(entity.getRadius());
 
-	@SuppressWarnings("deprecation")
-	@Override
-	public void create(Fence fence) throws ServiceException {
-		JedisPool jedisPool = poolFactory.getReadPool();
-		Jedis jedis = jedisPool.getResource();
-		try {
-			byte[] key = KEY_FENCE_MAP.getBytes();
-			byte[] field = fence.getId().getBytes();
-			byte[] newFence = SerializeUtility.serialize(fence);
-			List<byte[]> list = jedis.hmget(key, field);
-			if (list.size() > 0 && null != list.get(0)) {
-				byte[] value = list.get(0);
-				Fence oldFence = (Fence) SerializeUtility.unserialize(value);
+				fenceCacheService.create(fence);
+				
+			} else if (entity.getFenceType() == 2 && entity.getLongitudes().length() == 2) {
+				RectangleFence fence = new RectangleFence();
+				fence.setId(entity.getId().toString());
+				fence.setName(entity.getName());
 
-				Map<byte[], byte[]> map = new HashMap<byte[], byte[]>();
-				map.put(field, newFence);
-				jedis.hmset(key, map);
+				String latitudes = entity.getLatitudes();
+				String longitudes = entity.getLongitudes();
 
-				// 修改
-				SyncOperate operate = new SyncOperate();
-				operate.setOperateType(SyncOperate.UPDATE);
-				operate.setFenceType(fence.getType());
-				operate.setOldFence(oldFence);
-				operate.setNewFence(fence);
-				jedis.publish(KEY_FENCE_TOPIC.getBytes(), SerializeUtility.serialize(operate));
+				String[] latitudeArray = latitudes.split(",");
+				String[] longitudeArray = longitudes.split(",");
+
+				Point pointA = new Point(latitudeArray[0] + "," + longitudeArray[0]);
+				Point pointB = new Point(latitudeArray[1] + "," + longitudeArray[1]);
+
+				fence.setPointA(pointA);
+				fence.setPointB(pointB);
+
+				fenceCacheService.create(fence);
 			} else {
-				Map<byte[], byte[]> map = new HashMap<byte[], byte[]>();
-				map.put(field, newFence);
-				jedis.hmset(key, map);
 
-				// 新增
-				SyncOperate operate = new SyncOperate();
-				operate.setOperateType(SyncOperate.CREATE);
-				operate.setFenceType(fence.getType());
-				operate.setNewFence(fence);
-				jedis.publish(KEY_FENCE_TOPIC.getBytes(), SerializeUtility.serialize(operate));
-			}
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-			throw new CacheException(e.getMessage());
-		} finally {
-			jedisPool.returnResource(jedis);
-		}
-	}
-	
-	@Override
-	public void update(Fence fence) throws ServiceException {
-		this.create(fence);
-	}
-	
-	@SuppressWarnings("deprecation")
-	@Override
-	public void delete(String id) throws ServiceException {
-		JedisPool jedisPool = poolFactory.getReadPool();
-		Jedis jedis = jedisPool.getResource();
-		try {
-			byte[] key = KEY_FENCE_MAP.getBytes();
-			byte[] field = id.getBytes();
-			List<byte[]> list = jedis.hmget(key, field);
-			if (list.size() > 0) {
-				byte[] value = list.get(0);
-				Fence oldFence = (Fence) SerializeUtility.unserialize(value);
+				PolygonFence fence = new PolygonFence();
+				fence.setId(entity.getId().toString());
+				fence.setName(entity.getName());
 
-				jedis.hdel(key, field);
-				// 删除
-				SyncOperate operate = new SyncOperate();
-				operate.setOperateType(SyncOperate.DELETE);
-				operate.setFenceType(oldFence.getType());
-				operate.setOldFence(oldFence);
-				jedis.publish(KEY_FENCE_TOPIC.getBytes(), SerializeUtility.serialize(operate));
+				String latitudes = entity.getLatitudes();
+				String longitudes = entity.getLongitudes();
+
+				List<Double> polygonXA = ListUtil.string2DoubleList(longitudes);
+				List<Double> polygonYA = ListUtil.string2DoubleList(latitudes);
+
+				fence.setPolygonXA(polygonXA);
+				fence.setPolygonYA(polygonYA);
+
+				fenceCacheService.create(fence);
 			}
 		} catch (Exception e) {
-			logger.error(e.getMessage());
-			throw new CacheException(e.getMessage());
-		} finally {
-			jedisPool.returnResource(jedis);
+			logger.error(e);
 		}
-	}
-	
-	@SuppressWarnings("deprecation")
-	@Override
-	public List<Fence> get() throws ServiceException {
-		List<Fence> list = new ArrayList<Fence>();
-		JedisPool jedisPool = poolFactory.getReadPool();
-		Jedis jedis = jedisPool.getResource();
-		try {
-			byte[] key = KEY_FENCE_MAP.getBytes();
-			Map<byte[], byte[]> map = jedis.hgetAll(key);
-			if (null != map && map.size() > 0) {
-				for (Map.Entry<byte[], byte[]> entry : map.entrySet()) {
-					Fence boValue = (Fence) SerializeUtility.unserialize(entry.getValue());
-					list.add(boValue);
-				}
-			}
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-			throw new CacheException(e.getMessage());
-		} finally {
-			jedisPool.returnResource(jedis);
-		}
-		return list;
+
 	}
 
 }

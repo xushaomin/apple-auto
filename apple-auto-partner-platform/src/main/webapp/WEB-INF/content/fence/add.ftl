@@ -86,24 +86,24 @@
 	                    <label class="col-sm-2 control-label">提醒类型</label>
 	                    <div class="col-sm-8">
 	                        <label class="toggle-radio">
-	                            <input type="radio" name="dealType" value="GET" checked/> 出围栏
+	                            <input type="radio" name="dealType" value="1" checked/> 出围栏
 	                        </label>
 	                        &nbsp;
 	                        <label class="toggle-radio">
-	                            <input type="radio" name="dealType" value="POST" /> 入围栏
+	                            <input type="radio" name="dealType" value="2" /> 入围栏
 	                        </label>
 	                        &nbsp;
 	                        <label class="toggle-radio">
-	                            <input type="radio" name="dealType" value="POST" /> 出+入
+	                            <input type="radio" name="dealType" value="3" /> 出+入
 	                        </label>
 	                        <p class="help-block">指定围栏提醒类型. 默认: 出围栏</p>
 	                    </div>
 	                </div>
 	                
 	                <div class="form-group">
-	                    <label for="maxConnectionSeconds" class="col-sm-2 control-label"><abbr title='提醒时间间隔(m)'>提醒时间间隔</abbr></label>
+	                    <label for="continueTime" class="col-sm-2 control-label"><abbr title='提醒时间间隔(m)'>提醒时间间隔</abbr></label>
 	                    <div class="col-sm-8">
-	                        <input id="maxConnectionSeconds" name="maxConnectionSeconds" class="form-control" placeholder="请输入提醒时间间隔(s)" required="true" type="text" value="600"/>
+	                        <input id="continueTime" name="continueTime" class="form-control" placeholder="请输入提醒时间间隔(s)" required="true" type="text" value="600"/>
 	                        <p class="help-block">提醒时间间隔, 默认为600, 单位:秒</p>
 	                    </div>
 	                </div>
@@ -111,7 +111,7 @@
 	                <div class="form-group">
 	                    <div class="col-sm-offset-2 col-sm-10">
 	                        <button type="submit" class="btn btn-primary"><em class="fui-check-circle"></em> 保存</button>
-	                        &nbsp;<a href="list.hb">取消</a>
+	                        &nbsp;<a href="list">取消</a>
 	                    </div>
 	                </div>
 	            </form>

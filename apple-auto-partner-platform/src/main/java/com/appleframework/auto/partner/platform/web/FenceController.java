@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.appleframework.auto.entity.fence.FenceEntityWithBLOBs;
 import com.appleframework.auto.model.fence.FenceSo;
 import com.appleframework.auto.service.fence.FenceEntityService;
+import com.appleframework.exception.AppleException;
 import com.appleframework.model.page.Pagination;
 import com.appleframework.web.springmvc.controller.BaseController;
 
@@ -48,6 +49,17 @@ public class FenceController extends BaseController {
 		FenceEntityWithBLOBs entity = fenceEntityService.get(id);
 		model.addAttribute("info", entity);
 		return viewModel + "show";
+	}
+	
+	@RequestMapping(value = "/save")
+	public String save(Model model, FenceEntityWithBLOBs entity) {
+		try {
+			fenceEntityService.save(entity);
+		} catch (AppleException e) {
+			addErrorMessage(model, e.getMessage());
+			return ERROR_AJAX;
+		}
+		return SUCCESS_AJAX;
 	}
 
 }

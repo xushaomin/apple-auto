@@ -1,4 +1,4 @@
-package com.appleframework.auto.service.fence;
+package com.appleframework.auto.service.utils;
 
 import java.util.ArrayList;
 import java.util.List;

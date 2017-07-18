@@ -50,8 +50,8 @@ public class Point implements Serializable {
 	
 	public Point(String parameter) {
 		String[] parameters = parameter.split(",");
-		this.latitude = Double.parseDouble(parameters[0]);
-		this.longitude = Double.parseDouble(parameters[1]);;
+		this.longitude = Double.parseDouble(parameters[0]);;
+		this.latitude = Double.parseDouble(parameters[1]);
 	}
 
 	public Double getLatitude() {

@@ -74,7 +74,7 @@
   		points[i] = new Object();
 		points[i].lng = lonlat[0];
 		points[i].lat = lonlat[1];
-		mapsPoint[i] = new BMap.Point(lonlat[0],lonlat[1]);
+		mapsPoint[i] = new BMap.Point(lonlat[0], lonlat[1]);
 	}
 	
 	// 百度地图API功能
@@ -84,7 +84,7 @@
 	
 	var overlay;
 	<#if info.fenceType == 1> 
-		overlay = new BMap.Circle(mapsPoint[0], 50, {
+		overlay = new BMap.Circle(mapsPoint[0], ${info.radius}, {
             strokeColor: "${info.color!'#fc261d'}",
             strokeWeight: 4,
             fillColor: "#E2E8F1",
@@ -99,4 +99,48 @@
 		});
 	</#if>
 	map.addOverlay(overlay);
+	
+	var index = 0;
+	
+	//在轨迹点上创建图标，并添加点击事件，显示轨迹点信息。pointss,数组。
+	function addMarker(lng, lat){
+		var point = new BMap.Point(lng, lat);
+		var marker = new BMap.Marker(point);
+		map.addOverlay(marker); 
+	}    
+		
+	//添加线
+	function addLine(index){
+		if(index == 0){
+			return;
+		}
+		var linePoints = [];
+	
+		// 创建标注对象并添加到地图   
+		//for(i = 0; i <= index; i++){
+		//	linePoints.push(new BMap.Point(points[i].lng, points[i].lat));
+		//}
+		linePoints.push(new BMap.Point(points[index-1].lng, points[index-1].lat));
+		linePoints.push(new BMap.Point(points[index].lng, points[index].lat));
+		
+		polyline = new BMap.Polyline(linePoints, {strokeColor:"white", strokeWeight:1, strokeOpacity:0.5});   //创建折线
+		map.addOverlay(polyline);   //增加折线
+	}
+		
+	var makerPointss = [];
+	var newLinePointss = [];	
+		
+	function dynamicLine(){
+		var lng = points[index].lng;
+		var lat = points[index].lat;
+			
+		//addMarker(lng, lat);//增加对应该的轨迹点
+		addLine(index);
+		index = index + 1;
+		
+		setTimeout(dynamicLine, 1000);
+	}
+	
+    setTimeout(dynamicLine, 1000);//动态生成新的点。
+    
 </script>

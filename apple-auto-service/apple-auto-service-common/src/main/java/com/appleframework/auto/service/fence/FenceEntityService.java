@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.appleframework.auto.entity.fence.FenceEntityWithBLOBs;
 import com.appleframework.auto.model.fence.FenceSo;
+import com.appleframework.exception.AppleException;
 import com.appleframework.model.page.Pagination;
 
 /**
@@ -18,5 +19,7 @@ public interface FenceEntityService {
 	public Pagination findPage(Pagination page, FenceSo so);
 	
 	public FenceEntityWithBLOBs get(Integer id);
+	
+	public Integer save(FenceEntityWithBLOBs entity) throws AppleException;
 	
 }

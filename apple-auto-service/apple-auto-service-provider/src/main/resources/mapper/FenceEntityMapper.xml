@@ -23,8 +23,7 @@
 	</resultMap>
 	<sql id="Base_Column_List">
 		id, client_id, name, fence_type, is_enable, is_delete, deal_type, color,
-		continue_time, radius,
-		remark, create_time, update_time
+		continue_time, radius, remark, create_time, update_time
 	</sql>
 	<sql id="Blob_Column_List">
 		parameter, latitudes, longitudes
@@ -42,23 +41,41 @@
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
 	<insert id="insert" parameterType="com.appleframework.auto.entity.fence.FenceEntityWithBLOBs">
+		<selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      		SELECT LAST_INSERT_ID()
+    	</selectKey>
 		insert into fence (
-			id, client_id, name, fence_type,
-			is_enable, is_delete, deal_type,
-			color, continue_time, radius,
-			remark, create_time, update_time,
-			parameter, latitudes, longitudes
+			client_id, 
+			name, fence_type,
+			is_enable, 
+			is_delete, 
+			deal_type,
+			color, 
+			continue_time, 
+			radius,
+			remark, 
+			create_time, 
+			update_time,
+			parameter, 
+			latitudes, 
+			longitudes
 		)
 		values (
-			#{id,jdbcType=INTEGER}, #{client_id,jdbcType=INTEGER},
-			#{name,jdbcType=VARCHAR},
-			#{fenceType,jdbcType=INTEGER},
-			#{isEnable,jdbcType=BIT}, #{isDelete,jdbcType=BIT}, #{dealType,jdbcType=INTEGER},
-			#{color,jdbcType=VARCHAR}, #{continueTime,jdbcType=INTEGER},
-			#{radius,jdbcType=DOUBLE},
-			#{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
-			#{parameter,jdbcType=LONGVARCHAR}, #{latitudes,jdbcType=LONGVARCHAR},
-			#{longitudes,jdbcType=LONGVARCHAR}
+			#{clientId, jdbcType=INTEGER},
+			#{name, jdbcType=VARCHAR},
+			#{fenceType, jdbcType=INTEGER},
+			#{isEnable, jdbcType=BIT}, 
+			#{isDelete, jdbcType=BIT}, 
+			#{dealType, jdbcType=INTEGER},
+			#{color, jdbcType=VARCHAR}, 
+			#{continueTime, jdbcType=INTEGER},
+			#{radius, jdbcType=DOUBLE},
+			#{remark, jdbcType=VARCHAR}, 
+			#{createTime, jdbcType=TIMESTAMP}, 
+			#{updateTime, jdbcType=TIMESTAMP},
+			#{parameter, jdbcType=LONGVARCHAR}, 
+			#{latitudes, jdbcType=LONGVARCHAR},
+			#{longitudes, jdbcType=LONGVARCHAR}
 		)
 	</insert>
 	<insert id="insertSelective" parameterType="com.appleframework.auto.entity.fence.FenceEntityWithBLOBs">
