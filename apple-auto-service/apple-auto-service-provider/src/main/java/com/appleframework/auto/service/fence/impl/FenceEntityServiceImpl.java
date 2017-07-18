@@ -16,6 +16,7 @@ import com.appleframework.auto.service.fence.FenceEntityService;
 import com.appleframework.auto.service.fence.FenceInfoService;
 import com.appleframework.auto.service.utils.PoiUtils;
 import com.appleframework.exception.AppleException;
+import com.appleframework.model.Search;
 import com.appleframework.model.page.Pagination;
 
 @Service("fenceEntityService")
@@ -35,8 +36,8 @@ public class FenceEntityServiceImpl implements FenceEntityService {
 	}
 
 	@Override
-	public Pagination findPage(Pagination page, FenceSo so) {
-		page.setList(fenceEntityDao.findPage(page, so));
+	public Pagination findPage(Pagination page, FenceSo so, Search se) {
+		page.setList(fenceEntityDao.findPage(page, so, se));
 		return page;
 	}
 	

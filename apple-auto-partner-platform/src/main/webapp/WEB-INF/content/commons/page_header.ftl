@@ -5,11 +5,11 @@
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
                         <span class="sr-only">Toggle navigation</span>
                     </button>
-                    <a class="navbar-brand" href="/">HB</a>
+                    <a class="navbar-brand" href="/">车辆管理系统&nbsp;&nbsp;</a>
                 </div>
                 <div class="collapse navbar-collapse" id="navbar-collapse-01">
                     <ul class="nav navbar-nav navbar-left" id="mainMenu">
-                        <li><a href="/">Monitoring</a></li>
+                        <li><a href="/fence/list">围栏</a></li>
                         <li class="dropdown" id="instanceMenu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Instance <b class="caret"></b></a>
                             <span class="dropdown-arrow"></span>

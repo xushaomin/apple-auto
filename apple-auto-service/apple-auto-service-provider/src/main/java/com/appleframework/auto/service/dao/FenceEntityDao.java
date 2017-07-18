@@ -11,6 +11,7 @@ import com.appleframework.auto.entity.fence.FenceEntityWithBLOBs;
 import com.appleframework.auto.model.fence.FenceSo;
 import com.appleframework.auto.service.mapper.FenceEntityMapper;
 import com.appleframework.auto.service.mapper.FenceExtendMapper;
+import com.appleframework.model.Search;
 import com.appleframework.model.page.Pagination;
 
 @Repository("fenceEntityDao")
@@ -26,8 +27,8 @@ public class FenceEntityDao {
 		return fenceExtendMapper.selectAll();
 	}
 	
-	public List<FenceEntity> findPage(Pagination page, FenceSo so) {
-		return fenceExtendMapper.selectPage(page, so);
+	public List<FenceEntity> findPage(Pagination page, FenceSo so, Search se) {
+		return fenceExtendMapper.selectPage(page, so, se);
 	}
 	
 	public FenceEntityWithBLOBs get(Integer id) {

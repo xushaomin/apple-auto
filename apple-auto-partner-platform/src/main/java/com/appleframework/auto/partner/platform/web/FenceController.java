@@ -10,6 +10,7 @@ import com.appleframework.auto.entity.fence.FenceEntityWithBLOBs;
 import com.appleframework.auto.model.fence.FenceSo;
 import com.appleframework.auto.service.fence.FenceEntityService;
 import com.appleframework.exception.AppleException;
+import com.appleframework.model.Search;
 import com.appleframework.model.page.Pagination;
 import com.appleframework.web.springmvc.controller.BaseController;
 
@@ -26,11 +27,12 @@ public class FenceController extends BaseController {
 	private String viewModel = "fence/";
 
 	@RequestMapping(value = "/list")
-	public String list(Model model, Pagination page, FenceSo so) {
-		page.setPageSize(5);
-		page = fenceEntityService.findPage(page, so);
+	public String list(Model model, Pagination page, FenceSo so, Search se) {
+		page.setPageSize(10);
+		page = fenceEntityService.findPage(page, so, se);
 		model.addAttribute("page", page);
 		model.addAttribute("so", so);
+		model.addAttribute("se", se);
 		return viewModel + "list";
 	}
 

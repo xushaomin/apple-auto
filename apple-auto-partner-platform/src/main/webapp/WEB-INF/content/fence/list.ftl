@@ -12,6 +12,15 @@
 
     <#include "../commons/page_css.ftl" />
 
+	<link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.4/src/SearchInfoWindow_min.css" />    
+    <link rel="stylesheet" href="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.css" />    
+    
+ 	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=F0i6SrLmHquLVNLCqpExxPrj8mWVdFwx"></script>    
+    <!--加载鼠标绘制工具-->    
+    <script type="text/javascript" src="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.js"></script>    
+    <!--加载检索信息窗口-->    
+    <script type="text/javascript" src="http://api.map.baidu.com/library/SearchInfoWindow/1.4/src/SearchInfoWindow_min.js"></script>    
+	
 </head>
 <body>
 
@@ -25,6 +34,9 @@
 	<div class="row">
 	    <div class="col-md-10">
 	        <form class="form-inline" role="form" action="" id="filterForm">
+	        	<div class="input-group">
+	                <input type="text" name="name" value="${so.name!''}" class="form-control" placeholder="围栏关键字"/>
+	            </div>
 	            <div class="form-group">
 	                <select name="fenceType" class="form-control">
 	                    <option value="">所有类型</option>
@@ -44,9 +56,9 @@
 	            <div class="form-group">
 	                <div class="input-group">
 	                    <div class="input-group-addon">排序</div>
-	                    <select name="orderItem" class="form-control">
-	                            <option value="LOG_TIME" selected>日志时间</option>
-	                            <option value="CONN_TIME" >连接用时</option>
+	                    <select name="orderField" class="form-control">
+	                    	<option <#if se.orderField?? && se.orderField == 'id'>selected</#if> value="id">围栏编号</option>
+	                  		<option <#if se.orderField?? && se.orderField == 'create_time'>selected</#if> value="create_time" >创建时间</option>
 	                    </select>
 	                </div>
 	            </div>
@@ -84,29 +96,34 @@
 	                -->
 	                <#list page.list as info>
 	                    <tr class="text-danger">
-	                        <td><a target="_blank" href="/fence/show?id=${info.id}">${info.id}</a></td>
+	                        <td>
+	                        	<a target="_blank" href="/fence/show?id=${info.id}">${info.id}</a>
+	                        </td>
 	                        <td>${info.name}</td>
 	                        <td>
 								<#if info.fenceType == 1> 
-								  圆形围栏
+								  圆形
 								<#elseif info.fenceType == 2> 
-								 矩形围栏
+								 矩形
 								<#elseif info.fenceType == 3> 
-								多边形围栏
+								多边形
 								<#else> 
-								省围栏
+								省
 								</#if>
 	                        </td>
 	                        <td>
-	                        	<em class="fui-stumbleupon text-warning" title="变为不正常"></em>
-	                        	<em class="fui-checkbox-checked text-success" title="返回正常"></em>
+	                        	<#if info.isEnable == true> 
+									<em class="fui-checkbox-checked text-success" title="返回正常"></em>
+								<#else> 
+									<em class="fui-stumbleupon text-warning" title="变为不正常"></em>
+								</#if>
 	                        </td>
 	                        <td>${(info.createTime?string('yyyy-MM-dd'))!''}</td>
 	                        <td>
-	                        	<button href="/fence/show?id=${info.id}" class="btn btn-primary" data-toggle="modal" data-target="#myModal">查看</button>
-	                        	
-	                        	<a data-toggle="modal" href="/fence/show?id=${info.id}" data-target="#myModal">查看</a>  
-	                        	
+	                        	<button data-remote="/fence/show?id=${info.id}" class="btn btn-primary" data-toggle="modal" data-target="#myModal">查看</button>
+	                        	<!--
+	                        	<a data-toggle="modal" href="/fence/show?id=${info.id}" data-target="#myModal">查看</a>
+	                        	-->
 	                        </td>
 	                    </tr>
 	                 </#list>

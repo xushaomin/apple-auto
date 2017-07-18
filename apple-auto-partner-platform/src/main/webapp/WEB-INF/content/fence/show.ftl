@@ -138,9 +138,9 @@
 		addLine(index);
 		index = index + 1;
 		
-		setTimeout(dynamicLine, 1000);
+		setTimeout(dynamicLine, 10);
 	}
 	
-    setTimeout(dynamicLine, 1000);//动态生成新的点。
+    setTimeout(dynamicLine, 10);//动态生成新的点。
     
 </script>

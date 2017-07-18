@@ -45,7 +45,7 @@
 		
 		<if test="so.name != null">
     		and name like '%${so.name}%'
-   		</if>   	
+   		</if>
 		<if test="so.fenceType != null">
 			and fence_type = ${so.fenceType}
 		</if>
@@ -55,8 +55,26 @@
 		<if test="so.dealType != null">
 			and deal_type = ${so.dealType}
 		</if>
-			
-		 order by id desc
+		order by
+		
+		<choose>
+            <when test="se.orderField != null">
+               ${se.orderField}
+            </when>
+            <otherwise>
+                id
+            </otherwise>
+        </choose>
+        
+        <choose>
+            <when test="se.orderDirection != null">
+               ${se.orderDirection}
+            </when>
+            <otherwise>
+                desc
+            </otherwise>
+        </choose>
+		 
 	</select>
 
 </mapper>
