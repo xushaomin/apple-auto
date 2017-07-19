@@ -21,6 +21,7 @@ public class FenceNotifyBolt extends BaseFenceNotifyBolt {
 	@SuppressWarnings("rawtypes")
 	public void prepare(Map map, TopologyContext topologyContext, OutputCollector outputCollector) {
 		// this.outputCollector = outputCollector;
+		this.init();
 	}
 
 	public FenceNotifyBolt(Properties props) {
@@ -40,6 +41,12 @@ public class FenceNotifyBolt extends BaseFenceNotifyBolt {
 	public void declareOutputFields(OutputFieldsDeclarer outputFieldsDeclarer) {
 		// 声明输出的filed
 		//outputFieldsDeclarer.declare(new Fields("account", "location", "fenceId", "type"));
+	}
+
+	@Override
+	public void cleanup() {
+		super.cleanup();
+		super.close();
 	}
 
 }
