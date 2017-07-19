@@ -36,7 +36,7 @@ public abstract class BaseFenceNotifyBolt extends BaseRichBolt {
         props.put("key.serializer.class", "kafka.serializer.StringEncoder");
         ProducerConfig producerConfig = new ProducerConfig(props);
         producer = new Producer<String, byte[]>(producerConfig);
-        logger.error("Kafka producer init success ...");
+        logger.warn("Kafka producer init success ...");
 	}
 
 	protected void notify(String account, Location location, String fenceId, Integer type) {

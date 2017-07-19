@@ -138,12 +138,14 @@ public abstract class BaseFenceInoutBolt extends BaseRichBolt {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void writeToDisk() {
 		try {
-			String fenceLocationPath = props.getProperty("fence.location.map.path", "/work/data/fence/location/map.db");
+			logger.warn("write inout data into disk ...");
+			String fenceLocationPath = props.getProperty("fence.location.map.path");
 			DB db = DBMaker.fileDB(fenceLocationPath).make();
 			ConcurrentMap map = db.hashMap("fenceLocation").createOrOpen();
 			map.clear();
 			map.putAll(fenceLocationMapMap);
 			db.close();
+			logger.warn("write inout data success ...");
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
@@ -153,13 +155,15 @@ public abstract class BaseFenceInoutBolt extends BaseRichBolt {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void readFromDisk() {
 		try {
-			String fenceLocationPath = props.getProperty("fence.location.map.path", "/work/data/fence/location/map.db");
+			logger.warn("read inout data from disk ...");
+			String fenceLocationPath = props.getProperty("fence.location.map.path");
 			DB db = DBMaker.fileDB(fenceLocationPath).make();
 			ConcurrentMap map = db.hashMap("fenceLocation").createOrOpen();
 			if(map.size() > 0) {
 				fenceLocationMapMap.putAll(map);
 			}
 			db.close();
+			logger.warn("read inout data success ...");
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
