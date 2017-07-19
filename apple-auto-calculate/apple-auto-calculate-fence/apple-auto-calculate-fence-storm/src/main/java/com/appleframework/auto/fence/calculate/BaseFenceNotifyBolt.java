@@ -26,7 +26,7 @@ public abstract class BaseFenceNotifyBolt extends BaseRichBolt {
 
 	protected Properties props;
 	
-	private Producer<String, byte[]> producer;
+	protected Producer<String, byte[]> producer;
 	
 	protected void init() {
         props.put("serializer.class", "kafka.serializer.DefaultEncoder");

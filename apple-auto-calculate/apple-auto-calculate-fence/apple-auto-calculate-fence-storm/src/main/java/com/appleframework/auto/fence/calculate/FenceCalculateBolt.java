@@ -38,7 +38,6 @@ public class FenceCalculateBolt extends BaseFenceCalculateRTreeBolt {
 		String account = tuple.getString(0);
 		Location location = (Location) tuple.getValue(1);
 		// System.out.println("线程"+Thread.currentThread().getName());
-		// 简单的按照空格进行切分后，发射到下一阶段bolt
 		// LOGGER.info("FenceCalculateBolt:" + location.toString());
 		Set<String> fenceSet = this.calculate(location);
 		outputCollector.emit(new Values(account, location, fenceSet));

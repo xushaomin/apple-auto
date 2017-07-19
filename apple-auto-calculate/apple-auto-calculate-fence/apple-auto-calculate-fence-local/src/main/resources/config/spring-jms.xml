@@ -14,6 +14,7 @@
 	<!-- 使用annotation 自动注册bean,并检查@Required,@Autowired的属性已被注入 -->
 	<context:component-scan base-package="com.appleframework.auto.calculate.fence" />
 	
+	<!-- consumer -->
 	<bean id="propertyConfigurer" class="com.appleframework.config.ExtendedPropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
@@ -46,4 +47,30 @@
 		<property name="partitionsNum" value="${consumer.partitionsNum}" />
 	</bean>
 
+	<!-- producer -->
+    <bean id="producerProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="properties">
+            <props>
+        		<prop key="serializer.class">kafka.serializer.DefaultEncoder</prop>
+        		<prop key="metadata.broker.list">${metadata.broker.list}</prop>
+        		<prop key="producer.type">async</prop>
+    			<prop key="request.required.acks">1</prop>
+        		<prop key="partitioner.class">com.appleframework.jms.kafka.partitions.RandomPartitioner</prop>
+                <prop key="key.serializer.class">kafka.serializer.StringEncoder</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <bean id="producerConfig" class="kafka.producer.ProducerConfig">
+		<constructor-arg index="0" ref="producerProperties" />
+	</bean>
+    
+	<bean id="producer" class="kafka.javaapi.producer.Producer">
+		<constructor-arg index="0" ref="producerConfig" />
+	</bean>
+	
+	<bean id="messageProducer3" class="com.appleframework.jms.kafka.producer.KafkaMessageProducer3">
+		<property name="producer" ref="producer" />
+	</bean>
+	
 </beans>

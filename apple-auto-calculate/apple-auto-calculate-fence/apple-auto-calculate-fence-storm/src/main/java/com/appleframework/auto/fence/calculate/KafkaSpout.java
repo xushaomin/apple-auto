@@ -37,7 +37,6 @@ public class KafkaSpout extends BaseMessageConsumer implements IRichSpout {
 	@Override
 	public void processByteMessage(byte[] message) {
 		Location value = (Location)ByteUtils.fromByte(message);
-		//LOGGER.info("(consumer)==>" + value);
 		collector.emit(new Values(value.getAccount(), value));
 	}
 
