@@ -40,7 +40,7 @@
 		<constructor-arg index="0" ref="consumerProperties" />
 	</bean>
 
-	<bean id="locationConsumer" class="com.appleframework.auto.calculate.notify.consumer.FenceResultConsumer" init-method="init" destroy-method="destroy">
+	<bean id="fenceResultConsumer" class="com.appleframework.auto.calculate.notify.consumer.FenceResultConsumer" init-method="init" destroy-method="destroy">
 		<property name="consumerConfig" ref="consumerConfig" />
 		<property name="topic" value="${consumer.topic}" />
 		<property name="partitionsNum" value="${consumer.partitionsNum}" />

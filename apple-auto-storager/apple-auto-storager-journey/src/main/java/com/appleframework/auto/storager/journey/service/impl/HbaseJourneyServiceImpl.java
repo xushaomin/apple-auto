@@ -9,6 +9,7 @@ import com.appleframework.auto.bean.location.Journey;
 import com.appleframework.auto.storager.journey.key.JourneyRowkey;
 import com.appleframework.auto.storager.journey.service.HbaseJourneyService;
 import com.appleframework.data.hbase.client.RowKey;
+import com.appleframework.data.hbase.client.SimpleHbaseAdminClient;
 import com.appleframework.data.hbase.client.SimpleHbaseClient;
 
 @Service("hbaseJourneyService")
@@ -18,6 +19,9 @@ public class HbaseJourneyServiceImpl implements HbaseJourneyService {
 
 	@Resource
 	private SimpleHbaseClient journeyHbaseDao;
+	
+	@Resource
+	private SimpleHbaseAdminClient hbaseAdminClient;
 
 	@Override
 	public void save(Journey journey) {
@@ -26,6 +30,10 @@ public class HbaseJourneyServiceImpl implements HbaseJourneyService {
 			logger.debug(rowKey);
 		}
 		journeyHbaseDao.putObject(rowKey, journey);
+	}
+	
+	public void createTable() {
+		journeyHbaseDao.getHbaseTableConfig().getHbaseTableSchema().
 	}
 
 }

@@ -24,5 +24,19 @@
 		<property name="hbaseDataSource" ref="hbaseDataSource" />
 		<property name="hbaseTableConfig" ref="locationTableConfig" />	
 	</bean>
+	
+	<bean id="journeyTableConfig" class="com.appleframework.data.hbase.config.HBaseTableConfig"
+    	init-method="init">
+    	<property name="autoFlush" value="${hbase.table.auto.flush}" />
+    	<property name="tableName" value="${hbase.table.name.journey}" />
+		<property name="configResource">   
+			<value>classpath:/hbase/hbase-journey.xml</value>   
+		</property>
+	</bean>	
+			
+	<bean id="journeyHbaseDao" class="com.appleframework.data.hbase.client.SimpleHbaseClientImpl">
+		<property name="hbaseDataSource" ref="hbaseDataSource" />
+		<property name="hbaseTableConfig" ref="journeyTableConfig" />	
+	</bean>
 		
 </beans>

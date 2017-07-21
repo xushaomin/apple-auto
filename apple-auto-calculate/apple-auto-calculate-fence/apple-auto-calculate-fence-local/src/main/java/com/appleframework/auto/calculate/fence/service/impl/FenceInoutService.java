@@ -13,21 +13,38 @@ import javax.annotation.Resource;
 import org.apache.log4j.Logger;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
+import org.springframework.stereotype.Service;
 
 import com.appleframework.auto.bean.location.Location;
+import com.appleframework.auto.calculate.fence.model.FenceEvent;
 import com.appleframework.auto.calculate.fence.model.FenceLocation;
 import com.appleframework.config.core.PropertyConfigurer;
+import com.lmax.disruptor.EventHandler;
 
-public abstract class FenceInoutService {
+@Service("fenceInoutService")
+public class FenceInoutService implements EventHandler<FenceEvent> {
 
-	protected final static Logger logger = Logger.getLogger(FenceInoutService.class);
+	private final static Logger logger = Logger.getLogger(FenceInoutService.class);
 
 	private Map<String, Map<String, FenceLocation>> fenceLocationMapMap = new ConcurrentHashMap<>();
 
+	private String fenceLocationPath = PropertyConfigurer.getValue("fence.location.map.path");
+
 	@Resource
-	protected FenceNotifyService fenceNotifyService;
+	private FenceNotifyService fenceNotifyService;
 	
-	private String fenceLocationPath = PropertyConfigurer.getValue("fence.location.map.path", "/work/data/fence/location/map.db");
+	@Override
+	public void onEvent(FenceEvent fenceEvent, long sequence, boolean endOfBatch) throws Exception {
+		Set<String> fenceIdSet = fenceEvent.getFenceIdSet();
+		Location location = fenceEvent.getLocation();
+		if (fenceIdSet == null || fenceIdSet.size() == 0) {
+			// 不存在围栏信息，全部退出
+			noExistsFence(location);
+		} else {
+			// 存在围栏记录
+			existsFence(fenceIdSet, location);
+		}
+	}
 
 	public void noExistsFence(Location location) {
 		String account = location.getAccount();

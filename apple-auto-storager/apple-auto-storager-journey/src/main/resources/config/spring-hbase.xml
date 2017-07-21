@@ -24,5 +24,9 @@
 		<property name="hbaseDataSource" ref="hbaseDataSource" />
 		<property name="hbaseTableConfig" ref="journeyTableConfig" />	
 	</bean>
+	
+	<bean id="hbaseAdminClient" class="com.appleframework.data.hbase.client.SimpleHbaseAdminClientImpl">
+		<property name="hbaseDataSource" ref="hbaseDataSource" />
+	</bean>
 		
 </beans>

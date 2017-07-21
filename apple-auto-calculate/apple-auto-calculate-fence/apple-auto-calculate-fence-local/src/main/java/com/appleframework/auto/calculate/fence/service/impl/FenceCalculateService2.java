@@ -5,7 +5,6 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.appleframework.auto.bean.location.Location;
@@ -21,13 +20,8 @@ import com.github.davidmoten.rtree.geometry.Rectangle;
 import rx.Observable;
 import rx.functions.Func1;
 
-@Service("fenceCalculateService")
-public class FenceCalculateService {
-
-	protected final static Logger logger = Logger.getLogger(FenceCalculateService.class);
-
-	@Resource
-	private FenceEventService fenceEventService;
+@Service("fenceCalculateService2")
+public class FenceCalculateService2 extends FenceInoutService {
 	
 	@Resource
 	private FenceCacheService fenceCacheService;
@@ -35,9 +29,16 @@ public class FenceCalculateService {
 	public void calculate(Location location) {
 		double x = location.getLongitude();
 		double y = location.getLatitude();
+
 		try {
 			Set<String> fenceIdSet = this.search(x, y);
-			fenceEventService.publishEvent(location, fenceIdSet);
+			if (fenceIdSet == null || fenceIdSet.size() == 0) {
+				// 不存在围栏信息，全部退出
+				noExistsFence(location);
+			} else {
+				// 存在围栏记录
+				existsFence(fenceIdSet, location);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

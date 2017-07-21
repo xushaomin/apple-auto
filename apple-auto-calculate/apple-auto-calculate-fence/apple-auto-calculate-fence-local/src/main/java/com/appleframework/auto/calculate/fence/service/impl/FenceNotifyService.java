@@ -54,7 +54,7 @@ public class FenceNotifyService {
 	}
 
 	private void send(FenceResult result) {
-		String topic = PropertyConfigurer.getString("producer.topic.notify");
+		String topic = PropertyConfigurer.getString("producer.topic");
 		messageProducer3.sendObject(topic, result.getAccount(), result);
 	}
 

@@ -53,7 +53,7 @@ public abstract class BaseFenceNotifyBolt extends BaseRichBolt {
 	}
 	
 	private void send(FenceResult result) {
-		String topic = props.getProperty("producer.topic.notify");
+		String topic = props.getProperty("producer.topic");
 		KeyedMessage<String, byte[]> producerData 
 			= new KeyedMessage<String, byte[]>(topic, result.getAccount(), ByteUtils.toBytes(result));
 		producer.send(producerData);
