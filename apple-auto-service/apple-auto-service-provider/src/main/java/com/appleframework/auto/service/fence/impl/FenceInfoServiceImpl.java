@@ -34,7 +34,10 @@ public class FenceInfoServiceImpl implements FenceInfoService {
 				Double longitude = Double.parseDouble(entity.getLongitudes());
 				Point point = new Point(latitude, longitude);
 				fence.setPoint(point);
-				fence.setRadius(entity.getRadius());
+				if(null == entity.getRadius())
+					fence.setRadius(500d);
+				else
+					fence.setRadius(entity.getRadius());
 
 				fenceCacheService.create(fence);
 				
