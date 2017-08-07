@@ -21,7 +21,7 @@ public class JourneySearchServiceImpl implements JourneySearchService {
 	@Override
 	public Pagination search(Pagination page, String account, long startTime) {
 		JourneyRowkey startRowKey = JourneyRowkey.create(account, startTime);
-		JourneyRowkey endRowKey = JourneyRowkey.create(account, startTime + 315532800000L);
+		JourneyRowkey endRowKey = JourneyRowkey.create(account, startTime - 315532800000L);
 		com.appleframework.data.core.page.Pagination<Journey> pagin = journeyHbaseDao.findPageList(startRowKey,
 				endRowKey, Journey.class, page.getPageNo(), page.getPageSize());
 		page.setList(pagin.getList());

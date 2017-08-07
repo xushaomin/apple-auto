@@ -24,7 +24,7 @@
 		<rop.version>1.3.3.RELEASE</rop.version>
 		<cache.version>0.3.4-SNAPSHOT</cache.version>
 		<protobuf.version>2.6.1</protobuf.version>
-		<data.version>0.1.1.RELEASE</data.version>
+		<data.version>0.1.2.RELEASE</data.version>
 	</properties>
 
 	<dependencyManagement>

@@ -17,6 +17,12 @@
  		actives="${consumer.actives:0}" /> 	
  	
 	<dubbo:reference id="fenceEntityService" interface="com.appleframework.auto.service.fence.FenceEntityService" 
-		version="1.0" check="false"  />
-		
+		version="1.0" check="false" />
+	
+	<dubbo:reference id="journeySearchService" interface="com.appleframework.auto.service.journey.JourneySearchService" 
+		version="1.0" check="false" />
+	
+	<dubbo:reference id="locationSearchService" interface="com.appleframework.auto.service.location.LocationSearchService" 
+		version="1.0" check="false" />
+	
 </beans>

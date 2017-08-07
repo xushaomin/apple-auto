@@ -23,7 +23,9 @@ public class HbaseJourneyServiceTest {
 	@Test
 	public void testAddOpinion1() {
 		try {
-			JourneyRowkey startRowKey = JourneyRowkey.create("00000020170613011497318232000");
+			String account = "xusm";
+			Long startTime = System.currentTimeMillis();
+			JourneyRowkey startRowKey = JourneyRowkey.create(account, startTime);
 			List<Journey> list = locationHbaseDao.findObjectList(startRowKey, 10000, Journey.class);
 			for (Journey journey : list) {
 				System.out.println(journey);

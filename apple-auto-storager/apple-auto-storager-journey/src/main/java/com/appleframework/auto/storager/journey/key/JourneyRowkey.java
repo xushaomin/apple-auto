@@ -17,6 +17,11 @@ public class JourneyRowkey implements RowKey {
 		String accountS = StringUtils.zeroBeforeFill(account, 16);
 		this.row = accountS + (ID_MAX - journey.getStartTime());
 	}
+	
+	public JourneyRowkey(String account, Long startTime) {
+		String accountS = StringUtils.zeroBeforeFill(account, 16);
+		this.row = accountS + (ID_MAX - startTime);
+	}
 
 	public JourneyRowkey(String row) {
 		this.row = row;
@@ -29,6 +34,10 @@ public class JourneyRowkey implements RowKey {
 
 	public static JourneyRowkey create(String row) {
 		return new JourneyRowkey(row);
+	}
+	
+	public static JourneyRowkey create(String account, Long startTime) {
+		return new JourneyRowkey(account, startTime);
 	}
 
 	@Override
