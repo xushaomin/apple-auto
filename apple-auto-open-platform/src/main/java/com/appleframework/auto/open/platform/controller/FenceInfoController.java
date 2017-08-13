@@ -1,4 +1,4 @@
-package com.appleframework.auto.open.platform.controller;
+/*package com.appleframework.auto.open.platform.controller;
 
 import java.util.UUID;
 
@@ -16,14 +16,14 @@ import com.appleframework.rop.annotation.NeedInSessionType;
 import com.appleframework.rop.annotation.ServiceMethod;
 import com.appleframework.rop.annotation.ServiceMethodBean;
 
-/**
+*//**
  * <pre>
  * 功能说明：
  * </pre>
  * 
  * @author 徐少敏
  * @version 1.0
- */
+ *//*
 @ServiceMethodBean(version = "1.0", group = "apple.auto", groupTitle = "公共模块")
 public class FenceInfoController {
 
@@ -56,4 +56,4 @@ public class FenceInfoController {
 	}
 	
 
-}
+}*/
