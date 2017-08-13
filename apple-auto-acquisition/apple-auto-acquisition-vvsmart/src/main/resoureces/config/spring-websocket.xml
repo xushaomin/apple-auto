@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	 
+	<bean id="locationMessageConsumer" class="com.appleframework.auto.acquisition.vvsmart.consumer.LocationMessageConsumer" 
+		init-method="init">
+    	<property name="messageProducer3" ref="messageProducer3" />
+   		<property name="webSocketUrl" value="${webstocket.url}" />
+    </bean>
+     
+</beans> 
