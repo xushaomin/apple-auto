@@ -43,8 +43,8 @@ public class LocationMessageConsumer {
 			public void onMessage(String message) {
 				try {
 					JsonResult result = gson.fromJson(message, JsonResult.class);
-					logger.info("result.time --- " + result.getTime());
 					List<JsonTrack> list = result.getList();
+					logger.info("result.time --- " + result.getTime() +"---size---" + list.size());
 					for (JsonTrack jsonTrack : list) {
 						Location location = LocationConversion.conversion(jsonTrack);
 						String topic = PropertyConfigurer.getString("producer.topic.location", "location");

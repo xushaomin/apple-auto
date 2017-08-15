@@ -16,13 +16,11 @@ import org.mapdb.DBMaker;
 import org.springframework.stereotype.Service;
 
 import com.appleframework.auto.bean.location.Location;
-import com.appleframework.auto.calculate.fence.model.FenceEvent;
 import com.appleframework.auto.calculate.fence.model.FenceLocation;
 import com.appleframework.config.core.PropertyConfigurer;
-import com.lmax.disruptor.EventHandler;
 
 @Service("fenceInoutService")
-public class FenceInoutService implements EventHandler<FenceEvent> {
+public class FenceInoutService {
 
 	private final static Logger logger = Logger.getLogger(FenceInoutService.class);
 
@@ -33,10 +31,7 @@ public class FenceInoutService implements EventHandler<FenceEvent> {
 	@Resource
 	private FenceNotifyService fenceNotifyService;
 	
-	@Override
-	public void onEvent(FenceEvent fenceEvent, long sequence, boolean endOfBatch) throws Exception {
-		Set<String> fenceIdSet = fenceEvent.getFenceIdSet();
-		Location location = fenceEvent.getLocation();
+	public void onEvent(Location location, Set<String> fenceIdSet) {
 		if (fenceIdSet == null || fenceIdSet.size() == 0) {
 			// 不存在围栏信息，全部退出
 			noExistsFence(location);
