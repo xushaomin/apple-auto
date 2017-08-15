@@ -18,6 +18,7 @@ import com.appleframework.config.core.PropertyConfigurer;
 import com.appleframework.jms.core.producer.MessageProducer3;
 import com.google.gson.Gson;
 
+@SuppressWarnings("deprecation")
 public class LocationMessageConsumer {
 
 	private static final Log logger = LogFactory.getLog(LocationMessageConsumer.class);
