@@ -48,8 +48,10 @@ public class LocationMessageConsumer {
 					logger.info("result.time --- " + result.getTime() +"---size---" + list.size());
 					for (JsonTrack jsonTrack : list) {
 						Location location = LocationConversion.conversion(jsonTrack);
-						String topic = PropertyConfigurer.getString("producer.topic.location", "location");
-						messageProducer3.sendObject(topic, location.getAccount(), location);
+						if(null != location) {
+							String topic = PropertyConfigurer.getString("producer.topic.location", "location");
+							messageProducer3.sendObject(topic, location.getAccount(), location);
+						}
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -74,7 +76,7 @@ public class LocationMessageConsumer {
 				if (wc.isClosed()) {
 					wc.connect();
 				}
-				wc.send("141");
+				wc.send("762");
 			} catch (Exception e) {
 				logger.error(e);
 			}

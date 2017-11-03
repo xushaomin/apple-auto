@@ -26,6 +26,12 @@ public class FenceInfoServiceImpl implements FenceInfoService {
 
 	public void create(FenceEntityWithBLOBs entity) {
 		try {
+			if(entity.getIsDelete() == true) {
+				return;
+			}
+			if(entity.getIsEnable() == false) {
+				return;
+			}
 			if (entity.getFenceType() == 1) {
 				CircleFence fence = new CircleFence();
 				fence.setId(entity.getId().toString());

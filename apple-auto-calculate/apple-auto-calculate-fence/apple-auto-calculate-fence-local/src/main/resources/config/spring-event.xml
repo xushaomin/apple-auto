@@ -9,8 +9,9 @@
            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">	
 	
+	<!-- 
 	<bean id="disruptor" class="com.appleframework.auto.calculate.fence.event.DisruptorFactoryBean" destroy-method="destroy">
 		<property name="eventHandler" ref="fenceInoutService" />
 	</bean>
-	
+	 -->
 </beans>
