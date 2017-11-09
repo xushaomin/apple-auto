@@ -43,7 +43,7 @@
 		<dependency>
   			<groupId>com.github.davidmoten</groupId>
     		<artifactId>rtree</artifactId>
-    		<version>0.8.0.3.APPLE</version>
+    		<version>0.8.0.4.APPLE</version>
 		</dependency>
 		
 		<dependency>

@@ -24,6 +24,9 @@ public class FenceCacheService {
 		for (Fence fence : list) {
 			create(fence);
 		}
+		if(logger.isDebugEnabled()) {
+			logger.debug(tree.asString());
+		}
 	}
 	
 	private Geometry genCircleGeometry(CircleFence fence) {
